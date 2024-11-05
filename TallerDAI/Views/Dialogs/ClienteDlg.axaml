@@ -1,0 +1,40 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="500"
+        x:Class="TallerDAI.Views.Dialogs.ClienteDlg"
+		xmlns:models="using:TallerDAI.Models"
+        Title="Modificar Cliente">
+	<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+		<StackPanel Orientation="Vertical" Margin="5">
+			<TextBlock Text="DNI"/>
+			<TextBox x:Name="DniTB" />
+			<TextBlock Text="Nombre"/>
+			<TextBox x:Name="NombreTB"/>
+			<TextBlock Text="Email" />
+			<TextBox x:Name="EmailTB" />
+		</StackPanel>
+
+		<StackPanel
+				Orientation="Horizontal"
+				HorizontalAlignment="Center"
+				VerticalAlignment="Bottom"
+				Margin="5">
+
+			<Button x:Name="BtCancel"
+					Margin="5"
+					HorizontalContentAlignment="Center"
+					HorizontalAlignment="Center"
+					Content="Cancelar"/>
+
+			<Button x:Name="BtOk"
+					Margin="5"
+					HorizontalContentAlignment="Center"
+					HorizontalAlignment="Center"
+					Content="Aceptar"/>
+
+		</StackPanel>
+	</StackPanel>
+
+</Window>
