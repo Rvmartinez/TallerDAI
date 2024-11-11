@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using System.ComponentModel;
 
-namespace TallerDAI.ViewModels
+namespace TallerDIA.ViewModels
 {
     public class ViewModelBase : ObservableObject
     {

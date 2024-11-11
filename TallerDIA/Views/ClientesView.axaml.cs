@@ -1,9 +1,9 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
-using TallerDAI.ViewModels;
+using TallerDIA.ViewModels;
 
-namespace TallerDAI.Views;
+namespace TallerDIA.Views;
 
 public partial class ClientesView : UserControl
 {

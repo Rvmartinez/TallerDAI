@@ -1,8 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using System.Windows.Input;
-using TallerDAI.ViewModels;
+using TallerDIA.ViewModels;
 
-namespace TallerDAI.ViewModels
+namespace TallerDIA.ViewModels
 {
     public partial class MainWindowViewModel : ViewModelBase
     {

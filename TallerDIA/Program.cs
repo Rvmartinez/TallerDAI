@@ -1,7 +1,7 @@
 ﻿using Avalonia;
 using System;
 
-namespace TallerDAI
+namespace TallerDIA
 {
     internal sealed class Program
     {

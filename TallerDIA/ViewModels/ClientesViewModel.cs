@@ -4,30 +4,34 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using TallerDAI.Models;
-using TallerDAI.ViewModels;
-using TallerDAI.Views.Dialogs;
+using TallerDIA.Models;
+using TallerDIA.ViewModels;
+using TallerDIA.Views.Dialogs;
 
-namespace TallerDAI.ViewModels;
+namespace TallerDIA.ViewModels;
 
 public partial class ClientesViewModel : ViewModelBase
 {
-    public Cliente SelectedClient { get => SelectedClient;
+    private Cliente _SelectedClient;
+    public Cliente SelectedClient
+    {
+        get => _SelectedClient;
         set
         {
-            OnSelectedChanged(value);
+            SetProperty(ref _SelectedClient, value);
+            //OnSelectedChanged();
         }
     }
 
     private async void OnSelectedChanged(Cliente value)
     {
-        var ClienteDlg = new ClienteDlg();
+       /* var ClienteDlg = new ClienteDlg();
         await ClienteDlg.ShowDialog(this);
 
         if (!ClienteDlg.IsCancelled)
         {
             AddCliente(new Cliente() { DNI = ClienteDlg.DniTB.Text, Email = ClienteDlg.EmailTB.Text, Nombre = ClienteDlg.NombreTB.Text, IdCliente = 1 });
-        }
+        }*/
     }
 
     private ObservableCollection<Cliente> _Clientes;

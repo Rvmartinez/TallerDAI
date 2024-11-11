@@ -2,9 +2,9 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using System.Diagnostics;
-using TallerDAI.Models;
+using TallerDIA.Models;
 
-namespace TallerDAI.Views.Dialogs;
+namespace TallerDIA.Views.Dialogs;
 
 public partial class ClienteDlg : Window
 {

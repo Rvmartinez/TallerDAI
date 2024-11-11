@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 
-namespace TallerDAI.Views
+namespace TallerDIA.Views
 {
     public partial class MainWindow : Window
     {

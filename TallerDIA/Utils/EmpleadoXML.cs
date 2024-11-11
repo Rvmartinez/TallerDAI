@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Linq;
-using TallerDAI.Models;
+using TallerDIA.Models;
 
-namespace TallerDAI.Utils;
+namespace TallerDIA.Utils;
 
 public class EmpleadoXML
 {

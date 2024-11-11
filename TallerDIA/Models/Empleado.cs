@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace TallerDAI.Models;
+namespace TallerDIA.Models;
 
 
 /*

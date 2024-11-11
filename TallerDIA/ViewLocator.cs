@@ -1,9 +1,9 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using System;
-using TallerDAI.ViewModels;
+using TallerDIA.ViewModels;
 
-namespace TallerDAI
+namespace TallerDIA
 {
     public class ViewLocator : IDataTemplate
     {

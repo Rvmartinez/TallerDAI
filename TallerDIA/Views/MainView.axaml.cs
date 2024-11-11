@@ -2,7 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 
-namespace TallerDAI.Views;
+namespace TallerDIA.Views;
 
 public partial class MainView : UserControl
 {
