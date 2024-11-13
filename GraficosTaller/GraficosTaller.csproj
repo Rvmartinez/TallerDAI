@@ -30,5 +30,8 @@
         <DependentUpon>ChartWindow.axaml</DependentUpon>
         <SubType>Code</SubType>
       </Compile>
+      <Compile Update="UI\DesgloseWindow.axaml.cs">
+        <DependentUpon>DesgloseWindow.axaml</DependentUpon>
+      </Compile>
     </ItemGroup>
 </Project>

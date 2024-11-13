@@ -14,14 +14,15 @@ namespace DemoAvalonia.UI {
     using Avalonia.Markup.Xaml;
     
 
-    public partial class ChartWindow : Window
+    public partial class DesgloseWindow : Window
     {
-        public ChartWindow()
+        public DesgloseWindow()
         {
             InitializeComponent();
 
             var aux = Rango.SelectedIndex;
            this.Chart = this.GetControl<Chart>( "ChGrf" );
+           this.Chart.Type = Chart.ChartType.Bars;
            
           
             Boolean isFechaFin = true;
