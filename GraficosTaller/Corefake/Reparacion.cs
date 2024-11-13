@@ -12,13 +12,27 @@ public class Reparacion
     {
         FechaFin = null;
     }
-    public int? GetMes()
+    public int? GetMes(Boolean fin = false)
     {
-        return FechaInicio.Month;
+        if(fin == true)
+        {
+            return FechaFin?.Month ?? null;
+        }
+        else
+        {
+            return FechaInicio.Month;
+        }
     }
 
-    public int GetAnno()
+    public int? GetAnno(Boolean fin = false)
     {
-        return FechaInicio.Year;
+        if(fin == true)
+        {
+            return FechaFin?.Year ?? null;
+        }
+        else
+        {
+            return FechaInicio.Year;
+        }
     }
 }

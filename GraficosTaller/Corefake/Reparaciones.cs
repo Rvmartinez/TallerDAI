@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace GraficosTaller.Corefake;
@@ -17,20 +18,30 @@ public class Reparaciones
         ReparacionesLista.Add(reparacion);
     }
 
-    public int GetReparacionesAnno(int anno)
+    public int GetReparacionesAnno(int anno, Boolean fin = false)
     {
-        return ReparacionesLista.Count(reparacion => reparacion.GetAnno() == anno);
+        return ReparacionesLista.Count(reparacion => reparacion.GetAnno(fin) == anno);
     }
 
-    public int GetReparacionesMes(int mes, int anno)
+    public int GetReparacionesMes(int mes, int anno, Boolean fin = false)
     {
-        return ReparacionesLista.Count(reparacion => reparacion.GetMes() == mes && reparacion.GetAnno() == anno);
+        return ReparacionesLista.Count(reparacion => reparacion.GetMes(fin) == mes && reparacion.GetAnno(fin) == anno);
     }
 
-    public int[] getAnnosReparaciones()
+    public int[] getAnnosReparaciones(Boolean fin = false)
     {
-        var a  = ReparacionesLista.GroupBy(reparacion => reparacion.GetAnno());
-        return a.Select(reparacion => reparacion.Key).OrderBy(i => i).ToArray();
-        
+        List<int> annos = new List<int>();
+        foreach(var reparacion in ReparacionesLista)
+        {
+            var anno = reparacion.GetAnno(fin);
+            if (anno.HasValue && !annos.Contains(anno.Value))
+            {
+                annos.Add(anno.Value);
+            }
+        }
+
+        return annos.OrderDescending().ToArray();
+
+
     }
 }
