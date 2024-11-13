@@ -16,6 +16,12 @@
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch">
                 
+                        <Menu DockPanel.Dock="Top">
+                                <MenuItem Header="General" Background="Gray"></MenuItem>
+                                <MenuItem Header="Por clientes"></MenuItem>
+                        </Menu>
+                        
+                
                 <!--<StackPanel
                         Orientation="Vertical"
                         Margin="5"
