@@ -27,10 +27,11 @@ namespace DemoAvalonia.UI {
             Boolean isFechaFin = true;
 
             Reparaciones reparaciones = inicializarReparaciones();
+            desplegableAnnos(reparaciones, isFechaFin);
+
             reparacionesAnuales(reparaciones, isFechaFin);
             Rango.SelectionChanged += (sender, args) =>
             {
-                desplegableAnnos(reparaciones, isFechaFin);
                 updateChart(reparaciones, isFechaFin);
             };
             Annos.SelectionChanged += (sender, args) =>
@@ -67,8 +68,6 @@ namespace DemoAvalonia.UI {
         {
             if (Rango.SelectedIndex == 0)
             {
-                
-                
                 reparacionesDelAnno(Convert.ToInt32(Annos.Items[Annos.SelectedIndex]), reparaciones, isFechaFin);
             }
             else
