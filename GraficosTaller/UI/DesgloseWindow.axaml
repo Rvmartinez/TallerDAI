@@ -17,8 +17,8 @@
                 VerticalAlignment="Stretch">
                 
                         <Menu DockPanel.Dock="Top">
-                                <MenuItem Header="General" Background="Gray"></MenuItem>
-                                <MenuItem Header="Por clientes"></MenuItem>
+                                <MenuItem Header="General" Name="General"></MenuItem>
+                                <MenuItem Header="Por clientes" Background="Gray"></MenuItem>
                         </Menu>
                         
                 
@@ -73,8 +73,10 @@
                         </ComboBox>     
                         <TextBlock IsVisible="False" Name="AnnosText" VerticalAlignment="Center">Año a ver</TextBlock>
                         <ComboBox IsVisible="False" Name="Annos" VerticalAlignment="Center"></ComboBox>
+                        <TextBlock IsVisible="False" Name="ClientesText" VerticalAlignment="Center"></TextBlock>
+                        <ComboBox IsVisible="False" Name="Clientes" VerticalAlignment="Center"></ComboBox>
                         <TextBlock Name="ComputaText" VerticalAlignment="Center">¿Cuándo computan?</TextBlock>
-                        <ComboBox Name="Computa" VerticalAlignment="Center">
+                        <ComboBox Name="Computa" VerticalAlignment="Center" SelectedIndex="1">
                                 <ComboBoxItem>Al iniciarse</ComboBoxItem>
                                 <ComboBoxItem>Al finalizarse</ComboBoxItem>
                         </ComboBox>

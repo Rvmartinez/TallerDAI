@@ -16,7 +16,7 @@ public partial class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            desktop.MainWindow = new DesgloseWindow();
+            desktop.MainWindow = new ChartWindow();
         }
 
         base.OnFrameworkInitializationCompleted();

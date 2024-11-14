@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection.Metadata.Ecma335;
 using Avalonia.Media;
+using Avalonia.Media.TextFormatting.Unicode;
 using GraficosTaller.Corefake;
 
 namespace DemoAvalonia.UI {
@@ -27,28 +28,32 @@ namespace DemoAvalonia.UI {
           
             Boolean isFechaFin = true;
 
-            Reparaciones reparaciones = inicializarReparaciones();
-            reparacionesAnuales(reparaciones, isFechaFin);
+            Reparaciones reparaciones = InicializarReparaciones();
+            ReparacionesAnuales(reparaciones, isFechaFin, 2024);
             Rango.SelectionChanged += (sender, args) =>
             {
-                desplegableAnnos(reparaciones, isFechaFin);
-                updateChart(reparaciones, isFechaFin);
+                DesplegableAnnos(reparaciones, isFechaFin);
+                UpdateChart(reparaciones, isFechaFin);
             };
             Annos.SelectionChanged += (sender, args) =>
             {  
-                updateChart(reparaciones, isFechaFin);
+                UpdateChart(reparaciones, isFechaFin);
             };
             Computa.SelectionChanged += (sender, args) =>
             {
                 isFechaFin = (Computa.SelectedIndex == 1);
-                updateChart(reparaciones, isFechaFin);
+                UpdateChart(reparaciones, isFechaFin);
             };
-            ;
+            General.Click += (sender, args) =>
+            {
+                new ChartWindow().Show();
+                Close();
+            };
 
 
         }
         
-        private void desplegableAnnos(Reparaciones reparaciones, Boolean isFechaFin)
+        private void DesplegableAnnos(Reparaciones reparaciones, Boolean isFechaFin)
         {
             Annos.Items.Clear();
             foreach (var anno in reparaciones.getAnnosReparaciones(isFechaFin))
@@ -59,24 +64,36 @@ namespace DemoAvalonia.UI {
             Annos.IsVisible = true;
             AnnosText.IsVisible = true;
         }
+        
+        private void desplegableClientes(Reparaciones reparaciones)
+        {
+            Clientes.Items.Clear();
+            foreach (var cliente in reparaciones.GetClientesReparaciones())
+            {
+                if(!Clientes.Items.Contains(cliente)) Clientes.Items.Add(cliente);
+            }
+            Clientes.SelectedIndex=0;
+            Clientes.IsVisible = true;
+            ClientesText.IsVisible = true;
+        }
 
-        private void updateChart(Reparaciones reparaciones, Boolean isFechaFin)
+        private void UpdateChart(Reparaciones reparaciones, Boolean isFechaFin)
         {
             if (Rango.SelectedIndex == 0)
             {
                 
                 
-                reparacionesDelAnno(Convert.ToInt32(Annos.Items[Annos.SelectedIndex]), reparaciones, isFechaFin);
+                ReparacionesDelAnno(Convert.ToInt32(Annos.Items[Annos.SelectedIndex]), reparaciones, isFechaFin);
             }
             else
             {
                 Annos.IsVisible = false;
                 AnnosText.IsVisible = false;
-                reparacionesAnuales(reparaciones, isFechaFin);
+                ReparacionesAnuales(reparaciones, isFechaFin, 2024);
             }
         }
 
-        private Reparaciones inicializarReparaciones()
+        private Reparaciones InicializarReparaciones()
         {
             Reparaciones toret = new Reparaciones();
             toret.AnadirReparacion(new Reparacion(){Cliente = new Cliente(), FechaInicio = new DateTime(2023, 01, 02), FechaFin = new DateTime(2023, 02, 04)});
@@ -211,7 +228,7 @@ namespace DemoAvalonia.UI {
             return toret;
         }
 
-        private void reparacionesDelAnno(int anno, Reparaciones reparaciones, Boolean isFechaFin)
+        private void ReparacionesDelAnno(int anno, Reparaciones reparaciones, Boolean isFechaFin)
         {
             this.Chart.LegendY = "Reparaciones últimos 12 meses";
             this.Chart.LegendX = "Months";
@@ -226,19 +243,19 @@ namespace DemoAvalonia.UI {
             this.Chart.Draw();
         }
 
-        private void reparacionesAnuales(Reparaciones reparaciones, Boolean isFechaFin)
+        private void ReparacionesAnuales(Reparaciones reparaciones, Boolean isFechaFin, int anno)
         {
             List<int> valores = new List<int>();
-            List<int> annos = new List<int>();
-            foreach (var anno in reparaciones.getAnnosReparaciones())
+            List<string> clientes = new List<string>();
+            foreach (var ncliente in reparaciones.GetClientesReparaciones())
             {
-                valores.Add(reparaciones.GetReparacionesAnno(anno, isFechaFin));
-                annos.Add(anno);
+                valores.Add(reparaciones.GetReparacionesCliente(ncliente).GetReparacionesAnno(anno, isFechaFin));
+                clientes.Add(ncliente);
             }
             this.Chart.Values = valores.ToArray();
-            this.Chart.Labels = annos.ConvertAll(x => x.ToString()).ToArray();
-            this.Chart.LegendY = "Reparaciones por año";
-            this.Chart.LegendX = "Años";
+            this.Chart.Labels = clientes.ConvertAll(x => x.ToString()).ToArray();
+            this.Chart.LegendY = "Reparaciones por cliente el año " + anno;
+            this.Chart.LegendX = "Clientes";
             this.Chart.Draw();
         }
 

@@ -42,7 +42,11 @@ namespace DemoAvalonia.UI {
                 isFechaFin = (Computa.SelectedIndex == 1);
                 updateChart(reparaciones, isFechaFin);
             };
-            ;
+            Desglose.Click += (sender, args) =>
+            {
+                new DesgloseWindow().Show();
+                Close();
+            };
 
 
         }

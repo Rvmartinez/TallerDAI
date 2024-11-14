@@ -22,7 +22,7 @@ public class Cliente
         Random rnd = new Random();
         DNI = rnd.Next(10000000, 99999999);
         LetraDNI = (char)('A' + rnd.Next(0, 26));
-        Nombre = ('A' + rnd.Next(0, 26)).ToString();
+        Nombre = ((char)('A' + rnd.Next(0, 26))).ToString();
         Correo = Nombre + "@fakeprovider.com";
     }
     
