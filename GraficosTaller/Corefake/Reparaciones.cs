@@ -56,7 +56,7 @@ public class Reparaciones
         return clientes.ToArray();
     }
 
-    public int[] getAnnosReparaciones(Boolean fin = false)
+    public int[] GetAnnosReparaciones(Boolean fin = false)
     {
         List<int> annos = new List<int>();
         foreach(var reparacion in ReparacionesLista)

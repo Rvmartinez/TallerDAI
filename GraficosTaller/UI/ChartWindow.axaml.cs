@@ -55,7 +55,7 @@ namespace DemoAvalonia.UI {
         private void desplegableAnnos(Reparaciones reparaciones, Boolean isFechaFin)
         {
             Annos.Items.Clear();
-            foreach (var anno in reparaciones.getAnnosReparaciones(isFechaFin))
+            foreach (var anno in reparaciones.GetAnnosReparaciones(isFechaFin))
             {
                 if(!Annos.Items.Contains(anno)) Annos.Items.Add(anno);
             }
@@ -232,7 +232,7 @@ namespace DemoAvalonia.UI {
         {
             List<int> valores = new List<int>();
             List<int> annos = new List<int>();
-            foreach (var anno in reparaciones.getAnnosReparaciones())
+            foreach (var anno in reparaciones.GetAnnosReparaciones())
             {
                 valores.Add(reparaciones.GetReparacionesAnno(anno, isFechaFin));
                 annos.Add(anno);

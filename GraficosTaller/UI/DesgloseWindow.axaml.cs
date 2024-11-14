@@ -36,11 +36,13 @@ namespace DemoAvalonia.UI {
             ReparacionesAnuales(reparaciones, isFechaFin, Convert.ToInt32(Annos.Items[Annos.SelectedIndex]));
             Rango.SelectionChanged += (sender, args) =>
             {
+                if(Rango.SelectedIndex == 0) DesplegableClientes(reparaciones, Convert.ToInt32(Annos.Items[Annos.SelectedIndex]));
 
                 UpdateChart(reparaciones, isFechaFin);
             };
             Annos.SelectionChanged += (sender, args) =>
             {  
+                DesplegableClientes(reparaciones, Convert.ToInt32(Annos.Items[Annos.SelectedIndex]));
 
                 UpdateChart(reparaciones, isFechaFin);
             };
@@ -62,7 +64,7 @@ namespace DemoAvalonia.UI {
         private void DesplegableAnnos(Reparaciones reparaciones, Boolean isFechaFin)
         {
             Annos.Items.Clear();
-            foreach (var anno in reparaciones.getAnnosReparaciones(isFechaFin))
+            foreach (var anno in reparaciones.GetAnnosReparaciones(isFechaFin))
             {
                 if(!Annos.Items.Contains(anno)) Annos.Items.Add(anno);
             }
@@ -112,7 +114,6 @@ namespace DemoAvalonia.UI {
         {
             if (Rango.SelectedIndex == 0)
             {
-                DesplegableClientes(reparaciones, Convert.ToInt32(Annos.Items[Annos.SelectedIndex]));
                 ReparacionesDelAnno(Convert.ToInt32(Annos.Items[Annos.SelectedIndex]), reparaciones, isFechaFin);
                 
             }
