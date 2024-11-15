@@ -28,7 +28,7 @@ namespace DemoAvalonia.UI {
 
             Reparaciones reparaciones = inicializarReparaciones();
             desplegableAnnos(reparaciones, isFechaFin);
-
+            Annos.IsVisible = false;
             reparacionesAnuales(reparaciones, isFechaFin);
             Rango.SelectionChanged += (sender, args) =>
             {
@@ -68,6 +68,8 @@ namespace DemoAvalonia.UI {
         {
             if (Rango.SelectedIndex == 0)
             {
+                            Annos.IsVisible = true;
+
                 reparacionesDelAnno(Convert.ToInt32(Annos.Items[Annos.SelectedIndex]), reparaciones, isFechaFin);
             }
             else

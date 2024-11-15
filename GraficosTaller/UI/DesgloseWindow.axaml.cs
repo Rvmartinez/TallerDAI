@@ -36,14 +36,13 @@ namespace DemoAvalonia.UI {
             ReparacionesAnuales(reparaciones, isFechaFin, Convert.ToInt32(Annos.Items[Annos.SelectedIndex]));
             Rango.SelectionChanged += (sender, args) =>
             {
-                if(Rango.SelectedIndex == 0) DesplegableClientes(reparaciones, Convert.ToInt32(Annos.Items[Annos.SelectedIndex]));
+                if(Rango.SelectedIndex == 0) DesplegableClientes(reparaciones, Convert.ToInt32(Annos.Items[Annos.SelectedIndex]), isFechaFin);
 
                 UpdateChart(reparaciones, isFechaFin);
             };
             Annos.SelectionChanged += (sender, args) =>
             {  
-                DesplegableClientes(reparaciones, Convert.ToInt32(Annos.Items[Annos.SelectedIndex]));
-
+                DesplegableClientes(reparaciones, Convert.ToInt32(Annos.Items[Annos.SelectedIndex]), isFechaFin);
                 UpdateChart(reparaciones, isFechaFin);
             };
             Computa.SelectionChanged += (sender, args) =>
@@ -74,10 +73,7 @@ namespace DemoAvalonia.UI {
         private void DesplegableClientes(Reparaciones reparaciones, int anno, Boolean isFechaFin = false)
         {
             // Remove existing ComboBox if it exists
-            if (_clientes != null)
-            {
-                Options.Children.Remove(_clientes);
-            }
+            RemoveComboBox();
           
 
             // Create and configure new ComboBox
@@ -89,9 +85,10 @@ namespace DemoAvalonia.UI {
 
             foreach (var cliente in reparaciones.GetClientesReparaciones())
             {
-                if (!clientes.Items.Contains(cliente) && reparaciones.GetReparacionesCliente(cliente).GetReparacionesAnno(anno) != 0)
+                if (!clientes.Items.Contains(cliente) && reparaciones.GetReparacionesCliente(cliente).GetReparacionesAnno(anno, isFechaFin) > 0)
                 {
                     clientes.Items.Add(cliente);
+                    Console.WriteLine(cliente + " " + reparaciones.GetReparacionesCliente(cliente).GetReparacionesAnno(anno));
                 }
             }
 
@@ -109,6 +106,14 @@ namespace DemoAvalonia.UI {
             Options.Children.Add(clientes);
             _clientes = clientes;
         }
+        
+        private void RemoveComboBox()
+        {
+            if (_clientes != null)
+            {
+                Options.Children.Remove(_clientes);
+            }
+        }
 
         private void UpdateChart(Reparaciones reparaciones, Boolean isFechaFin)
         {
@@ -119,6 +124,7 @@ namespace DemoAvalonia.UI {
             }
             else
             {
+                RemoveComboBox();
                 ReparacionesAnuales(reparaciones, isFechaFin, Convert.ToInt32(Annos.Items[Annos.SelectedIndex]));
             }
         }
@@ -268,6 +274,8 @@ namespace DemoAvalonia.UI {
             {
               
               valores.Add(reparaciones.GetReparacionesCliente(_clientes.Items[_clientes.SelectedIndex].ToString()).GetReparacionesMes(i, anno, isFechaFin)); 
+                            Console.WriteLine("Added " + _clientes.Items[_clientes.SelectedIndex].ToString() + ":" + reparaciones.GetReparacionesCliente(_clientes.Items[_clientes.SelectedIndex].ToString()).GetReparacionesAnno(anno, isFechaFin));
+
             }
 
             this.Chart.Values = valores.ToArray();
