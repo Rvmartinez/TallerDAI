@@ -73,12 +73,13 @@
                         </ComboBox>     
                         <TextBlock Name="AnnosText" VerticalAlignment="Center">Año a ver</TextBlock>
                         <ComboBox Name="Annos" VerticalAlignment="Center"></ComboBox>
-                        <TextBlock IsVisible="False" Name="ClientesText" VerticalAlignment="Center"></TextBlock>
                         <TextBlock Name="ComputaText" VerticalAlignment="Center">¿Cuándo computan?</TextBlock>
                         <ComboBox Name="Computa" VerticalAlignment="Center" SelectedIndex="1">
                                 <ComboBoxItem>Al iniciarse</ComboBoxItem>
                                 <ComboBoxItem>Al finalizarse</ComboBoxItem>
                         </ComboBox>
+                        <TextBlock IsVisible="False" Name="ClientesText" VerticalAlignment="Center">Cliente</TextBlock>
+
                 </StackPanel>
                 
                 

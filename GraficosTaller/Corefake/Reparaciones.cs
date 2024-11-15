@@ -20,12 +20,12 @@ public class Reparaciones
     
     
 
-    public int GetReparacionesAnno(int anno, Boolean fin = false)
+    public int GetReparacionesAnno(int anno, Boolean fin)
     {
         return ReparacionesLista.Count(reparacion => reparacion.GetAnno(fin) == anno);
     }
     
-    public int GetReparacionesMes(int mes, int anno, Boolean fin = false)
+    public int GetReparacionesMes(int mes, int anno, Boolean fin)
     {
         return ReparacionesLista.Count(reparacion => reparacion.GetMes(fin) == mes && reparacion.GetAnno(fin) == anno);
     }
@@ -56,7 +56,7 @@ public class Reparaciones
         return clientes.ToArray();
     }
 
-    public int[] GetAnnosReparaciones(Boolean fin = false)
+    public int[] GetAnnosReparaciones(Boolean fin)
     {
         List<int> annos = new List<int>();
         foreach(var reparacion in ReparacionesLista)

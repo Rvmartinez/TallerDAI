@@ -48,6 +48,7 @@ namespace DemoAvalonia.UI {
             Computa.SelectionChanged += (sender, args) =>
             {
                 isFechaFin = (Computa.SelectedIndex == 1);
+                DesplegableClientes(reparaciones, Convert.ToInt32(Annos.Items[Annos.SelectedIndex]), isFechaFin);
                 UpdateChart(reparaciones, isFechaFin);
             };
             General.Click += (sender, args) =>
@@ -88,7 +89,6 @@ namespace DemoAvalonia.UI {
                 if (!clientes.Items.Contains(cliente) && reparaciones.GetReparacionesCliente(cliente).GetReparacionesAnno(anno, isFechaFin) > 0)
                 {
                     clientes.Items.Add(cliente);
-                    Console.WriteLine(cliente + " " + reparaciones.GetReparacionesCliente(cliente).GetReparacionesAnno(anno));
                 }
             }
 
@@ -105,6 +105,8 @@ namespace DemoAvalonia.UI {
             // Add new ComboBox to the visual tree
             Options.Children.Add(clientes);
             _clientes = clientes;
+            ClientesText.IsVisible = true;
+
         }
         
         private void RemoveComboBox()
@@ -113,6 +115,8 @@ namespace DemoAvalonia.UI {
             {
                 Options.Children.Remove(_clientes);
             }
+            ClientesText.IsVisible = false;
+
         }
 
         private void UpdateChart(Reparaciones reparaciones, Boolean isFechaFin)

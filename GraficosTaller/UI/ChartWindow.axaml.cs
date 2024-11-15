@@ -234,7 +234,7 @@ namespace DemoAvalonia.UI {
         {
             List<int> valores = new List<int>();
             List<int> annos = new List<int>();
-            foreach (var anno in reparaciones.GetAnnosReparaciones())
+            foreach (var anno in reparaciones.GetAnnosReparaciones(isFechaFin))
             {
                 valores.Add(reparaciones.GetReparacionesAnno(anno, isFechaFin));
                 annos.Add(anno);
