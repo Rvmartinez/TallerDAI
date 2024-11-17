@@ -9,7 +9,7 @@
         MaxWidth="1200" MaxHeight="600"
         x:Class="GraficosTaller.UI.DesgloseWindow"
         Title="ChartsSection"
-        RequestedThemeVariant="Dark"
+        RequestedThemeVariant="Light"
         Icon="\Assets\icon.png">
         
         <DockPanel
