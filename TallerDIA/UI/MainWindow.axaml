@@ -1,0 +1,122 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:gestiónDeReparaciones="clr-namespace:Gestión_de_reparaciones"
+        xmlns:core="clr-namespace:Gestión_de_reparaciones.CORE"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Gestión_de_reparaciones.MainWindow"
+        Title="Gestión_de_reparaciones"
+        x:DataType="core:RegistroReparacion"
+        x:CompileBindings="False">
+        
+    <DockPanel Margin="10">
+        <StackPanel HorizontalAlignment="Stretch">
+        <Button Name="BtMostrarGrid"
+                Content="Mostrar Grid"
+                Margin="5"
+               
+                DockPanel.Dock="Top"
+                Click="OnButtonBtCP"/>
+       
+        <Button Name="BtCrearReparacion"
+                Content="Crear Reparacion"
+                Margin="5"
+               
+                DockPanel.Dock="Top"
+                Click="OnButtonCrearReparacion"/>
+        
+        <Button Name="BtEliminarReparacion"
+                Content="Eliminar Reparacion"
+                Margin="5"
+                IsVisible="False"
+                DockPanel.Dock="Top"
+                Click="OnButtonEliminarReparacion"/>
+        
+       
+        
+        <Button Name="BtFinalizarReparacion"
+                Content="Finalizar Reparacion"
+                Margin="5"
+                IsVisible="False"
+                DockPanel.Dock="Top"
+                Click="OnButtonFinalizarReparacion"/>
+        <Label  Name="Label_Filtro" IsVisible="False">Filtro de Reparaciones</Label>
+        <CheckBox Name="CheckTerminados" IsVisible="False"
+                     Content="Reparaciones terminadas"
+                     IsCheckedChanged="Filtro_Terminado"/>
+        <CheckBox Name="CheckNoTerminados" IsVisible="False"
+                  Content="Reparaciones sin terminar"
+                  IsCheckedChanged="Filtro_NoTerminado"/>
+
+        </StackPanel>
+        
+        <DockPanel Name="MainPanel" Margin="10" LastChildFill="False" >
+            <DockPanel Name="GridPanel" IsVisible="True" Margin="10" >
+                
+                    
+                        <DataGrid Name="DataGridReparaciones" 
+                                  AutoGenerateColumns="False"
+                                  SelectionMode="Extended"
+                                  Background="Aqua"
+                                 >
+                            <DataGrid.Columns>
+                                
+                                <DataGridTextColumn IsReadOnly="False" Header="Asunto" Binding="{Binding Asunto}" />
+                                
+                                <DataGridTextColumn IsReadOnly="False" Header="Nota"  Binding="{Binding Nota}" />
+                                
+                                <DataGridTextColumn IsReadOnly="True" Header="Fecha Inicio"  Binding="{Binding FechaInicio}" />
+                                
+                                <DataGridTextColumn IsReadOnly="True" Header="Fecha Fin"  Binding="{Binding FechaFin}" />
+                                
+                                <DataGridTextColumn IsReadOnly="True" Header="Cliente"  Binding="{Binding ClienteNombre}" />
+                                                    
+                                <DataGridTextColumn IsReadOnly="True" Header="Empleado"  Binding="{Binding EmpleadoNombre}" />
+                                                    
+                            </DataGrid.Columns>
+                            
+                        </DataGrid>
+                    
+                
+            </DockPanel>
+                
+            <DockPanel Name="CreateReparacion" IsVisible="False" Margin="10" Background="DarkGreen">
+                <StackPanel DockPanel.Dock="Left" HorizontalAlignment="Stretch">
+                    <Label Content="Asunto" Margin="0 ,0, 200,5 " />
+                    <TextBox Name="TextAsunto" Text="" HorizontalAlignment="Stretch" Margin="5"  />
+                
+                    <Label Content="Nota" Margin="0 ,0, 200,5" />
+                    <TextBox Name="TextNota" Text=""  Margin="5" HorizontalAlignment="Stretch"  AcceptsReturn="True" TextWrapping="Wrap" />
+                    
+                </StackPanel>
+               
+                <StackPanel HorizontalAlignment="Stretch">
+                    
+                    <TextBlock Margin="0 5">Eligue un cliente:</TextBlock>
+                    <AutoCompleteBox Name="ListClientes" Margin="5" x:Name="clientesO" FilterMode="Contains" />
+                
+                    <TextBlock Margin="0 5" >Eligue un empleado:</TextBlock>
+                    <AutoCompleteBox Name="ListEmpleados" Margin="5" x:Name="empleadosO"  FilterMode="Contains" />
+
+                </StackPanel>
+                
+                <Button Name="BtCrear"
+                        Content="Aceptar"
+                        Margin="5"
+                        DockPanel.Dock="Bottom"
+                        HorizontalAlignment="Stretch"
+                        Click="OnButtonCrear"/>
+            </DockPanel>
+                
+            <DockPanel Name="Panel3" IsVisible="False" Margin="10" Background="DarkOrange">
+                <Label>Panel 3</Label>
+            </DockPanel>
+            
+           
+                
+        </DockPanel>
+        
+         
+    </DockPanel>
+</Window>
