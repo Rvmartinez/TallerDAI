@@ -4,7 +4,6 @@
 using System;
 using System.Collections.Generic;
 using Avalonia.Controls;
-using Avalonia.Media;
 using DemoAvalonia.UI;
 using GraficosTaller.Corefake;
 
@@ -21,23 +20,23 @@ namespace GraficosTaller.UI {
           
             Boolean isFechaFin = true;
 
-            Reparaciones reparaciones = inicializarReparaciones();
-            desplegableAnnos(reparaciones, isFechaFin);
+            Reparaciones reparaciones = InicializarReparaciones();
+            DesplegableAnnos(reparaciones, isFechaFin);
             Annos.IsVisible = false;
             AnnosText.IsVisible = false;
-            reparacionesAnuales(reparaciones, isFechaFin);
+            ReparacionesAnuales(reparaciones, isFechaFin);
             Rango.SelectionChanged += (sender, args) =>
             {
-                updateChart(reparaciones, isFechaFin);
+                UpdateChart(reparaciones, isFechaFin);
             };
             Annos.SelectionChanged += (sender, args) =>
             {  
-                updateChart(reparaciones, isFechaFin);
+                UpdateChart(reparaciones, isFechaFin);
             };
             Computa.SelectionChanged += (sender, args) =>
             {
                 isFechaFin = (Computa.SelectedIndex == 1);
-                updateChart(reparaciones, isFechaFin);
+                UpdateChart(reparaciones, isFechaFin);
             };
             Desglose.Click += (sender, args) =>
             {
@@ -48,7 +47,7 @@ namespace GraficosTaller.UI {
 
         }
         
-        private void desplegableAnnos(Reparaciones reparaciones, Boolean isFechaFin)
+        private void DesplegableAnnos(Reparaciones reparaciones, Boolean isFechaFin)
         {
             Annos.Items.Clear();
             foreach (var anno in reparaciones.GetAnnosReparaciones(isFechaFin))
@@ -60,24 +59,24 @@ namespace GraficosTaller.UI {
             AnnosText.IsVisible = true;
         }
 
-        private void updateChart(Reparaciones reparaciones, Boolean isFechaFin)
+        private void UpdateChart(Reparaciones reparaciones, Boolean isFechaFin)
         {
             if (Rango.SelectedIndex == 0)
             {
                 Annos.IsVisible = true;
                 AnnosText.IsVisible = true;
 
-                reparacionesDelAnno(Convert.ToInt32((object?)Annos.Items[Annos.SelectedIndex]), reparaciones, isFechaFin);
+                ReparacionesDelAnno(Convert.ToInt32(Annos.Items[Annos.SelectedIndex]), reparaciones, isFechaFin);
             }
             else
             {
                 Annos.IsVisible = false;
                 AnnosText.IsVisible = false;
-                reparacionesAnuales(reparaciones, isFechaFin);
+                ReparacionesAnuales(reparaciones, isFechaFin);
             }
         }
 
-        private Reparaciones inicializarReparaciones()
+        private Reparaciones InicializarReparaciones()
         {
             Reparaciones toret = new Reparaciones();
             toret.AnadirReparacion(new Reparacion(){Cliente = new Cliente(), FechaInicio = new DateTime(2023, 01, 02), FechaFin = new DateTime(2023, 02, 04)});
@@ -212,7 +211,7 @@ namespace GraficosTaller.UI {
             return toret;
         }
 
-        private void reparacionesDelAnno(int anno, Reparaciones reparaciones, Boolean isFechaFin)
+        private void ReparacionesDelAnno(int anno, Reparaciones reparaciones, Boolean isFechaFin)
         {
             this.Chart.LegendY = "Reparaciones últimos 12 meses";
             this.Chart.LegendX = "Months";
@@ -227,7 +226,7 @@ namespace GraficosTaller.UI {
             this.Chart.Draw();
         }
 
-        private void reparacionesAnuales(Reparaciones reparaciones, Boolean isFechaFin)
+        private void ReparacionesAnuales(Reparaciones reparaciones, Boolean isFechaFin)
         {
             List<int> valores = new List<int>();
             List<int> annos = new List<int>();
@@ -242,84 +241,8 @@ namespace GraficosTaller.UI {
             this.Chart.LegendX = "Años";
             this.Chart.Draw();
         }
-
-        void OnChartFormatChanged()
-        {
-            var rbBars = this.GetControl<RadioButton>( "RbBars" );
-            var rbLine = this.GetControl<RadioButton>( "RbLine" );
-            var edThickness = this.GetControl<NumericUpDown>( "EdThickness" );
-
-            if ( rbBars.IsChecked.HasValue
-             && rbBars.IsChecked.Value )
-            {
-                this._chartType = Chart.ChartType.Bars;
-            }
-            else
-            if ( rbLine.IsChecked.HasValue
-              && rbLine.IsChecked.Value )
-            {
-                this._chartType = Chart.ChartType.Lines;
-            }
-            
-            if ( this._chartType == Chart.ChartType.Lines ) {
-                this.Chart.Type = Chart.ChartType.Lines;
-                this.Chart.DataPen = new Pen( Brushes.Red, 2 * ( ( (double?) edThickness.Value ) ?? 1 ) );
-            } else {
-                this.Chart.Type = Chart.ChartType.Bars;
-                this.Chart.DataPen = new Pen( Brushes.Navy, 20 * ( ( (double?) edThickness.Value ?? 1 ) ) );
-            }
-            
-            this.Chart.Draw();
-        }
-
-        void OnChartThicknessChanged(double thickness)
-        {
-            if ( this.Chart.Type == Chart.ChartType.Bars ) {
-                this.Chart.DataPen = new Pen( this.Chart.DataPen.Brush, 20 * thickness );
-            } else {
-                this.Chart.DataPen = new Pen( this.Chart.DataPen.Brush, 2 * thickness );
-            }
-            
-            this.Chart.AxisPen = new Pen( this.Chart.AxisPen.Brush, 4 * thickness );
-            this.Chart.Draw();
-        }
-
-        void OnFontsStyleChanged()
-        {
-            var cbBold = this.GetControl<CheckBox>( "CbBold" );
-            var cbItalic = this.GetControl<CheckBox>( "CbItalic" );
-            bool italic = cbItalic.IsChecked ?? false;
-            bool bold = cbBold.IsChecked ?? false;
-            FontStyle style = italic ? FontStyle.Italic : FontStyle.Normal;
-            FontWeight weight = bold ? FontWeight.Bold : FontWeight.Normal;
-
-            this.Chart.DataFont = new Chart.Font( this.Chart.DataFont.Size ) {
-                Family = this.Chart.DataFont.Family,
-                Style = style,
-                Weight = weight
-            };
-            
-            this.Chart.LabelFont = new Chart.Font( this.Chart.LabelFont.Size ) {
-                Family = this.Chart.LabelFont.Family,
-                Style = style,
-                Weight = weight
-            };
-            
-            this.Chart.LegendFont = new Chart.Font( this.Chart.LegendFont.Size ) {
-                Family = this.Chart.LegendFont.Family,
-                Style = style,
-                Weight = weight
-            };
-            
-            this.Chart.Draw();
-        }
-
-        /*void InitializeComponent()
-        {
-            AvaloniaXamlLoader.Load(this);
-        }*/
+        
         
         private Chart Chart { get; }
-        private Chart.ChartType _chartType;
     }
 }

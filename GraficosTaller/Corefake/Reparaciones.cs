@@ -38,9 +38,9 @@ public class Reparaciones
         return reparaciones;
     }
     
-    public String[] GetClientesReparaciones()
+    public string[] GetClientesReparaciones()
     {
-        List<String> clientes = new List<String>();
+        List<string> clientes = new List<string>();
         foreach(var reparacion in ReparacionesLista)
         {
             if (!clientes.Contains(reparacion.Cliente.Nombre))

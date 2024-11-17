@@ -3,8 +3,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Avalonia.Controls;
-using Avalonia.Media;
 using DemoAvalonia.UI;
 using GraficosTaller.Corefake;
 
@@ -56,25 +56,29 @@ namespace GraficosTaller.UI {
         private void GenerateYearsCombobox(Reparaciones reparaciones)
         {
             Annos.Items.Clear();
+            List<int> annos = new List<int>();
+            
             foreach (var anno in reparaciones.GetAnnosReparaciones(true))
             {
-                if(!Annos.Items.Contains(anno)) Annos.Items.Add(anno);
+                if(!annos.Contains(anno)) annos.Add(anno);
             }
 
             foreach (var anno in reparaciones.GetAnnosReparaciones(false))
             {
-                if(!Annos.Items.Contains(anno)) Annos.Items.Add(anno);
+                if(!annos.Contains(anno)) annos.Add(anno);
             }
+            
+            annos = annos.OrderByDescending(anno => anno).ToList();
+            annos.ForEach(anno => Annos.Items.Add(anno));
+            
             Annos.SelectedIndex=0;
         }
         
         private void GenerateClientCombobox(Reparaciones reparaciones, int anno, Boolean isFechaFin = false)
         {
-            // Remove existing ComboBox if it exists
             RemoveClienteComboBox();
           
 
-            // Create and configure new ComboBox
             ComboBox clientes = new ComboBox
             {
                 Name = "Clientes",
@@ -89,7 +93,6 @@ namespace GraficosTaller.UI {
                 }
             }
 
-            // Set initial selection and event handler
             if (clientes.Items.Count > 0)
             {
                 clientes.SelectedIndex = 0;
@@ -99,7 +102,6 @@ namespace GraficosTaller.UI {
                 UpdateChart(reparaciones, isFechaFin);
             };
 
-            // Add new ComboBox to the visual tree
             Options.Children.Add(clientes);
             _clientes = clientes;
             ClientesText.IsVisible = true;
@@ -275,9 +277,9 @@ namespace GraficosTaller.UI {
             List<int> valores = new List<int>();
             Reparaciones? reparacionesCliente;
 
-            if (_clientes is not null && _clientes.Items.Count > 0) 
+            if (_clientes != null  && _clientes.Items.Count > 0)
             {
-                reparacionesCliente = reparaciones.GetReparacionesCliente(_clientes.Items[_clientes.SelectedIndex].ToString());
+                reparacionesCliente = reparaciones.GetReparacionesCliente(_clientes.Items[_clientes?.SelectedIndex ?? 0]?.ToString() ?? "");
             }
             else 
             {
@@ -312,84 +314,9 @@ namespace GraficosTaller.UI {
             this.Chart.Draw();
         }
 
-        void OnChartFormatChanged()
-        {
-            var rbBars = this.GetControl<RadioButton>( "RbBars" );
-            var rbLine = this.GetControl<RadioButton>( "RbLine" );
-            var edThickness = this.GetControl<NumericUpDown>( "EdThickness" );
-
-            if ( rbBars.IsChecked.HasValue
-             && rbBars.IsChecked.Value )
-            {
-                this._chartType = Chart.ChartType.Bars;
-            }
-            else
-            if ( rbLine.IsChecked.HasValue
-              && rbLine.IsChecked.Value )
-            {
-                this._chartType = Chart.ChartType.Lines;
-            }
-            
-            if ( this._chartType == Chart.ChartType.Lines ) {
-                this.Chart.Type = Chart.ChartType.Lines;
-                this.Chart.DataPen = new Pen( Brushes.Red, 2 * ( ( (double?) edThickness.Value ) ?? 1 ) );
-            } else {
-                this.Chart.Type = Chart.ChartType.Bars;
-                this.Chart.DataPen = new Pen( Brushes.Navy, 20 * ( ( (double?) edThickness.Value ?? 1 ) ) );
-            }
-            
-            this.Chart.Draw();
-        }
-
-        void OnChartThicknessChanged(double thickness)
-        {
-            if ( this.Chart.Type == Chart.ChartType.Bars ) {
-                this.Chart.DataPen = new Pen( this.Chart.DataPen.Brush, 20 * thickness );
-            } else {
-                this.Chart.DataPen = new Pen( this.Chart.DataPen.Brush, 2 * thickness );
-            }
-            
-            this.Chart.AxisPen = new Pen( this.Chart.AxisPen.Brush, 4 * thickness );
-            this.Chart.Draw();
-        }
-
-        void OnFontsStyleChanged()
-        {
-            var cbBold = this.GetControl<CheckBox>( "CbBold" );
-            var cbItalic = this.GetControl<CheckBox>( "CbItalic" );
-            bool italic = cbItalic.IsChecked ?? false;
-            bool bold = cbBold.IsChecked ?? false;
-            FontStyle style = italic ? FontStyle.Italic : FontStyle.Normal;
-            FontWeight weight = bold ? FontWeight.Bold : FontWeight.Normal;
-
-            this.Chart.DataFont = new Chart.Font( this.Chart.DataFont.Size ) {
-                Family = this.Chart.DataFont.Family,
-                Style = style,
-                Weight = weight
-            };
-            
-            this.Chart.LabelFont = new Chart.Font( this.Chart.LabelFont.Size ) {
-                Family = this.Chart.LabelFont.Family,
-                Style = style,
-                Weight = weight
-            };
-            
-            this.Chart.LegendFont = new Chart.Font( this.Chart.LegendFont.Size ) {
-                Family = this.Chart.LegendFont.Family,
-                Style = style,
-                Weight = weight
-            };
-            
-            this.Chart.Draw();
-        }
-
-        /*void InitializeComponent()
-        {
-            AvaloniaXamlLoader.Load(this);
-        }*/
+     
         
         private Chart Chart { get; }
-        private Chart.ChartType _chartType;
         private ComboBox? _clientes = null;
     }
 }
