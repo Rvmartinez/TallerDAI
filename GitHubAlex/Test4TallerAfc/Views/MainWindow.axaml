@@ -1,0 +1,74 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:Test4TallerAfc.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="Test4TallerAfc.Views.MainWindow"
+        x:DataType="vm:MainWindowViewModel"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="Test4TallerAfc">
+    <Window.Styles>
+        <Style Selector="TextBlock">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Width" Value="220"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="1"/>
+        </Style>
+        <Style Selector="TextBox">
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Margin" Value="1"/>
+        </Style>
+        
+        <Style Selector="Button">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Width" Value="175"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="CornerRadius" Value="9"/>
+            <Setter Property="Margin" Value="1"/>
+            
+        </Style>
+    </Window.Styles>
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+    <DockPanel Name="Grid1">
+        <StackPanel Name="ControlPanel">
+            <TextBlock Name="Titulo" Margin="5" FontWeight="Bold">EMPLEADOS</TextBlock>
+            <TextBlock>DNI:</TextBlock>
+            <TextBox Name="tbDni"></TextBox>
+            <TextBlock>Nombre:</TextBlock>
+            <TextBox Name="tbNombre"></TextBox>
+            <TextBlock>Email:</TextBlock>
+            <TextBox Name="tbEmail"></TextBox>
+            <Button Name="btAnadirEmpleado" Margin="5 20 1 1" Click="BtAnadirEmpleado_OnClick">Añadir empleado</Button>
+            <Button Name="btModificarEmpleado" Margin="5 1 1 1"  Click="btModificarEmpleado_OnClick">Modificar empleado</Button>
+            <Button Name="btEliminarEmpleado" Margin="5 1 1 1"  Click="btEliminarEmpleado_OnClick">Eliminar empleado</Button>
+        </StackPanel>
+        <StackPanel Name="GridPanel">
+            <DataGrid Name="DgEmpleados" Margin="20"  ItemsSource="{Binding Empleados}" 
+                      AutoGenerateColumns="False" IsReadOnly="True" 
+                      GridLinesVisibility="All"
+                      BorderThickness="1" BorderBrush="Gray"
+                      SelectionChanged="NuevoEmpleadoSeleccionado">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="DNI" Binding="{Binding Dni}" />
+                    <DataGridTextColumn Header="Nombre"  Binding="{Binding Nombre}"/>
+                    <DataGridTextColumn Header="Email" Width="350"  Binding="{Binding Email}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <DockPanel Name="PanelTickets" Dock="Top">
+                <ListBox Name="LbTickets" Margin="20"
+                         BorderThickness="1" BorderBrush="Gray"/>
+               </DockPanel>
+            <DockPanel Name="PanelAvisos" Dock="Bottom">
+                <TextBlock Width="750" Name="tblAvisos">¡Bienvenido a la ventana de gestón de Empleados del Taller! </TextBlock>
+            </DockPanel>
+        </StackPanel>
+    </DockPanel>
+</Window>
