@@ -6,7 +6,7 @@ namespace GraficosTaller.Corefake;
 
 public class Reparaciones
 {
-    public List<Reparacion> ReparacionesLista { get; set; }
+    private List<Reparacion> ReparacionesLista { get; set; }
 
     public Reparaciones()
     {

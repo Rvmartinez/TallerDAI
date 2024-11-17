@@ -4,10 +4,10 @@ namespace GraficosTaller.Corefake;
 
 public class Cliente
 {
-    public int DNI { get; private set; }
-    public char LetraDNI { get; private set; }
-    public string Nombre { get; private set; }
-    public string Correo { get; private set; }
+    public int DNI { get; }
+    public char LetraDNI { get;}
+    public string Nombre { get;}
+    public string Correo { get; }
 
     public Cliente(int dni, char letraDNI, string nombre, string correo)
     {
