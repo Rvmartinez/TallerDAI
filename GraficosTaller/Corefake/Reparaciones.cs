@@ -30,10 +30,6 @@ public class Reparaciones
         return ReparacionesLista.Count(reparacion => reparacion.GetMes(fin) == mes && reparacion.GetAnno(fin) == anno);
     }
     
-    /*public int GetReparacionesAnnoCliente(int anno, Cliente cliente, Boolean fin = false)
-    {
-        return ReparacionesLista.Count(reparacion => reparacion.GetAnno(fin) == anno && reparacion.Cliente == cliente);
-    }*/
     
     public Reparaciones GetReparacionesCliente(String cliente)
     {

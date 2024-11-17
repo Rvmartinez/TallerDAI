@@ -1,6 +1,8 @@
 // DemoAvalonia (c) 2021/23 Baltasar MIT License <jbgarcia@uvigo.es>
 
 
+using Avalonia.Styling;
+
 namespace DemoAvalonia.UI;
 
 
@@ -47,25 +49,36 @@ public class Chart: Control {
         this._normalizedData = Array.Empty<int>();
         this.FrameWidth = 30;
         this.Type = ChartType.Lines;
-        this.AxisPen = new Pen( Brushes.Black, 4 );
-        this.DataPen = new Pen( Brushes.Red, 2 );
+        
+        this.AxisPen = new Pen( Brushes.White, 4 );
+        this.DataPen = new Pen( Brushes.Yellow, 2 );
+        this.GridPen = new Pen( Brushes.Gray );
+        this.Background = Brushes.Black;
+        this.LegendBrush = Brushes.White;
+
+       
+        
+        
         this.DataFont = new Font( 12 ) { Family = FontFamily.Default };
         this.LabelFont = new Font( 12 ) { Family = FontFamily.Default };
         this.LegendFont = new Font( 12 ) { Family = FontFamily.Default };
         this.DrawGrid = true;
-        this.GridPen = new Pen( Brushes.Gray );
-        this.Background = Brushes.White;
-        this.LegendBrush = Brushes.Black;
+        
     }
 
     public override void Render(DrawingContext graphs)
     {
+       
         base.Render( graphs );
         this.Draw( graphs );
     }
 
     public void Draw()
     {
+        if (!isInitialized)
+        {
+            InitialColors();
+        }
         this.InvalidateVisual();
     }
 
@@ -223,6 +236,16 @@ public class Chart: Control {
     {
         int numValues = this._values.Count;
         int maxValue = this._values.Max();
+        if (maxValue == 0)
+        {
+            this._normalizedData = this._values.ToArray();
+
+            for(int i = 0; i < numValues; ++i) {
+                this._normalizedData[ i ] = 0;
+            }
+
+            return;
+        }
         this._normalizedData = this._values.ToArray();
 
         for(int i = 0; i < numValues; ++i) {
@@ -461,9 +484,31 @@ public class Chart: Control {
             return this._graphics;
         }
     }
+
+    private void InitialColors()
+    {
+        if (base.ActualThemeVariant.ToString().Equals("Dark"))
+        {
+            this.AxisPen = new Pen( Brushes.White, 4 );
+            this.DataPen = new Pen( Brushes.Yellow, 2 );
+            this.GridPen = new Pen( Brushes.Gray );
+            this.Background = Brushes.Black;
+            this.LegendBrush = Brushes.White;
+        }
+        else
+        {
+            this.AxisPen = new Pen( Brushes.Black, 4 );
+            this.DataPen = new Pen( Brushes.Red, 2 );
+            this.GridPen = new Pen( Brushes.Gray );
+            this.Background = Brushes.White;
+            this.LegendBrush = Brushes.Black;
+        }
+        isInitialized = true;
+    }
     
     private readonly List<int> _values;
     private readonly List<string> _labels;
     private DrawingContext? _graphics;
     private int[] _normalizedData;
+    public bool isInitialized = false;
 }

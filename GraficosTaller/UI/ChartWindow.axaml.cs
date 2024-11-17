@@ -3,17 +3,12 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Reflection.Metadata.Ecma335;
+using Avalonia.Controls;
 using Avalonia.Media;
+using DemoAvalonia.UI;
 using GraficosTaller.Corefake;
 
-namespace DemoAvalonia.UI {
-    using Avalonia;
-    using Avalonia.Controls;
-    using Avalonia.Markup.Xaml;
-    
-
+namespace GraficosTaller.UI {
     public partial class ChartWindow : Window
     {
         public ChartWindow()
@@ -29,6 +24,7 @@ namespace DemoAvalonia.UI {
             Reparaciones reparaciones = inicializarReparaciones();
             desplegableAnnos(reparaciones, isFechaFin);
             Annos.IsVisible = false;
+            AnnosText.IsVisible = false;
             reparacionesAnuales(reparaciones, isFechaFin);
             Rango.SelectionChanged += (sender, args) =>
             {
@@ -45,7 +41,7 @@ namespace DemoAvalonia.UI {
             };
             Desglose.Click += (sender, args) =>
             {
-                new DesgloseWindow().Show();
+                new GraficosTaller.UI.DesgloseWindow().Show();
                 Close();
             };
 
@@ -68,9 +64,10 @@ namespace DemoAvalonia.UI {
         {
             if (Rango.SelectedIndex == 0)
             {
-                            Annos.IsVisible = true;
+                Annos.IsVisible = true;
+                AnnosText.IsVisible = true;
 
-                reparacionesDelAnno(Convert.ToInt32(Annos.Items[Annos.SelectedIndex]), reparaciones, isFechaFin);
+                reparacionesDelAnno(Convert.ToInt32((object?)Annos.Items[Annos.SelectedIndex]), reparaciones, isFechaFin);
             }
             else
             {

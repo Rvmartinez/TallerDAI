@@ -1,7 +1,7 @@
-﻿using Avalonia;
-using System;
+﻿using System;
+using Avalonia;
 
-namespace GraficosTaller;
+namespace GraficosTaller.UI;
 
 class Program
 {

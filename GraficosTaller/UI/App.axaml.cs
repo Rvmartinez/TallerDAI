@@ -1,9 +1,8 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using DemoAvalonia.UI;
 
-namespace GraficosTaller;
+namespace GraficosTaller.UI;
 
 public partial class App : Application
 {
