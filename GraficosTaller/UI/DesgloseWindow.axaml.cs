@@ -272,8 +272,8 @@ namespace GraficosTaller.UI {
         private void ReparacionesMensuales(int anno, Reparaciones reparaciones, Boolean isFechaFin)
         {
             this.Chart.Type = Chart.ChartType.Lines;
-            this.Chart.LegendY = "Reparaciones últimos 12 meses";
-            this.Chart.LegendX = "Months";
+            this.Chart.LegendY = "Reparaciones durante el año " + anno;
+            this.Chart.LegendX = "Meses";
             List<int> valores = new List<int>();
             Reparaciones? reparacionesCliente;
 

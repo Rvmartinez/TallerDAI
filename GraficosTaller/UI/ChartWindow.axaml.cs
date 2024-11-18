@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Avalonia.Controls;
 using DemoAvalonia.UI;
 using GraficosTaller.Corefake;
@@ -213,8 +214,8 @@ namespace GraficosTaller.UI {
 
         private void ReparacionesDelAnno(int anno, Reparaciones reparaciones, Boolean isFechaFin)
         {
-            this.Chart.LegendY = "Reparaciones últimos 12 meses";
-            this.Chart.LegendX = "Months";
+            this.Chart.LegendY = "Reparaciones durante el año " + anno;
+            this.Chart.LegendX = "Meses";
             List<int> valores = new List<int>();
             for (int i = 1; i <= 12; i++)
             {
