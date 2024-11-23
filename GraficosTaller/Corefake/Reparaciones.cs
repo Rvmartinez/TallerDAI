@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace GraficosTaller.Corefake;
 
-public class Reparaciones
+public class Reparaciones : IReparaciones
 {
     private List<Reparacion> ReparacionesLista { get; set; }
 

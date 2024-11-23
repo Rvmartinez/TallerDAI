@@ -13,7 +13,7 @@ namespace GraficosTaller.UI {
     public partial class ChartWindow : Window
     {
 
-        public ChartWindow(Reparaciones reparaciones)
+        public ChartWindow(Reparaciones reparaciones, ConfigChart? config)
         {
             InitializeComponent();
 
@@ -42,10 +42,27 @@ namespace GraficosTaller.UI {
                 UpdateChart(reparaciones, isFechaFin);
             };
             
+            ConfigChartFunction(config);
+            
 
 
         }
-        
+
+        private void ConfigChartFunction(ConfigChart? config)
+        {
+            if (config != null)
+            {
+                if (config.Modo == ConfigChart.ModoVision.Anual)
+                {
+                    this.Chart.Type = Chart.ChartType.Bars;
+                }
+                else
+                {
+                    this.Chart.Type = Chart.ChartType.Lines;
+                }
+            }
+        }
+
         private void DesplegableAnnos(Reparaciones reparaciones, Boolean isFechaFin)
         {
             Annos.Items.Clear();
