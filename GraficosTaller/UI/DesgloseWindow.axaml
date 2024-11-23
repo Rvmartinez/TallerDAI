@@ -16,10 +16,10 @@
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch">
                 
-                        <Menu DockPanel.Dock="Top">
+                        <!--<Menu DockPanel.Dock="Top">
                                 <MenuItem Header="General" Name="General"></MenuItem>
                                 <MenuItem Header="Por clientes" Background="Gray"></MenuItem>
-                        </Menu>
+                        </Menu><<-->
                         
                 
                
