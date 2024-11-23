@@ -1,13 +1,45 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:vm="using:TallerDIA.ViewModels"
+        xmlns:util="using:TallerDIA.Utils"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+		xmlns:icon="https://github.com/projektanker/icons.avalonia"
         x:Class="TallerDIA.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
+		Background="#808080"
         Icon="/Assets/avalonia-logo.ico"
-		Content="{Binding ContentViewModel}"
         Title="TallerDIA">
-	<Button Command="{Binding GoToGestorClientesCommand}"/>
+	<Design.DataContext>
+		<vm:MainWindowViewModel/>
+	</Design.DataContext>
+
+	<SplitView IsPaneOpen="{Binding IsPaneOpen}"
+			   OpenPaneLength="200"
+			   CompactPaneLength="40"
+			   DisplayMode="CompactInline"
+			   Background="Black"
+			   PaneBackground="#1e1e1e">
+		<SplitView.Pane>
+			<StackPanel>
+				<Button icon:Attached.Icon="mdi-menu" Command="{Binding TogglePaneCommand}" HorizontalAlignment="Stretch" FontSize="24"/>
+				<ListBox ItemsSource="{Binding PaneItems}" SelectedItem="{Binding SelectedPaneItem}" >
+					<ListBox.ItemTemplate>
+						<DataTemplate DataType="{x:Type util:PaneListItemTemplate}">
+							<StackPanel Spacing="15" Orientation="Horizontal">
+								<icon:Icon Value="{Binding Icon}" FontSize="24" />
+								<TextBlock Text="{Binding Label}"/>
+							</StackPanel>
+						</DataTemplate>
+					</ListBox.ItemTemplate>
+				</ListBox>
+			</StackPanel>
+		</SplitView.Pane>
+		<SplitView.Content>
+			<Border CornerRadius="12 0 0 0">
+				<TransitioningContentControl Content="{Binding CurrentPage}"/>
+			</Border>
+		</SplitView.Content>
+	</SplitView>
 </Window>

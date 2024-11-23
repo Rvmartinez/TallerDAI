@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Xml.Linq;
-using TallerDIA.Models;
+using Models;
 
-namespace TallerDIA.Utils;
 
 public class EmpleadoXML
 {
@@ -10,17 +10,17 @@ public class EmpleadoXML
     public XElement ToXml()
     {
         XElement toret = new XElement("Empleado",
-           new XAttribute("Nombre", Empleado.Nombre),
-           new XAttribute("Dni", Empleado.Dni),
-           new XAttribute("Email", Empleado.Email),
-           new XAttribute("Disponible", Empleado.Disponible));
-        List<string> ticks = new List<string>(Empleado.Tickets);
-        foreach (var tick in ticks)
-        {
-            XElement tickXML = new XElement("Ticket", tick);
-            toret.Add(tickXML);
-        }
-        return toret;
+            new XAttribute("Nombre", this.Empleado.Nombre),
+            new XAttribute("Dni", this.Empleado.Dni),
+            new XAttribute("Email", this.Empleado.Email));
+         List<DateTime> ticks=new List<DateTime>(Empleado.Tickets);
+         foreach (var tick in ticks)
+         {
+             // !!!!!!!!!! To String 
+             XElement tickXML = new XElement("Ticket",tick.ToString());
+             toret.Add(tickXML);
+         }
+         return toret;
     }
 
     public Empleado FromXml(XElement xet)
@@ -30,11 +30,6 @@ public class EmpleadoXML
         emp.Nombre = xet2.Attribute("Nombre").ToString();
         emp.Dni = xet2.Attribute("Dni").ToString();
         emp.Email = xet2.Attribute("Email").ToString();
-        emp.Disponible = false;
-        if (xet2.Attribute("Disponible").Value.ToString() == "true")
-        {
-            emp.Disponible = true;
-        }
         return emp;
     }
 }

@@ -1,27 +1,53 @@
-﻿using CommunityToolkit.Mvvm.Input;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Microsoft.VisualBasic;
+using System;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
+using TallerDIA.Utils;
 using TallerDIA.ViewModels;
+using Test4TallerAfc.ViewModels;
 
 namespace TallerDIA.ViewModels
 {
     public partial class MainWindowViewModel : ViewModelBase
     {
+        private bool _IsPaneOpen = true;
+        public bool IsPaneOpen
+        {
+            get => _IsPaneOpen;
+            set
+            {
+                _IsPaneOpen = value;
+                OnPropertyChanged(nameof(IsPaneOpen));
+            }
+        }
 
-        private ViewModelBase _contentViewModel;
-        public MainWindowViewModel()
-        {
-            _contentViewModel= new ClientesViewModel();
-        }
-        
-        public ViewModelBase ContentViewModel
-        {
-            get => _contentViewModel;
-            private set => OnPropertyChanged("_contentViewModel");
-        }
         [RelayCommand]
-        public void GoToGestorClientes()
+        public void TogglePaneCommand()
         {
-            ContentViewModel = new ClientesViewModel();
+            IsPaneOpen = !IsPaneOpen;
         }
+        [ObservableProperty]
+        private ViewModelBase _currentPage = new HomeViewModel();
+
+        public ObservableCollection<PaneListItemTemplate> PaneItems { get; } = new()
+        {
+            new PaneListItemTemplate(typeof(HomeViewModel),"mdi-home"),
+            new PaneListItemTemplate(typeof(ClientesViewModel),"mdi-account-multiple"),
+            new PaneListItemTemplate(typeof(EmpleadosViewModel),"mdi-account-multiple")
+        };
+
+        [ObservableProperty]
+        private PaneListItemTemplate _selectedPaneItem;
+
+        partial void OnSelectedPaneItemChanged(PaneListItemTemplate value)
+        {
+            if (value is null) return;
+            var instance = Activator.CreateInstance(value.ModelType);
+            if(instance is null ) return;
+            CurrentPage = (ViewModelBase)instance;
+        }
+
     }
 }

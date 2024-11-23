@@ -1,0 +1,72 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             xmlns:vm="using:TallerDIA.ViewModels"
+             xmlns:models="using:TallerDIA.Models"
+             xmlns:util="using:TallerDIA.Utils"
+             xmlns:icon="https://github.com/projektanker/icons.avalonia"
+             x:DataType="vm:EmpleadosViewModel"
+             x:Class="TallerDIA.Views.EmpleadosView">
+    <UserControl.Styles>
+        <Style Selector="Button">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Width" Value="175"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="CornerRadius" Value="9"/>
+            <Setter Property="Margin" Value="5 10 1 1"/>
+        </Style>
+    </UserControl.Styles>
+    <Design.DataContext>
+        <!-- This only sets the DataContext for the previewer in an IDE,
+             to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
+        <vm:EmpleadosViewModel/>
+    </Design.DataContext>
+    <DockPanel Name="PanelMain" >
+        <StackPanel Name="PanelEntrada">
+            <StackPanel Name="ControlPanel">
+                    <TextBlock Name="Titulo" Margin="8" FontWeight="Bold">EMPLEADOS</TextBlock>
+                    <TextBlock Margin="4 5 1 1">DNI:</TextBlock>
+                    <TextBox Name="tbDni" MinWidth="100" Margin="5 5 1 1" Text="{Binding EmpleadoActual.Dni}"></TextBox>
+                    <TextBlock Margin="4 5 1 1">Nombre:</TextBlock>
+                    <TextBox Name="tbNombre" MinWidth="100" Margin="5 5 1 1" Text="{Binding EmpleadoActual.Nombre}"></TextBox>
+                    <TextBlock Margin="4 5 1 1">Email:</TextBlock>
+                    <TextBox Name="tbEmail" MinWidth="100" Margin="5 5 1 1" Text="{Binding EmpleadoActual.Email}"></TextBox>
+                    <Button Name="btAnadirEmpleado" Margin="5 20 1 1" Command="{Binding btAnadirEmpleado_OnClick}">Añadir empleado</Button>
+                    <Button Name="btModificarEmpleado" Command="{Binding btModificarEmpleado_OnClick}">Modificar empleado</Button>
+                    <Button Name="btEliminarEmpleado" Command="{Binding btEliminarEmpleado_OnClick}">Eliminar empleado</Button>
+                    <Button Name="btNuevoEmpleado" Command="{Binding btNuevoEmpleado_OnClick}">Limpiar selección</Button>
+            </StackPanel>
+        </StackPanel>
+        <DockPanel Name="PanelSalida">
+            <DockPanel Name="PanelData" Dock="Top" VerticalAlignment="Stretch">
+                <DataGrid x:Name="DgEmpleados" Margin="20"  ItemsSource="{Binding Empleados}" 
+                          HorizontalAlignment="Right" VerticalAlignment="Stretch"
+                          MinHeight="250"
+                          BorderThickness="1" BorderBrush="Purple" CanUserReorderColumns="true"  IsReadOnly="True" SelectedItem="{Binding EmpleadoSeleccionado}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="DNI" Width="auto" Binding="{Binding Dni,Mode=TwoWay}" />
+                        <DataGridTextColumn Header="Nombre" Width="*" Binding="{Binding Nombre,Mode=TwoWay}"/>
+                        <DataGridTextColumn Header="Email" Width="*"  Binding="{Binding Email,Mode=TwoWay}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </DockPanel>
+            <DockPanel Name="PanelAvisos" Dock="Bottom" >
+                <Border Margin="30 20 20 20" BorderThickness="1" BorderBrush="Purple">
+                    <StackPanel Margin="70 10 20 20">
+                        <TextBlock MinWidth="200" Margin="7" Name="tblAvisos" FontWeight="Bold" Text="{Binding Aviso}">Bienvenido a la ventana de gestón de Empleados del Taller.</TextBlock>
+                        <TextBlock MinWidth="200" Margin="6" Name="tblSeleccionado" FontWeight="Bold">EMPLEADO SELECCIONADO:</TextBlock>
+                        <TextBlock FontWeight="Bold" Margin="6">DNI:</TextBlock>
+                        <TextBlock Name="tblSelecDni" Text="{Binding EmpleadoSeleccionado.Dni}"></TextBlock>
+                        <TextBlock FontWeight="Bold" Margin="6">Nombre:</TextBlock>
+                        <TextBlock Name="tblSelecNombre" Text="{Binding EmpleadoSeleccionado.Nombre}"></TextBlock>
+                        <TextBlock FontWeight="Bold" Margin="6">Email:</TextBlock>
+                        <TextBlock Name="tblSelecEmail" Text="{Binding EmpleadoSeleccionado.Email}"></TextBlock>
+                    </StackPanel>
+                </Border>
+            </DockPanel>
+        </DockPanel>
+    </DockPanel>
+</UserControl>
