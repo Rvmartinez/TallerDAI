@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-
-namespace TallerDIA.Models;
-
-
+﻿using System;
+using System.Collections.Generic;
+namespace Models;
 /*
  *
  Gestión de personal (altas, bajas, modificaciones, consultas(reparaciones asignadas)), salvaguarda y recuperación.
@@ -15,51 +13,49 @@ namespace TallerDIA.Models;
 
 public class Empleado
 {
-    public bool Disponible { get; set; }
     public string Dni { get; set; }
     public string Nombre { get; set; }
     //private string Nombre { get; set; }
     public string Email { get; set; }
-    public List<string> Tickets { get; set; }
-
+    public List<DateTime> Tickets { get; set; }
+//altas, bajas, modificaciones, consultas(reparaciones asignadas)
     public Empleado()
     {
-        Disponible = false;
-        Dni = "";
-        Nombre = "";
-        Email = "";
-        Tickets = new List<string>();
+        this.Dni = "";
+        this.Nombre = "";
+        this.Email = "";
+        this.Tickets = new List<DateTime>();
     }
-    public Empleado(string dni, string nombre, string email, List<string> tickets, bool disponible)
+    public Empleado(string dni, string nombre, string email, List<DateTime> tickets)
     {
-        Disponible = disponible;
-        Dni = dni;
-        Nombre = nombre;
-        Email = email;
-        Tickets = new List<string>(tickets);
+        this.Dni = dni;
+        this.Nombre = nombre;
+        this.Email = email;
+        this.Tickets = new List<DateTime>(tickets);
     }
-    public bool TieneTicket(string ticket)
+    public bool TieneTicket(DateTime fechaInicio)
     {
-        bool toret = Tickets.Contains(ticket);
+        bool toret = Tickets.Contains(fechaInicio);
         return toret;
     }
-
-    public bool EstaDisponible()
+    
+    public override string ToString()
     {
-        return Disponible;
-    }
+        string toret = "El empleado "+this.Nombre+" (DNI=" + this.Dni+") con Email: "+this.Email+" ;";
 
-    public void DarDeAlta()
-    {
-        Disponible = false;
-    }
+        if (this.Tickets != null && this.Tickets.Count > 0)
+        {
+            toret += "\n Y tiene asignados los Tickets:";
+            foreach (var ticket in Tickets)
+            {
+                toret+="\n"+ticket;
+            }
+        }
 
-    public void DarDeBaja()
-    {
-        Disponible = true;
+        return toret;
     }
 }
-
-
-
-
+    
+    
+    
+    

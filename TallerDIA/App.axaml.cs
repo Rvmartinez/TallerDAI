@@ -10,6 +10,7 @@ namespace TallerDIA
 {
     public partial class App : Application
     {
+        public static  MainWindow MainWindow { get; set; }
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
@@ -26,6 +27,7 @@ namespace TallerDIA
                 {
                     DataContext = new MainWindowViewModel(),
                 };
+                App.MainWindow = desktop as MainWindow;
             }
 
             base.OnFrameworkInitializationCompleted();

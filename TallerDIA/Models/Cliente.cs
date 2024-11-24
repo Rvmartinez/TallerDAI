@@ -14,6 +14,13 @@ namespace TallerDIA.Models
         public required int IdCliente { get; set; }
 
         public Cliente() { }
+        public Cliente(string dni, string nombre,string email,int id)
+        {
+            DNI = dni;
+            Nombre = nombre;
+            Email = email;
+            IdCliente = id;
+        }
 
     }
 }
