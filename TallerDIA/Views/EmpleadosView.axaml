@@ -38,6 +38,7 @@
                     <Button Name="btModificarEmpleado" Command="{Binding btModificarEmpleado_OnClick}">Modificar empleado</Button>
                     <Button Name="btEliminarEmpleado" Command="{Binding btEliminarEmpleado_OnClick}">Eliminar empleado</Button>
                     <Button Name="btNuevoEmpleado" Command="{Binding btNuevoEmpleado_OnClick}">Limpiar selección</Button>
+                    <Button Name="btTicketsSelecc" Command="{Binding btTicketsSelecc_OnClick}">Ver tickets del Empleado</Button>
             </StackPanel>
         </StackPanel>
         <DockPanel Name="PanelSalida">

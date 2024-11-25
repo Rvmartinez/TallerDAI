@@ -12,26 +12,31 @@ public partial class EmpleadosViewModel : ViewModelBase
 {
     public EmpleadosViewModel()
     {
-        DateTime reparacion1 = new DateTime(2019,06,11,10,15,10);
-        DateTime reparacion2 = new DateTime(2020,05,07,9,10,1);
-        DateTime reparacion3 = new DateTime(2018,10,08,18,1,59);
-        DateTime reparacion4 = new DateTime(2021,01,10,7,45,22);
-        List<DateTime> reparaciones1 = new List<DateTime>{reparacion1,reparacion2};
-        List<DateTime> reparaciones2 = new List<DateTime>{reparacion3,reparacion4};
-        Empleado empleado1 = new Empleado("12345678A", "Abelardo", "averelardo@hotcorreo.coom", reparaciones1);
-        Empleado empleado2 = new Empleado("22345678B", "Luffy", "onepieceismid@ymail.com", reparaciones2);
-        List<Empleado> empleados = new List<Empleado> 
-        {
-            empleado1,empleado2
-        };
-        Empleados = new ObservableCollection<Empleado>(empleados);/**/
+        Empleados = ControlesEmpleado.ObtenerListaEmpleados();/**/
         EmpleadoActual = new Empleado();
         EmpleadoSeleccionado = new Empleado();
         Console.Out.WriteLine("EmpleadosViewModel en marcha...");
         Aviso = "Bienvenido a la ventana de gestón de Empleados del Taller.";
     }
-    
-    
+
+    public EmpleadosViewModel(Empleado empleado)
+    {
+        Empleados = ControlesEmpleado.ObtenerListaEmpleados();
+        EmpleadoActual = new Empleado();
+        if (ControlesEmpleado.FiltrarEntradasEmpleado(empleado) && ControlesEmpleado.BuscarEmpleado(Empleados.ToList(), empleado) != null)
+        {
+            EmpleadoSeleccionado=empleado;
+            Aviso = "Empleado mostrado con éxito.";
+            Console.Out.WriteLine("EmpleadosViewModel en marcha y mostrando Empleado seleccionado...");
+        }
+        else
+        {
+            Aviso = "Error al introducir empleado.";
+            Console.Out.WriteLine("EmpleadosViewModel en marcha pero sin mostrar el Empleado seleccionado...");
+        }
+    }
+
+
     // Cuando el usuario haga click en una fila del datagrid, se mostrarán los datos de ese Empleado
     // en los TextBoxes correspondientes.
     // Atada al datagrid en XAML mediante 'SelectionChanged="NuevoEmpleadoSeleccionado"'.
@@ -98,6 +103,8 @@ public partial class EmpleadosViewModel : ViewModelBase
     }
 
     
+
+
     // FUNCIONES PARA ACTUALIZAR LA INTERFAZ Y FILTRAR LAS ENTRADAS.
     
     // Funcion para que el datagrid muestre los datos de la lista propiedad "Empleados".
@@ -115,10 +122,11 @@ public partial class EmpleadosViewModel : ViewModelBase
     {
         Console.Out.WriteLine("Intentando introducir...");
         if (ControlesEmpleado.FiltrarEntradasEmpleado(EmpleadoActual) &&
-            ControlesEmpleado.BuscarEmpleado(Empleados.ToList(), EmpleadoActual) == null)
+            ControlesEmpleado.BuscarEmpleado(Empleados.ToList(), EmpleadoActual) == null &&
+            ControlesEmpleado.FiltrarEmpleadoRegex(EmpleadoActual))
         {
             Empleados.Add(EmpleadoActual);
-            EmpleadoActual.Tickets = new List<DateTime>();
+            //EmpleadoActual.Tickets = new List<DateTime>();
             ActualizarDgEmpleados();
             Console.Out.WriteLine("Insertado exitoso.");
             Aviso = "Empleado insertado exitosamente.";
@@ -180,4 +188,11 @@ public partial class EmpleadosViewModel : ViewModelBase
         ActualizarDgEmpleados();
         Aviso = "Entradas y empleado seleccionado reseteados.";
     }
+    [RelayCommand]
+    public void btTicketsSelecc_OnClick()
+    {
+        //var window = new (EmpleadoSeleccionado);
+        //window.Show();
+    }
+
 }
