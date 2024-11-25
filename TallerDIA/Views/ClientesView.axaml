@@ -14,14 +14,23 @@
     mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+        <Grid Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+                <TextBox Grid.Column="0" Watermark="Búsqueda" Text="{Binding FilterText}"></TextBox>
+            <ComboBox Grid.Column="1" ItemsSource="{Binding FilterModes}" SelectedIndex="{Binding SelectedFilterMode}"></ComboBox>
+        </Grid>
         <StackPanel
-            Grid.Row="0"
+            Grid.Row="1"
             HorizontalAlignment="Stretch"
             Orientation="Horizontal" />
-        <Grid>
+        <Grid Grid.Row = "1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="*" />
@@ -55,7 +64,7 @@
         </Grid>
         <DataGrid
             x:Name="dgClientes"
-            Grid.Row="1"
+            Grid.Row="2"
             BorderBrush="Purple"
             BorderThickness="1"
             CanUserReorderColumns="true"
