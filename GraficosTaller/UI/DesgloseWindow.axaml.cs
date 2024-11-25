@@ -214,5 +214,6 @@ namespace GraficosTaller.UI {
         private bool mostrandoAnuales;
         private bool rangoFilter = false;
         private bool isFechaFin = true;
+        private string clienteFilter = "";
     }
 }
