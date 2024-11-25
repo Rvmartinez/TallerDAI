@@ -12,42 +12,74 @@ using GraficosTaller.Corefake;
 namespace GraficosTaller.UI {
     public partial class DesgloseWindow : Window
     {
-        public DesgloseWindow(Reparaciones reparaciones)
+        public DesgloseWindow(Reparaciones reparaciones, ConfigChart config)
         {
             InitializeComponent();
 
            this.Chart = this.GetControl<Chart>( "ChGrf" );
            this.Chart.Type = Chart.ChartType.Bars;
-           
-          
-            Boolean isFechaFin = true;
 
+
+           ConfigChartFunction(config);
             
             GenerateYearsCombobox(reparaciones);
+            if (annoSelected == 0) annoSelected = Convert.ToInt32(Annos.Items[0].ToString());
 
 
-            ReparacionesAnuales(reparaciones, isFechaFin, Convert.ToInt32(Annos.Items[Annos.SelectedIndex]));
+            ReparacionesAnuales(reparaciones, annoSelected);
             Rango.SelectionChanged += (sender, args) =>
             {
-                if(Rango.SelectedIndex == 0) GenerateClientCombobox(reparaciones, Convert.ToInt32(Annos.Items[Annos.SelectedIndex]), isFechaFin);
+                mostrandoAnuales = (Rango.SelectedIndex == 1);
 
-                UpdateChart(reparaciones, isFechaFin);
+                if(Rango.SelectedIndex == 0) GenerateClientCombobox(reparaciones, annoSelected);
+
+                UpdateChart(reparaciones);
             };
             Annos.SelectionChanged += (sender, args) =>
             {  
-                GenerateClientCombobox(reparaciones, Convert.ToInt32(Annos.Items[Annos.SelectedIndex]), isFechaFin);
-                UpdateChart(reparaciones, isFechaFin);
+                annoSelected = Convert.ToInt32(Annos.Items[Annos.SelectedIndex]);
+
+                GenerateClientCombobox(reparaciones, annoSelected);
+                UpdateChart(reparaciones);
             };
             Computa.SelectionChanged += (sender, args) =>
             {
                 isFechaFin = (Computa.SelectedIndex == 1);
-                GenerateClientCombobox(reparaciones, Convert.ToInt32(Annos.Items[Annos.SelectedIndex]), isFechaFin);
-                UpdateChart(reparaciones, isFechaFin);
+                GenerateClientCombobox(reparaciones, annoSelected);
+                UpdateChart(reparaciones);
             };
             
             
 
 
+        }
+        
+        private void ConfigChartFunction(ConfigChart? config)
+        {
+            if (config != null)
+            {
+                if (config.Modo != null)
+                {
+                    Rango.IsVisible = false;
+                    RangoText.IsVisible = false;
+                    rangoFilter = true;
+                    mostrandoAnuales = (config.Modo == 0);
+                }
+
+                if (config.Anno != null)
+                {
+                    Annos.IsVisible = false;
+                    AnnosText.IsVisible = false;
+                    annoSelected = (int)config.Anno;
+                }
+
+                if (config.FechaFin != null)
+                {
+                    isFechaFin = (bool)config.FechaFin;
+                    ComputaText.IsVisible = false;
+                    Computa.IsVisible = false;
+                }
+            }
         }
         
         private void GenerateYearsCombobox(Reparaciones reparaciones)
@@ -71,7 +103,7 @@ namespace GraficosTaller.UI {
             Annos.SelectedIndex=0;
         }
         
-        private void GenerateClientCombobox(Reparaciones reparaciones, int anno, Boolean isFechaFin = false)
+        private void GenerateClientCombobox(Reparaciones reparaciones, int anno)
         {
             RemoveClienteComboBox();
           
@@ -96,7 +128,7 @@ namespace GraficosTaller.UI {
             }
             clientes.SelectionChanged += (sender, args) =>
             {
-                UpdateChart(reparaciones, isFechaFin);
+                UpdateChart(reparaciones);
             };
 
             Options.Children.Add(clientes);
@@ -115,21 +147,21 @@ namespace GraficosTaller.UI {
 
         }
 
-        private void UpdateChart(Reparaciones reparaciones, Boolean isFechaFin)
+        private void UpdateChart(Reparaciones reparaciones)
         {
             if (Rango.SelectedIndex == 0)
             {
-                ReparacionesMensuales(Convert.ToInt32((object?)Annos.Items[Annos.SelectedIndex]), reparaciones, isFechaFin);
+                ReparacionesMensuales(annoSelected, reparaciones);
                 
             }
             else
             {
                 RemoveClienteComboBox();
-                ReparacionesAnuales(reparaciones, isFechaFin, Convert.ToInt32((object?)Annos.Items[Annos.SelectedIndex]));
+                ReparacionesAnuales(reparaciones, annoSelected);
             }
         }
 
-        private void ReparacionesMensuales(int anno, Reparaciones reparaciones, Boolean isFechaFin)
+        private void ReparacionesMensuales(int anno, Reparaciones reparaciones)
         {
             this.Chart.Type = Chart.ChartType.Lines;
             this.Chart.LegendY = "Reparaciones durante el año " + anno;
@@ -157,7 +189,7 @@ namespace GraficosTaller.UI {
             this.Chart.Draw();
         }
 
-        private void ReparacionesAnuales(Reparaciones reparaciones, Boolean isFechaFin, int anno)
+        private void ReparacionesAnuales(Reparaciones reparaciones, int anno)
         {
             this.Chart.Type = Chart.ChartType.Bars;
             List<int> valores = new List<int>();
@@ -178,5 +210,9 @@ namespace GraficosTaller.UI {
         
         private Chart Chart { get; }
         private ComboBox? _clientes = null;
+        private int annoSelected;
+        private bool mostrandoAnuales;
+        private bool rangoFilter = false;
+        private bool isFechaFin = true;
     }
 }

@@ -21,28 +21,29 @@ namespace GraficosTaller.UI {
            this.Chart = this.GetControl<Chart>( "ChGrf" );
            
           
-            Boolean isFechaFin = true;
+           ConfigChartFunction(config);
 
+            DesplegableAnnos(reparaciones);
 
-            DesplegableAnnos(reparaciones, isFechaFin);
             Annos.IsVisible = false;
             AnnosText.IsVisible = false;
-            ReparacionesAnuales(reparaciones, isFechaFin);
+            ReparacionesAnuales(reparaciones);
             Rango.SelectionChanged += (sender, args) =>
             {
-                UpdateChart(reparaciones, isFechaFin);
+                mostrandoAnuales = (Rango.SelectedIndex == 1);
+                UpdateChart(reparaciones);
             };
             Annos.SelectionChanged += (sender, args) =>
-            {  
-                UpdateChart(reparaciones, isFechaFin);
+            {
+                annoSelected = Convert.ToInt32(Annos.Items[Annos.SelectedIndex]);
+                UpdateChart(reparaciones);
             };
             Computa.SelectionChanged += (sender, args) =>
             {
                 isFechaFin = (Computa.SelectedIndex == 1);
-                UpdateChart(reparaciones, isFechaFin);
+                UpdateChart(reparaciones);
             };
             
-            ConfigChartFunction(config);
             
 
 
@@ -52,18 +53,32 @@ namespace GraficosTaller.UI {
         {
             if (config != null)
             {
-                if (config.Modo == ConfigChart.ModoVision.Anual)
+                if (config.Modo != null)
                 {
-                    this.Chart.Type = Chart.ChartType.Bars;
+                    Rango.IsVisible = false;
+                    RangoText.IsVisible = false;
+                    rangoFilter = true;
+                    mostrandoAnuales = (config.Modo == 0);
                 }
-                else
+
+                if (config.Anno != null)
                 {
-                    this.Chart.Type = Chart.ChartType.Lines;
+                    Annos.IsVisible = false;
+                    AnnosText.IsVisible = false;
+                    annoSelected = (int)config.Anno;
+                    annosFilter = true;
+                }
+
+                if (config.FechaFin != null)
+                {
+                    isFechaFin = (bool)config.FechaFin;
+                    ComputaText.IsVisible = false;
+                    Computa.IsVisible = false;
                 }
             }
         }
 
-        private void DesplegableAnnos(Reparaciones reparaciones, Boolean isFechaFin)
+        private void DesplegableAnnos(Reparaciones reparaciones)
         {
             Annos.Items.Clear();
             foreach (var anno in reparaciones.GetAnnosReparaciones(isFechaFin))
@@ -75,25 +90,25 @@ namespace GraficosTaller.UI {
             AnnosText.IsVisible = true;
         }
 
-        private void UpdateChart(Reparaciones reparaciones, Boolean isFechaFin)
+        private void UpdateChart(Reparaciones reparaciones)
         {
-            if (Rango.SelectedIndex == 0)
+            if (!mostrandoAnuales)
             {
-                Annos.IsVisible = true;
-                AnnosText.IsVisible = true;
+                Annos.IsVisible = !annosFilter;
+                AnnosText.IsVisible = !annosFilter;
 
-                ReparacionesDelAnno(Convert.ToInt32(Annos.Items[Annos.SelectedIndex]), reparaciones, isFechaFin);
+                ReparacionesDelAnno(annoSelected, reparaciones);
             }
             else
             {
                 Annos.IsVisible = false;
                 AnnosText.IsVisible = false;
-                ReparacionesAnuales(reparaciones, isFechaFin);
+                ReparacionesAnuales(reparaciones);
             }
         }
         
 
-        private void ReparacionesDelAnno(int anno, Reparaciones reparaciones, Boolean isFechaFin)
+        private void ReparacionesDelAnno(int anno, Reparaciones reparaciones)
         {
             this.Chart.LegendY = "Reparaciones durante el año " + anno;
             this.Chart.LegendX = "Meses";
@@ -108,7 +123,7 @@ namespace GraficosTaller.UI {
             this.Chart.Draw();
         }
 
-        private void ReparacionesAnuales(Reparaciones reparaciones, Boolean isFechaFin)
+        private void ReparacionesAnuales(Reparaciones reparaciones)
         {
             List<int> valores = new List<int>();
             List<int> annos = new List<int>();
@@ -126,5 +141,10 @@ namespace GraficosTaller.UI {
 
 
         private Chart Chart;
+        private int annoSelected;
+        private bool annosFilter = false;
+        private bool mostrandoAnuales;
+        private bool rangoFilter = false;
+        private bool isFechaFin = true;
     }
 }

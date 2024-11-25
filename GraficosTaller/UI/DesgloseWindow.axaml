@@ -32,7 +32,7 @@
                         Spacing="10"
                         Margin="10"
                         >
-                        <TextBlock VerticalAlignment="Center">Rango de visión</TextBlock>
+                        <TextBlock Name="RangoText" VerticalAlignment="Center">Rango de visión</TextBlock>
                         <ComboBox Name="Rango" SelectedIndex="1" VerticalAlignment="Center">
                         <ComboBoxItem>12 meses</ComboBoxItem>
                         <ComboBoxItem>Anuales</ComboBoxItem>

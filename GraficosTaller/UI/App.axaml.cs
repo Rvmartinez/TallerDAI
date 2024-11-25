@@ -17,7 +17,7 @@ public partial class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            desktop.MainWindow = new ChartWindow(InicializarReparaciones());
+            desktop.MainWindow = new DesgloseWindow(InicializarReparaciones(), new ConfigChart());
         }
 
         base.OnFrameworkInitializationCompleted();
