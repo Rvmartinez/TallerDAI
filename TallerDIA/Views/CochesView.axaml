@@ -13,10 +13,6 @@
     d:DesignWidth="800"
     x:DataType="vm:CochesViewModel"
     mc:Ignorable="d">
-    <UserControl.Resources>
-        <!--  Registro del conversor  -->
-        <utils:BooleanToTBColorConverter x:Key="BooleanToTBColorConverter" />
-    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -42,14 +38,26 @@
                 Orientation="Horizontal">
                 <Button
                     Margin="0,0,15,0"
-                    icon:Attached.Icon="mdi-account-plus"
+                    icon:Attached.Icon="mdi-plus-box-multiple"
                     Command="{Binding SubirCocheCommand}"
                     FontSize="24" />
                 <Button
-                    icon:Attached.Icon="mdi-account-minus"
-                    Background="{Binding ToDelete, Converter={StaticResource BooleanToTBColorConverter}}"
+                    Margin="0,0,15,0"
+                    icon:Attached.Icon="mdi-car-cog"
+                    Command="{Binding EditarCocheCommand}"
+                    FontSize="24"
+                    />
+                <Button
+                    Margin="0,0,15,0"
+                    icon:Attached.Icon="mdi-car-off"
                     Command="{Binding BorrarCocheCommand}"
                     FontSize="24" />
+                <Button
+                    Margin="0,0,15,0"
+                    icon:Attached.Icon="mdi-seat-passenger"
+                    Command="{Binding MostrarClienteCommand}"
+                    FontSize="24" 
+                    />
             </StackPanel>
         </Grid>
         <DataGrid
