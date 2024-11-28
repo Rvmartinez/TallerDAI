@@ -30,8 +30,10 @@ public partial class ClienteDlg : Window
     public ClienteDlg()
     {
         InitializeComponent();
-        this.IsCancelled = false;
+        this.IsCancelled = true;
         EmailErrorTB.IsVisible = false;
+        BtOk.IsEnabled = false;
+
         DniErrorTB.IsVisible = false;
         BtOk.Click += (_, _) => this.OnExit();
         BtCancel.Click += (_, _) => this.OnCancelClicked();
@@ -84,7 +86,7 @@ public partial class ClienteDlg : Window
         if (Regex.IsMatch(DniTB.Text ?? string.Empty, DniRegex, RegexOptions.IgnoreCase))
         {
             DniErrorTB.IsVisible = false;
-            if (!DniErrorTB.IsVisible && DniTB.Text != "")
+            if (!EmailErrorTB.IsVisible && EmailTB.Text != "" )
                 BtOk.IsEnabled = true;
         }
         else

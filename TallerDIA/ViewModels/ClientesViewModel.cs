@@ -121,13 +121,7 @@ public partial class ClientesViewModel : ViewModelBase
             Cliente c  = new Cliente() { DNI = ClienteDlg.DniTB.Text, Email = ClienteDlg.EmailTB.Text, Nombre = ClienteDlg.NombreTB.Text, IdCliente = this.GetLastClientId()+1 };
             if (CanAddCliente(c))
             {
-                List<Cliente> temp = Clientes.ToList();
-                Clientes.Clear();
-
-                temp.Add(c);
-                Clientes = new ObservableCollection<Cliente>(temp);
-                OnPropertyChanged(nameof(Clientes));
-
+                Clientes.Add(c);
             }
         }
         

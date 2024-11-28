@@ -1,9 +1,8 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.Input;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using CommunityToolkit.Mvvm.Input;
-using Models;
 using TallerDIA.Models;
 using TallerDIA.Utils;
 using TallerDIA.ViewModels;
@@ -130,6 +129,7 @@ public partial class EmpleadosViewModel : ViewModelBase
         }
         EmpleadoActual=new Empleado();
     }
+
     [RelayCommand]
     public void btModificarEmpleado_OnClick()
     {
