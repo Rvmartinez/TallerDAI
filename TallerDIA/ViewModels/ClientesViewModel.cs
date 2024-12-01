@@ -85,36 +85,37 @@ public partial class ClientesViewModel : ViewModelBase
 
     private ObservableCollection<Cliente> _Clientes;
 
+    public ObservableCollection<Cliente> applyFilter(ObservableCollection<Cliente> clientes)
+    {
+        if (FilterText != "")
+        {
+                
+            switch (FilterModes[SelectedFilterMode])
+            {
+                case "Nombre":
+                    return new ObservableCollection<Cliente>(_Clientes.Where(c => c.Nombre.Contains(FilterText)));
+                case "DNI":
+                    return new ObservableCollection<Cliente>(_Clientes.Where(c => c.DNI.Contains(FilterText)));
+                case "Email":
+                    return new ObservableCollection<Cliente>(_Clientes.Where(c => c.Email.Contains(FilterText)));
+                case "ID Cliente":
+                    return new ObservableCollection<Cliente>(_Clientes.Where(c => c.IdCliente.ToString().Contains(FilterText)));
+                default:
+                    // maybe this should be an exception or unreachable
+                    return clientes;
+            }
+        }
+        else
+        {
+            return clientes;
+        }
+
+    }
     public ObservableCollection<Cliente> Clientes
     {
         get
         {
-            Console.Out.WriteLine(FilterText);
-            if (FilterText != "")
-            {
-                
-                switch (FilterModes[SelectedFilterMode])
-                {
-                    case "Nombre":
-                        return new ObservableCollection<Cliente>(_Clientes.Where(c => c.Nombre.Contains(FilterText)));
-                    case "DNI":
-                        return new ObservableCollection<Cliente>(_Clientes.Where(c => c.DNI.Contains(FilterText)));
-                    case "Email":
-                        return new ObservableCollection<Cliente>(_Clientes.Where(c => c.Email.Contains(FilterText)));
-                    case "ID Cliente":
-                        return new ObservableCollection<Cliente>(_Clientes.Where(c => c.IdCliente.ToString().Contains(FilterText)));
-                    default:
-                        // maybe this should be an exception or unreachable
-                        return _Clientes;
-                }
-            }
-            else
-            {
-                Console.Out.WriteLine("retornando lista completa");
-                Console.Out.WriteLine(_Clientes.ToList().Count);
-                return _Clientes;
-            }
-            
+            return applyFilter(_Clientes);
         }
         set
         {
