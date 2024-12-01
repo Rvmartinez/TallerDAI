@@ -23,7 +23,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-                <TextBox Grid.Column="0" Watermark="Búsqueda" Text="{Binding FilterText}"></TextBox>
+            <TextBox Grid.Column="0" Watermark="Búsqueda" Text="{Binding FilterText}"></TextBox>
             <ComboBox Grid.Column="1" ItemsSource="{Binding FilterModes}" SelectedIndex="{Binding SelectedFilterMode}"></ComboBox>
         </Grid>
         <StackPanel
