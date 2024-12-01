@@ -61,7 +61,7 @@ public partial class ClientesViewModel : ViewModelBase
 
     private ObservableCollection<Cliente> _Clientes;
 
-    public ObservableCollection<Cliente> Clientes
+    public  ObservableCollection<Cliente> Clientes
     {
         get => _Clientes;
         set

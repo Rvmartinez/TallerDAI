@@ -1,0 +1,46 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+		Height="250"
+		Width="250"
+        x:Class="TallerDIA.Views.Dialogs.ReparacionDlg"
+		xmlns:models="using:TallerDIA.Models"
+		WindowStartupLocation="CenterOwner"
+        Title="Reparacion">
+	<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+		<StackPanel Orientation="Vertical" Margin="5">
+			<TextBlock Text="Asunto"/>
+			<TextBox x:Name="AsuntoTb"/>
+			<TextBlock Text="Cliente"/>
+			<AutoCompleteBox x:Name="ClienteTb"/>
+			<TextBlock Text="Trabajador"/>
+			<AutoCompleteBox x:Name="TrabajadorTb"/>
+			<TextBlock Text="Nota"/>
+			<TextBox x:Name="NotaTb" AcceptsReturn="True"/>
+			
+		</StackPanel>
+
+		<StackPanel
+				Orientation="Horizontal"
+				HorizontalAlignment="Center"
+				VerticalAlignment="Bottom"
+				Margin="5">
+
+			<Button x:Name="BtCancel"
+					Margin="5"
+					HorizontalContentAlignment="Center"
+					HorizontalAlignment="Center"
+					Content="Cancelar"/>
+
+			<Button x:Name="BtOk"
+					Margin="5"
+					HorizontalContentAlignment="Center"
+					HorizontalAlignment="Center"
+					Content="Aceptar"/>
+
+		</StackPanel>
+	</StackPanel>
+
+</Window>

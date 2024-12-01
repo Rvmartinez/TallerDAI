@@ -37,7 +37,7 @@
                 <Button
                     Margin="0,0,15,0"
                     icon:Attached.Icon="mdi-account-plus"
-                    
+                    Command="{Binding AddRepaisCommand}"
                     FontSize="24" />
                 <Button
                     Margin="0,0,15,0"
@@ -48,6 +48,11 @@
                     Margin="0,0,15,0"
                     icon:Attached.Icon="mdi-account-minus"
                     Command="{Binding ButtonEliminarReparacionCommand}"
+                    FontSize="24" />
+                <Button
+                    Margin="0,0,15,0"
+                    icon:Attached.Icon="mdi-account-minus"
+                    Command="{Binding ButtonNevegarCommand}"
                     FontSize="24" />
                 <Button
                     Margin="0,0,15,0"

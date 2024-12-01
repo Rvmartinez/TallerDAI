@@ -39,5 +39,13 @@
       <DependentUpon>EmpleadosMW.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\Dialogs\ReparacionDlg.axaml.cs">
+      <DependentUpon>ReparacionDlg.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\Dialogs\ReparacionNavegarDlg.axaml.cs">
+      <DependentUpon>ReparacionNavegarDlg.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 </Project>

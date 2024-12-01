@@ -29,7 +29,7 @@ namespace TallerDIA.ViewModels
         static Cliente cliente3 = new Cliente { DNI = "87654321", Nombre = "Ana Lopez", Email = "ana.lopez@example.com", IdCliente = 2 };
         static Cliente cliente4 = new Cliente { DNI = "11223344", Nombre = "Carlos Garcia", Email = "carlos.garcia@example.com", IdCliente = 3 };
 
-        private List<Reparacion> reparacionesBackup;
+        private static List<Reparacion> reparacionesBackup;
 
         private ObservableCollection<Reparacion> _Reparaciones;
 
@@ -95,6 +95,7 @@ namespace TallerDIA.ViewModels
         }
 
         public object AddReparacion { get; }
+        
 
 
         /* static Empleado empleado1 = new Empleado("12345678B", "Mario Pérez", "mario.perez@example.com", true);
@@ -304,14 +305,14 @@ namespace TallerDIA.ViewModels
             }
         }
 
-        [RelayCommand]
+        
         public async Task AddRepaisCommand()
         {
             var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop ? desktop.MainWindow : null;
-            var ClienteDlg = new ClienteDlg();
-            await ClienteDlg.ShowDialog(mainWindow);
+            var ReparacionDlg = new ReparacionDlg();
+            await ReparacionDlg.ShowDialog(mainWindow);
 
-            if (!ClienteDlg.IsCancelled)
+            if (!ReparacionDlg.IsCancelled)
             {
                // Cliente c  = new Cliente() { DNI = ClienteDlg.DniTB.Text, Email = ClienteDlg.EmailTB.Text, Nombre = ClienteDlg.NombreTB.Text, IdCliente = this.GetLastClientId()+1 };
                
@@ -319,6 +320,22 @@ namespace TallerDIA.ViewModels
                 
             }
         
+        }
+
+        [RelayCommand]
+        public async Task ButtonNevegarCommand()
+        {
+            var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop ? desktop.MainWindow : null;
+            var ReparacionNavegarDlg = new ReparacionNavegarDlg();
+            await ReparacionNavegarDlg.ShowDialog(mainWindow);
+
+            if (!ReparacionNavegarDlg.IsCancelled)
+            {
+                // Cliente c  = new Cliente() { DNI = ClienteDlg.DniTB.Text, Email = ClienteDlg.EmailTB.Text, Nombre = ClienteDlg.NombreTB.Text, IdCliente = this.GetLastClientId()+1 };
+               
+                //Reparaciones.Add(c);
+                
+            }
         }
 
        
