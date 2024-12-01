@@ -50,6 +50,8 @@
                     icon:Attached.Icon="mdi-account-minus"
                     Command="{Binding OnDeleteCommand}"
                     FontSize="24" />
+                
+                
 
             </StackPanel>
         </Grid>

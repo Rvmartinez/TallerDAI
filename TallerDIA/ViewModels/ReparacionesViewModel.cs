@@ -8,7 +8,10 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
 using TallerDIA.Models;
+using TallerDIA.Views.Dialogs;
 
 namespace TallerDIA.ViewModels
 {
@@ -59,7 +62,7 @@ namespace TallerDIA.ViewModels
             set
             {
                 SetProperty(ref _MostrarTerminados, value);
-                List<Reparacion> aux = reparacionesBackup.Where(r => r.FechaFin.Equals(new DateTime())).ToList();
+                List<Reparacion> aux = reparacionesBackup.Where(r => !r.FechaFin.Equals(new DateTime())).ToList();
                 if (aux.Count == 0)
                     return;
                 else if (_MostrarTerminados)
@@ -70,7 +73,28 @@ namespace TallerDIA.ViewModels
                     Reparaciones = new ObservableCollection<Reparacion>(reparacionesBackup);
             }
         }
+        
+        
+        private bool _MostrarNoTerminados;
+        public bool MostrarNoTerminados
+        {
+            get => _MostrarNoTerminados;
+            set
+            {
+                SetProperty(ref _MostrarNoTerminados, value);
+                List<Reparacion> aux = reparacionesBackup.Where(r => r.FechaFin.Equals(new DateTime())).ToList();
+                if (aux.Count == 0)
+                    return;
+                else if (_MostrarNoTerminados)
+                {
+                    Reparaciones = new ObservableCollection<Reparacion>(aux);
+                }
+                else
+                    Reparaciones = new ObservableCollection<Reparacion>(reparacionesBackup);
+            }
+        }
 
+        public object AddReparacion { get; }
 
 
         /* static Empleado empleado1 = new Empleado("12345678B", "Mario Pérez", "mario.perez@example.com", true);
@@ -108,67 +132,10 @@ namespace TallerDIA.ViewModels
         }
 
         #region Popup
-        public void MostrarGrid()
-        {
-            /*var mainPanel = this.GetControl<DockPanel>("MainPanel");
-            var panel = this.GetControl<DockPanel>("GridPanel");
-            var dataGrid = this.GetControl<DataGrid>("DataGridReparaciones");
-            var buttonEliminar = this.GetControl<Button>("BtEliminarReparacion");
-            var buttonFinalizar = this.GetControl<Button>("BtFinalizarReparacion");
-            var label = this.GetControl<Label>("Label_Filtro");
-            var checkTerminados = this.GetControl<CheckBox>("CheckTerminados");
-            var checkNoTerminados = this.GetControl<CheckBox>("CheckNoTerminados");
-            
-            var paneles = mainPanel.Children;
-
-            foreach (var p in paneles)
-            {
-                p.IsVisible = false;
-            }
-
-            panel.IsVisible = true;
-            dataGrid.IsVisible = true;
-            panel.Width = mainPanel.Bounds.Width;
-            panel.Height = mainPanel.Bounds.Height;
-            buttonEliminar.IsVisible = true;
-            buttonFinalizar.IsVisible = true;
-            label.IsVisible = true;
-            checkTerminados.IsVisible = true;
-            checkNoTerminados.IsVisible = true;
-            Console.WriteLine("Entro en el metodo de mostrar el datagrid");
-            */
-            bool toret = false;
-        }
+       
 
 
-      /*  private void OnButtonCrearReparacion(object? sender, RoutedEventArgs e)
-        {
-            var mainPanel = this.GetControl<DockPanel>("MainPanel");
-            var panel = this.GetControl<DockPanel>("CreateReparacion");
-            var paneles = mainPanel.Children;
-            var buttonEliminar = this.GetControl<Button>("BtEliminarReparacion");
-
-            var buttonFinalizar = this.GetControl<Button>("BtFinalizarReparacion");
-            var label = this.GetControl<Label>("Label_Filtro");
-            var checkTerminados = this.GetControl<CheckBox>("CheckTerminados");
-            var checkNoTerminados = this.GetControl<CheckBox>("CheckNoTerminados");
-
-            foreach (var p in paneles)
-            {
-                p.IsVisible = false;
-            }
-
-            panel.IsVisible = true;
-            panel.Width = mainPanel.Bounds.Width;
-            panel.Height = mainPanel.Bounds.Height;
-            buttonEliminar.IsVisible = false;
-
-            buttonFinalizar.IsVisible = false;
-            label.IsVisible = false;
-            checkTerminados.IsVisible = false;
-            checkNoTerminados.IsVisible = false;
-        }
-      */
+     
 
         private async void OnButtonCrear()
         {
@@ -248,6 +215,7 @@ namespace TallerDIA.ViewModels
         [RelayCommand]
         public async Task OnButtonEliminarReparacion()
         {
+           
             if (SelectedRepair == null)
             {
                 var message = MessageBoxManager.GetMessageBoxStandard("Alerta de eliminacion",
@@ -268,6 +236,8 @@ namespace TallerDIA.ViewModels
                         //ControladorReparacion.Eliminar(reparacion, RegistroReparacion);
                         //RegistroReparacion.Remove(reparacion);
                         Reparaciones.Remove(SelectedRepair);
+                        reparacionesBackup = Reparaciones.ToList();
+                        
                         SelectedRepair = null;
                         break;
                     case ButtonResult.No:
@@ -293,7 +263,7 @@ namespace TallerDIA.ViewModels
             }
             else
             {
-                var message = MessageBoxManager.GetMessageBoxStandard("Midificacion de reparacion",
+                var message = MessageBoxManager.GetMessageBoxStandard("Modificacion de reparacion",
                     "Estas seguro de marcar como finalizada la reparacion seleccionada?", ButtonEnum.YesNo, MsBox.Avalonia.Enums.Icon.Question, WindowStartupLocation.CenterOwner);
 
                 var respuesta = await message.ShowAsync();
@@ -315,9 +285,12 @@ namespace TallerDIA.ViewModels
                                 Console.WriteLine("Reparacion encontrada");
                                 Console.WriteLine(rep.ToString());
                                 rep.asignarFechaFin();
+                                
                             }
                             Console.WriteLine(rep.ToString());
                         }
+                        reparacionesBackup = Reparaciones.ToList();
+                        Reparaciones = new ObservableCollection<Reparacion>(reparacionesBackup);
 
                         break;
                     case ButtonResult.No:
@@ -326,55 +299,28 @@ namespace TallerDIA.ViewModels
                         Console.WriteLine("No se puede finalizar el reparacion");
                         break;
                 }
+
+                SelectedRepair = null;
             }
-        }
-
-        private void Filtro_Terminado()
-        {
-           /* var checkTerminados = this.FindControl<CheckBox>("CheckTerminados");
-            var checkNoTerminados = this.FindControl<CheckBox>("CheckNoTerminados");
-            var grid = this.FindControl<DataGrid>("DataGridReparaciones");
-
-            if (checkTerminados.IsChecked == true)
-            {
-                //checkNoTerminados.IsChecked = false;
-                
-                Reparaciones = new ObservableCollection<Reparacion>( reparacionesBackup.Where(r => r.FechaFin.Equals(new DateTime())).ToList());
-
-            }
-            else
-            {
-                grid.ItemsSource = new ObservableCollection<Reparacion>(reparacionesBackup);
-            }
-           */
-
-
         }
 
         [RelayCommand]
-        public void Filtro_NoTerminado()
+        public async Task AddRepaisCommand()
         {
+            var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop ? desktop.MainWindow : null;
+            var ClienteDlg = new ClienteDlg();
+            await ClienteDlg.ShowDialog(mainWindow);
 
-            /*var checkTerminados = this.FindControl<CheckBox>("CheckTerminados");
-            var checkNoTerminados = this.FindControl<CheckBox>("CheckNoTerminados");
-            var grid = this.FindControl<DataGrid>("DataGridReparaciones");
-            if (checkNoTerminados.IsChecked == true)
+            if (!ClienteDlg.IsCancelled)
             {
-                checkTerminados.IsChecked = false;
-                grid.ItemsSource = null;
-                List<Reparacion> reparacionesTerminadas = ControladorReparacion.BuscarNoTerminados(RegistroReparacion);
-                grid.ItemsSource = reparacionesTerminadas;
+               // Cliente c  = new Cliente() { DNI = ClienteDlg.DniTB.Text, Email = ClienteDlg.EmailTB.Text, Nombre = ClienteDlg.NombreTB.Text, IdCliente = this.GetLastClientId()+1 };
+               
+                    //Reparaciones.Add(c);
+                
             }
-            else
-            {
-                grid.ItemsSource = null;
-                grid.ItemsSource = RegistroReparacion;
-            }*/
-
-            /* 
-                Reparaciones = new ObservableCollection<Reparacion>(reparacionesBackup.Where(r => !r.FechaFin.Equals(new DateTime())).ToList());
-
-           */
+        
         }
+
+       
     }
 }
