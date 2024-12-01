@@ -5,6 +5,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks.Dataflow;
@@ -14,34 +15,13 @@ using TallerDIA.Views.Dialogs;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
 using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
+using TallerDIA.Utils;
 
 namespace TallerDIA.ViewModels;
 
-public partial class ClientesViewModel : ViewModelBase
+public partial class ClientesViewModel : FilterViewModel<Cliente>
 {
     private Cliente _SelectedClient;
-    private String _FilterText = "";
-    private int _SelectedFilterMode = 0;
-    private ObservableCollection<String> _FilterModes = new ObservableCollection<String>(new []{"Nombre","DNI","Email","ID Cliente"});
-    public ObservableCollection<String> FilterModes
-    {
-        get => _FilterModes;
-    }
-
-    public int SelectedFilterMode
-    {
-        get => _SelectedFilterMode;
-        set
-        { SetProperty(ref _SelectedFilterMode, value); OnPropertyChanged("Clientes"); }
-    }
-
-    public String FilterText
-    {
-        get => _FilterText;
-        set { SetProperty(ref _FilterText, value); OnPropertyChanged("Clientes");  }
-    }
-
 
     public Cliente SelectedClient
     {
@@ -84,38 +64,11 @@ public partial class ClientesViewModel : ViewModelBase
     }
 
     private ObservableCollection<Cliente> _Clientes;
-
-    public ObservableCollection<Cliente> applyFilter(ObservableCollection<Cliente> clientes)
-    {
-        if (FilterText != "")
-        {
-                
-            switch (FilterModes[SelectedFilterMode])
-            {
-                case "Nombre":
-                    return new ObservableCollection<Cliente>(_Clientes.Where(c => c.Nombre.Contains(FilterText)));
-                case "DNI":
-                    return new ObservableCollection<Cliente>(_Clientes.Where(c => c.DNI.Contains(FilterText)));
-                case "Email":
-                    return new ObservableCollection<Cliente>(_Clientes.Where(c => c.Email.Contains(FilterText)));
-                case "ID Cliente":
-                    return new ObservableCollection<Cliente>(_Clientes.Where(c => c.IdCliente.ToString().Contains(FilterText)));
-                default:
-                    // maybe this should be an exception or unreachable
-                    return clientes;
-            }
-        }
-        else
-        {
-            return clientes;
-        }
-
-    }
     public ObservableCollection<Cliente> Clientes
     {
         get
         {
-            return applyFilter(_Clientes);
+            return _Clientes;
         }
         set
         {
@@ -219,4 +172,34 @@ public partial class ClientesViewModel : ViewModelBase
         
     }
 
+    public override ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>(["Nombre","DNI","Email","ID Cliente"]);
+
+    public override ObservableCollection<Cliente> FilteredItems
+    {
+        get
+        {
+            if (FilterText != "")
+            {
+
+                switch (FilterModes[SelectedFilterMode])
+                {
+                    case "Nombre":
+                        return new ObservableCollection<Cliente>(Clientes.Where(c => c.Nombre.Contains(FilterText)));
+                    case "DNI":
+                        return new ObservableCollection<Cliente>(Clientes.Where(c => c.DNI.Contains(FilterText)));
+                    case "Email":
+                        return new ObservableCollection<Cliente>(Clientes.Where(c => c.Email.Contains(FilterText)));
+                    case "ID Cliente":
+                        return new ObservableCollection<Cliente>(Clientes.Where(c => c.IdCliente.ToString().Contains(FilterText)));
+                    default:
+                        // maybe this should be an exception or unreachable
+                        return Clientes;
+                }
+            }
+            else
+            {
+                return Clientes;
+            }
+        }
+    }
 }

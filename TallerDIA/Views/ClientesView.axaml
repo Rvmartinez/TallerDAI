@@ -69,7 +69,7 @@
             BorderThickness="1"
             CanUserReorderColumns="true"
             IsReadOnly="True"
-            ItemsSource="{Binding Clientes}"
+            ItemsSource="{Binding FilteredItems }"
             SelectedItem="{Binding SelectedClient}">
             <DataGrid.Styles>
                 <Style Selector="DataGridColumnHeader">
