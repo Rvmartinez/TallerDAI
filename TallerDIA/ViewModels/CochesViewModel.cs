@@ -15,7 +15,7 @@ using TallerDIA.Utils;
 using TallerDIA.Views;
 namespace TallerDIA.ViewModels;
 
-public partial class CochesViewModel : ViewModelBase
+public partial class CochesViewModel : FilterViewModel<Coche>
 {
     private GarajeCoches _garaje = new GarajeCoches();
     public ObservableCollection<Coche> Coches => _garaje.Coches;
@@ -126,4 +126,31 @@ public partial class CochesViewModel : ViewModelBase
         
     }
 
+    public override ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>(["Matricula","Marca","Modelo"]);
+
+    public override ObservableCollection<Coche> FilteredItems
+    {
+        get
+        {
+            if (FilterText != "")
+            {
+
+                switch (FilterModes[SelectedFilterMode])
+                {
+                    case "Matricula":
+                        return new ObservableCollection<Coche>(Coches.Where(c => c.Matricula.Contains(FilterText)));
+                    case "Marca":
+                        return new ObservableCollection<Coche>(Coches.Where(c => c.Marca.ToString().Contains(FilterText)));
+                    case "Modelo":
+                        return new ObservableCollection<Coche>(Coches.Where(c => c.Modelo.Contains(FilterText)));
+                    default:
+                        return Coches;
+                }
+            }
+            else
+            {
+                return Coches;
+            }
+        }
+    }
 }

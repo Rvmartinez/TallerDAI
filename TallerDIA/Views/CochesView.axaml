@@ -16,13 +16,24 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        
+        <Grid Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="0" Watermark="Búsqueda" Text="{Binding FilterText}"></TextBox>
+            <ComboBox Grid.Column="1" ItemsSource="{Binding FilterModes}" SelectedIndex="{Binding SelectedFilterMode}"></ComboBox>
+        </Grid>
+    
         <StackPanel
-            Grid.Row="0"
+            Grid.Row="1"
             HorizontalAlignment="Stretch"
             Orientation="Horizontal" />
-        <Grid>
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="*" />
@@ -62,13 +73,13 @@
         </Grid>
         <DataGrid
             Name="DatagridCoches"
-            Grid.Row="1"
+            Grid.Row="2"
             AutoGenerateColumns="False"
             BorderBrush="Purple"
             BorderThickness="1"
             CanUserReorderColumns="true"
             IsReadOnly="True"
-            ItemsSource="{Binding Coches}"
+            ItemsSource="{Binding FilteredItems}"
             SelectedItem="{Binding SelectedCar}">
             <DataGrid.Styles>
                 <Style Selector="DataGridColumnHeader">
