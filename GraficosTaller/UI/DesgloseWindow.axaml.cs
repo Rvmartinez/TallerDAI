@@ -88,9 +88,10 @@ namespace GraficosTaller.UI {
                     
                 }
 
-                if (config.Modo == ConfigChart.ModoVision.Anual && config.Cliente is not null)
+                if (config.Modo == ConfigChart.ModoVision.Anual && config.Cliente is not null ||
+                    config.Modo == ConfigChart.ModoVision.Mensual && config.Cliente is null)
                 {
-                    throw new ArgumentException("Esta grafica no soporta vision anual si seleccionas un cliente");
+                    throw new ArgumentException("Esta grafica no soporta ese tipo de filtrado");
                 }
             }
         }

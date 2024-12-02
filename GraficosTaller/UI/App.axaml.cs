@@ -17,7 +17,7 @@ public partial class App : Application
     {
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
         {
-            desktop.MainWindow = new DesgloseWindow(InicializarReparaciones(), new ConfigChart(){Anno = 2024, FechaFin = true, Cliente = "A", Modo = ConfigChart.ModoVision.Mensual});
+            desktop.MainWindow = new DesgloseWindow(InicializarReparaciones(), new ConfigChart(){Anno = 2024, FechaFin = true, Modo = ConfigChart.ModoVision.Anual});
         }
 
         base.OnFrameworkInitializationCompleted();
