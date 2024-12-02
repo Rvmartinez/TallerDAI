@@ -44,35 +44,29 @@
     </Design.DataContext>
     <DockPanel Name="PanelMain" >
         <DockPanel Name="PanelEntrada" Dock="Top">
-            <Grid RowDefinitions="1*, 1*, 1*" ColumnDefinitions="1*, 1*, 1*, 1*, 40, 40, 40, 40" >
-                <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Name="Titulo" FontSize="18" Margin="10">Listado de empleados</TextBlock>
-                <TextBlock Grid.Column="0" Grid.Row="1">DNI:</TextBlock>
-                <TextBox Grid.Column="0" Grid.Row="2" Margin="3 0 0 3" Name="tbDni" MinWidth="90" Text="{Binding EmpleadoActual.Dni}"></TextBox>
-                <TextBlock Grid.Column="1" Grid.Row="1">Nombre:</TextBlock>
-                <TextBox Grid.Column="1" Grid.Row="2" Margin="3 0 0 3" Name="tbNombre" MinWidth="90" Text="{Binding EmpleadoActual.Nombre}"></TextBox>
-                <TextBlock Grid.Column="2" Grid.Row="1">Email:</TextBlock>
-                <TextBox Grid.Column="2" Grid.Row="2" Margin="3 0 0 3" Name="tbEmail" MinWidth="90" Text="{Binding EmpleadoActual.Email}"></TextBox>
-                <Button Grid.Column="3" Grid.Row="2" icon:Attached.Icon="mdi-account-plus" Name="btAnadirEmpleado" Command="{Binding btAnadirEmpleado_OnClick}"></Button>
-                <Button Grid.Column="4" Grid.Row="2" icon:Attached.Icon="mdi-account-minus" Name="btEliminarEmpleado" Command="{Binding btEliminarEmpleado_OnClick}"></Button>
-                <Button Grid.Column="5" Grid.Row="2" icon:Attached.Icon="mdi-account-sync" Name="btModificarEmpleado" Command="{Binding btModificarEmpleado_OnClick}"></Button>
-                <Button Grid.Column="6" Grid.Row="2" icon:Attached.Icon="mdi-plus" Name="btNuevoEmpleado" Command="{Binding btNuevoEmpleado_OnClick}"></Button>
-                <Button Grid.Column="7" Grid.Row="2" icon:Attached.Icon="mdi-eye-arrow-right" Name="btTicketsSelecc" Command="{Binding btTicketsSelecc_OnClick}"></Button>
+            <Grid RowDefinitions="1*, 1*, 1*, 1*" ColumnDefinitions="1*, 1*, 1*, 1*, 40, 40, 40, 40" >
+                <TextBox Grid.Column="0" Grid.ColumnSpan="6" Watermark="Búsqueda" Text="{Binding FilterText}"></TextBox>
+                <ComboBox Grid.Column="6"  Grid.ColumnSpan="2" ItemsSource="{Binding FilterModes}" SelectedIndex="{Binding SelectedFilterMode}"></ComboBox>
+                <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Name="Titulo" FontSize="18" Margin="10">Listado de empleados</TextBlock>
+                <TextBlock Grid.Column="0" Grid.Row="2">DNI:</TextBlock>
+                <TextBox Grid.Column="0" Grid.Row="3" Margin="3 0 0 3" Name="tbDni" MinWidth="90" Text="{Binding EmpleadoActual.Dni}"></TextBox>
+                <TextBlock Grid.Column="1" Grid.Row="2">Nombre:</TextBlock>
+                <TextBox Grid.Column="1" Grid.Row="3" Margin="3 0 0 3" Name="tbNombre" MinWidth="90" Text="{Binding EmpleadoActual.Nombre}"></TextBox>
+                <TextBlock Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="2" MinWidth="300">Email:</TextBlock>
+                <TextBox Grid.Column="2" Grid.Row="3" Margin="3 0 0 3" Name="tbEmail" MinWidth="90" Text="{Binding EmpleadoActual.Email}"></TextBox>
+                <Button Grid.Column="3" Grid.Row="3" icon:Attached.Icon="mdi-account-plus" Name="btAnadirEmpleado" Command="{Binding btAnadirEmpleado_OnClick}"></Button>
+                <Button Grid.Column="4" Grid.Row="3" icon:Attached.Icon="mdi-account-minus" Name="btEliminarEmpleado" Command="{Binding btEliminarEmpleado_OnClick}"></Button>
+                <Button Grid.Column="5" Grid.Row="3" icon:Attached.Icon="mdi-account-sync" Name="btModificarEmpleado" Command="{Binding btModificarEmpleado_OnClick}"></Button>
+                <Button Grid.Column="6" Grid.Row="3" icon:Attached.Icon="mdi-plus" Name="btNuevoEmpleado" Command="{Binding btNuevoEmpleado_OnClick}"></Button>
+                <Button Grid.Column="7" Grid.Row="3" icon:Attached.Icon="mdi-eye-arrow-right" Name="btTicketsSelecc" Command="{Binding btTicketsSelecc_OnClick}"></Button>
             </Grid>
         </DockPanel>
         <DockPanel Name="PanelSalida"  Dock="Bottom">
             <DockPanel Name="PanelData" Dock="Top" VerticalAlignment="Stretch">
-                <Grid Margin="5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <TextBox Grid.Column="0" Watermark="Búsqueda" Text="{Binding FilterText}"></TextBox>
-                    <ComboBox Grid.Column="1" ItemsSource="{Binding FilterModes}" SelectedIndex="{Binding SelectedFilterMode}"></ComboBox>
-                </Grid>
                 <DataGrid x:Name="DgEmpleados"
                           ItemsSource="{Binding FilteredItems}"
                           HorizontalAlignment="Right" VerticalAlignment="Stretch"
-                          MinHeight="250"
+                          MinHeight="375"
                           BorderThickness="1" BorderBrush="Purple" CanUserReorderColumns="true"  IsReadOnly="True" SelectedItem="{Binding EmpleadoSeleccionado}">
                 <DataGrid.Columns>
                         <DataGridTextColumn
@@ -91,9 +85,7 @@
                 </DataGrid>
             </DockPanel>
             <DockPanel Name="PanelAvisos" Dock="Bottom" >
-                <StackPanel>
-                    <TextBlock MinWidth="200" Margin="7" Name="tblAvisos" FontWeight="Bold" Text="{Binding Aviso}">Bienvenido a la ventana de gestón de Empleados del Taller.</TextBlock>
-                </StackPanel>
+                <TextBlock VerticalAlignment="Bottom" HorizontalAlignment="Center" MinWidth="200" Margin="7" Name="tblAvisos" FontWeight="Bold" Text="{Binding Aviso}">Bienvenido a la ventana de gestón de Empleados del Taller.</TextBlock>
             </DockPanel>
         </DockPanel>
     </DockPanel>
