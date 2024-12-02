@@ -11,6 +11,7 @@ using Avalonia;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
 using ColorTextBlock.Avalonia;
+using TallerDIA.Utils;
 using TallerDIA.Views;
 
 namespace TallerDIA.ViewModels;
