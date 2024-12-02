@@ -6,7 +6,7 @@
 		Height="250"
 		Width="250"
         x:Class="TallerDIA.Views.Dialogs.ReparacionNavegarDlg"
-		xmlns:models="using:TallerDIA.Models"
+		
 		WindowStartupLocation="CenterOwner"
         Title="Reparacion"
         >
@@ -14,16 +14,12 @@
 		
 
 		<StackPanel
-				Orientation="Horizontal"
+				Orientation="Vertical"
 				HorizontalAlignment="Center"
 				VerticalAlignment="Bottom"
 				Margin="5">
-
-			<Button x:Name="BtCancel"
-					Margin="5"
-					HorizontalContentAlignment="Center"
-					HorizontalAlignment="Center"
-					Content="Cancelar"/>
+			<Label>Que información desea consultar?</Label>
+			
 
 			<Button x:Name="BtCliente"
 					Margin="5"
@@ -36,6 +32,11 @@
 			        HorizontalContentAlignment="Center"
 			        HorizontalAlignment="Center"
 			        Content="Ver Trabajador"/>
+			<Button x:Name="BtCancel"
+			        Margin="5"
+			        HorizontalContentAlignment="Center"
+			        HorizontalAlignment="Center"
+			        Content="Cancelar"/>
 
 		</StackPanel>
 	</StackPanel>

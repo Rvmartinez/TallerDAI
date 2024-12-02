@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
+
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
@@ -18,16 +18,16 @@ namespace TallerDIA.ViewModels
 
     public partial class ReparacionesViewModel : ViewModelBase
     {
-        static Cliente cliente1 = new Cliente
+        static Cliente _cliente1 = new Cliente
         {
             DNI = "12345678A",
             Nombre = "Juan Pérez",
             Email = "juan.perez@example.com",
             IdCliente = 1
         };
-        static Cliente cliente2 = new Cliente { DNI = "12345678", Nombre = "Juan Perez", Email = "juan.perez@example.com", IdCliente = 1 };
-        static Cliente cliente3 = new Cliente { DNI = "87654321", Nombre = "Ana Lopez", Email = "ana.lopez@example.com", IdCliente = 2 };
-        static Cliente cliente4 = new Cliente { DNI = "11223344", Nombre = "Carlos Garcia", Email = "carlos.garcia@example.com", IdCliente = 3 };
+        static Cliente _cliente2 = new Cliente { DNI = "12345678", Nombre = "Juan Perez", Email = "juan.perez@example.com", IdCliente = 1 };
+        static Cliente _cliente3 = new Cliente { DNI = "87654321", Nombre = "Ana Lopez", Email = "ana.lopez@example.com", IdCliente = 2 };
+        static Cliente _cliente4 = new Cliente { DNI = "11223344", Nombre = "Carlos Garcia", Email = "carlos.garcia@example.com", IdCliente = 3 };
 
         private static List<Reparacion> reparacionesBackup;
 
@@ -43,50 +43,47 @@ namespace TallerDIA.ViewModels
             }
         }
 
-        private Reparacion _SelectedRepair;
+        private Reparacion _selectedRepair;
         public Reparacion SelectedRepair
         {
-            get => _SelectedRepair;
+            get => _selectedRepair;
             set
             {
-                SetProperty(ref _SelectedRepair, value);
+                SetProperty(ref _selectedRepair, value);
             }
         }
 
 
 
-        private bool _MostrarTerminados;
+        private bool _mostrarTerminados;
         public bool MostrarTerminados
         {
-            get => _MostrarTerminados;
+            get => _mostrarTerminados;
             set
             {
-                SetProperty(ref _MostrarTerminados, value);
+                SetProperty(ref _mostrarTerminados, value);
                 List<Reparacion> aux = reparacionesBackup.Where(r => !r.FechaFin.Equals(new DateTime())).ToList();
-                if (aux.Count == 0)
-                    return;
-                else if (_MostrarTerminados)
+                if (aux.Count == 0 || _mostrarTerminados)
                 {
                     Reparaciones = new ObservableCollection<Reparacion>(aux);
                 }
+                
                 else
                     Reparaciones = new ObservableCollection<Reparacion>(reparacionesBackup);
             }
         }
         
         
-        private bool _MostrarNoTerminados;
+        private bool _mostrarNoTerminados;
         public bool MostrarNoTerminados
         {
-            get => _MostrarNoTerminados;
+            get => _mostrarNoTerminados;
             set
             {
-                SetProperty(ref _MostrarNoTerminados, value);
+                SetProperty(ref _mostrarNoTerminados, value);
                 List<Reparacion> aux = reparacionesBackup.Where(r => r.FechaFin.Equals(new DateTime())).ToList();
-                if (aux.Count == 0)
-                    return;
-                else if (_MostrarNoTerminados)
-                {
+                if (aux.Count == 0 || _mostrarNoTerminados){
+                    
                     Reparaciones = new ObservableCollection<Reparacion>(aux);
                 }
                 else
@@ -102,12 +99,12 @@ namespace TallerDIA.ViewModels
 
          static Empleado empleado2 = new Empleado("20345678C", "Marisa Almanera", "mars.alma@example.com", false);
         */
-        static List<Cliente> clientes = new List<Cliente> { cliente1, cliente2, cliente3, cliente4 };
+        static List<Cliente> _clientes = new List<Cliente> { _cliente1, _cliente2, _cliente3, _cliente4 };
 
         //static List<Empleado> empleados = new List<Empleado> { empleado1, empleado2 };
 
-        List<String> clientesSorce = new List<String>();
-        List<String> empleadosSorce = new List<String>();
+        //List<String> clientesSorce = new List<String>();
+        //List<String> empleadosSorce = new List<String>();
 
         
         public ReparacionesViewModel()
@@ -117,15 +114,16 @@ namespace TallerDIA.ViewModels
             Cliente c2 = new Cliente { DNI = "11223344", Nombre = "Carlos Garcia", Email = "carlos.garcia@example.com", IdCliente = 2 };
             Empleado emp = new Empleado { Dni = "111", Email = "111",Nombre="rrr"};
             Reparaciones.Add(new Reparacion("asunto1", "nota1", c1, emp));
-            Reparaciones.Add(new Reparacion("asunto2", "nota1", c1, emp));
+            Reparaciones.Add(new Reparacion("asunto2", "nota1", c2, emp));
             Reparaciones.Add(new Reparacion("asunto3", "nota1", c1, emp));
             Reparaciones[0].FechaFin = DateTime.Now;
             reparacionesBackup = Reparaciones.ToList();
-            foreach (Cliente cliente in clientes)
+           /* 
+            foreach (Cliente cliente in _clientes)
             {
                 clientesSorce.Add(cliente.DNI + "_" + cliente.Nombre);
             }
-
+            */
            /* foreach (Empleado empleado in empleados)
             {
                 empleadosSorce.Add(empleado.Dni + "_" + empleado.Nombre);
@@ -138,78 +136,7 @@ namespace TallerDIA.ViewModels
 
      
 
-        private async void OnButtonCrear()
-        {
-            /*var textAsunto = this.FindControl<TextBox>("TextAsunto");
-            var textNota = this.FindControl<TextBox>("TextNota");
-            var listClientes = this.FindControl<AutoCompleteBox>("ListClientes");
-            var listEmpleados = this.FindControl<AutoCompleteBox>("ListEmpleados");
-            if (listClientes.SelectedItem == null || listEmpleados.SelectedItem == null)
-            {
-                var message = MessageBoxManager.GetMessageBoxStandard("Alerta de campos no seleccionados",
-                    "Debe de seleccionar un cliente y un empleado", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Warning, WindowStartupLocation.CenterOwner);
-
-                await message.ShowAsync();
-                listClientes.BorderBrush = Brushes.Red;
-                listEmpleados.BorderBrush = Brushes.Red;
-
-            }
-            else if (textAsunto.Text == "" || textNota.Text == "")
-            {
-                var message = MessageBoxManager.GetMessageBoxStandard("Alerta de campos no completados",
-                    "Debe escribir un Asunto y unha Nota", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Warning, WindowStartupLocation.CenterOwner);
-
-                await message.ShowAsync();
-                textAsunto.BorderBrush = Brushes.Red;
-                textNota.BorderBrush = Brushes.Red;
-            }
-            else
-
-            {
-                string[] clienteDniNombre = listClientes.SelectedItem.ToString().Split('_');
-
-                string[] empleadoDniNombre = listEmpleados.SelectedItem.ToString().Split('_');
-                Cliente cliente = new Cliente();
-                Empleado empleado = new Empleado();
-
-                foreach (Cliente cli in clientes)
-                {
-                    if (cli.DNI.Equals(clienteDniNombre[0]) && cli.Nombre.Equals(clienteDniNombre[1]))
-                    {
-
-
-                        cliente = new Cliente(cli.DNI, cli.Nombre, cli.Email, cli.IdCliente);
-
-                    }
-                }
-
-                foreach (Empleado empl in empleados)
-                {
-                    if (empl.Dni == empleadoDniNombre[0] && empl.Nombre == empleadoDniNombre[1])
-                    {
-                        empleado = empl;
-                    }
-                }
-
-
-
-
-                this.RegistroReparacion.Add(new Reparacion(textAsunto.Text, textNota.Text, cliente, empleado));
-
-                textAsunto.Clear();
-                textNota.Clear();
-                listClientes.Text = "";
-                listEmpleados.Text = "";
-                textAsunto.BorderBrush = Brushes.Black;
-                textNota.BorderBrush = Brushes.Black;
-                listClientes.BorderBrush = Brushes.Black;
-                listEmpleados.BorderBrush = Brushes.Black;
-            }
-
-
-            */
-
-        }
+       
 
         #endregion
 
@@ -239,7 +166,7 @@ namespace TallerDIA.ViewModels
                         Reparaciones.Remove(SelectedRepair);
                         reparacionesBackup = Reparaciones.ToList();
                         
-                        SelectedRepair = null;
+                        SelectedRepair = null!;
                         break;
                     case ButtonResult.No:
                         break;
@@ -301,7 +228,7 @@ namespace TallerDIA.ViewModels
                         break;
                 }
 
-                SelectedRepair = null;
+                SelectedRepair = null!;
             }
         }
 
@@ -326,10 +253,10 @@ namespace TallerDIA.ViewModels
         public async Task ButtonNevegarCommand()
         {
             var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop ? desktop.MainWindow : null;
-            var ReparacionNavegarDlg = new ReparacionNavegarDlg();
-            await ReparacionNavegarDlg.ShowDialog(mainWindow);
+            var reparacionNavegarDlg = new ReparacionNavegarDlg();
+            await reparacionNavegarDlg.ShowDialog(mainWindow);
 
-            if (!ReparacionNavegarDlg.IsCancelled)
+            if (!reparacionNavegarDlg.IsCancelled)
             {
                 // Cliente c  = new Cliente() { DNI = ClienteDlg.DniTB.Text, Email = ClienteDlg.EmailTB.Text, Nombre = ClienteDlg.NombreTB.Text, IdCliente = this.GetLastClientId()+1 };
                

@@ -2,7 +2,7 @@
      x:Class="TallerDIA.Views.ReparacionesView"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:core="using:TallerDIA.Models"
+    
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:gestiónDeReparaciones="using:TallerDIA.ViewModels"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -36,29 +36,29 @@
                 Orientation="Horizontal">
                 <Button
                     Margin="0,0,15,0"
-                    icon:Attached.Icon="mdi-account-plus"
+                    icon:Attached.Icon="mdi-plus-circle"
                     Command="{Binding AddRepaisCommand}"
                     FontSize="24" />
                 <Button
                     Margin="0,0,15,0"
-                    icon:Attached.Icon="mdi-account-edit"
+                    icon:Attached.Icon="mdi-pencil"
                     
                     FontSize="24" />
                 <Button
                     Margin="0,0,15,0"
-                    icon:Attached.Icon="mdi-account-minus"
+                    icon:Attached.Icon="mdi-minus-circle"
                     Command="{Binding ButtonEliminarReparacionCommand}"
                     FontSize="24" />
                 <Button
                     Margin="0,0,15,0"
-                    icon:Attached.Icon="mdi-account-minus"
+                    icon:Attached.Icon="mdi-information"
                     Command="{Binding ButtonNevegarCommand}"
                     FontSize="24" />
                 <Button
                     Margin="0,0,15,0"
-                    icon:Attached.Icon="mdi-account-minus"
+                    icon:Attached.Icon="mdi-calendar-check"
                     Command="{Binding ButtonFinalizarReparacionCommand}"
-                    Content="FinalizarFecha"
+                    
                     FontSize="24" />
                 
                 <CheckBox
@@ -78,7 +78,7 @@
             </StackPanel>
         </Grid>
         <DataGrid
-            x:Name="dgReparaciones"
+            x:Name="DgReparaciones"
             Grid.Row="1"
             BorderBrush="Purple"
             BorderThickness="1"

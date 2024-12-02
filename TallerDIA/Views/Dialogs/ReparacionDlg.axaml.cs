@@ -1,10 +1,7 @@
-using Avalonia;
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
-using System.Diagnostics;
-using System.Text.RegularExpressions;
+
 using TallerDIA.Models;
-using TallerDIA.ViewModels;
+
 
 namespace TallerDIA.Views.Dialogs;
 
@@ -14,21 +11,24 @@ public partial class ReparacionDlg : Window
     
     public ReparacionDlg(Reparacion r)
     {
+        
         InitializeComponent();
         BtOk.Click += (_, _) => this.OnExit();
         BtCancel.Click += (_, _) => this.OnCancelClicked();
         //ClienteTb.ItemsSource = ClientesViewModel.Clientes;
-        //TrabajadorTb.ItemsSource= EmpleadosViewModel.Empleados;
+        //EmpleadoTb.ItemsSource= EmpleadosViewModel.Empleados;
     }
 
    
 
     public ReparacionDlg()
     {
+       
         InitializeComponent();
-        
         BtOk.Click += (_, _) => this.OnExit();
         BtCancel.Click += (_, _) => this.OnCancelClicked();
+        //ClienteTb.ItemsSource = ClientesViewModel.Clientes;
+        //EmpleadoTb.ItemsSource= EmpleadosViewModel.Empleados;
         
     }
 

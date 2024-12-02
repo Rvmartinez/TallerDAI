@@ -1,10 +1,8 @@
-using Avalonia;
+
 using Avalonia.Controls;
-using Avalonia.Markup.Xaml;
-using System.Diagnostics;
-using System.Text.RegularExpressions;
+
 using TallerDIA.Models;
-using TallerDIA.ViewModels;
+
 
 namespace TallerDIA.Views.Dialogs;
 
@@ -17,8 +15,7 @@ public partial class ReparacionNavegarDlg : Window
         InitializeComponent();
        
         BtCancel.Click += (_, _) => this.OnCancelClicked();
-        //ClienteTb.ItemsSource = ClientesViewModel.Clientes;
-        //TrabajadorTb.ItemsSource= EmpleadosViewModel.Empleados;
+        
     }
 
    
@@ -34,8 +31,8 @@ public partial class ReparacionNavegarDlg : Window
 
      void OnBtTrabajadorClicked()
     {
-       MainWindowViewModel mainWindow = Application.Current.ApplicationLifetime as MainWindowViewModel;
-       mainWindow.GoToTrabajador();
+       //MainWindowViewModel mainWindow = Application.Current.ApplicationLifetime as MainWindowViewModel;
+       //mainWindow.GoToTrabajador();
     }
 
     void OnCancelClicked()

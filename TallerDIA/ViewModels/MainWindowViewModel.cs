@@ -51,11 +51,6 @@ namespace TallerDIA.ViewModels
             CurrentPage = (ViewModelBase)instance;
         }
 
-        public void GoToTrabajador()
-        {
-            var instance = Activator.CreateInstance(PaneItems[2].GetType());
-            if(instance is null ) return;
-            CurrentPage = (ViewModelBase)instance;
-        }
+       
     }
 }

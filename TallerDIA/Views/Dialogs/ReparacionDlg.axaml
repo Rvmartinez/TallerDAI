@@ -6,7 +6,7 @@
 		Height="250"
 		Width="250"
         x:Class="TallerDIA.Views.Dialogs.ReparacionDlg"
-		xmlns:models="using:TallerDIA.Models"
+		
 		WindowStartupLocation="CenterOwner"
         Title="Reparacion">
 	<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -14,9 +14,9 @@
 			<TextBlock Text="Asunto"/>
 			<TextBox x:Name="AsuntoTb"/>
 			<TextBlock Text="Cliente"/>
-			<AutoCompleteBox x:Name="ClienteTb"/>
+			<AutoCompleteBox x:Name="ClienteTb" FilterMode="Contains"/>
 			<TextBlock Text="Trabajador"/>
-			<AutoCompleteBox x:Name="TrabajadorTb"/>
+			<AutoCompleteBox x:Name="EmpleadoTb" FilterMode="Contains"/>
 			<TextBlock Text="Nota"/>
 			<TextBox x:Name="NotaTb" AcceptsReturn="True"/>
 			
