@@ -21,17 +21,18 @@ namespace GraficosTaller.UI {
 
 
            ConfigChartFunction(config);
-            
-            GenerateYearsCombobox(reparaciones);
-            if (annoSelected == 0) annoSelected = Convert.ToInt32(Annos.Items[0].ToString());
+           GenerateYearsCombobox(reparaciones);
+
+           
+            if (annoSelected == 0) annoSelected = Convert.ToInt32(Annos.Items[0]?.ToString());
 
 
-            ReparacionesAnuales(reparaciones, annoSelected);
+            UpdateChart(reparaciones);
             Rango.SelectionChanged += (sender, args) =>
             {
                 mostrandoAnuales = (Rango.SelectedIndex == 1);
 
-                if(Rango.SelectedIndex == 0) GenerateClientCombobox(reparaciones, annoSelected);
+                if(Rango.SelectedIndex == 0 && clienteFilter is null) GenerateClientCombobox(reparaciones, annoSelected);
 
                 UpdateChart(reparaciones);
             };
@@ -78,6 +79,18 @@ namespace GraficosTaller.UI {
                     isFechaFin = (bool)config.FechaFin;
                     ComputaText.IsVisible = false;
                     Computa.IsVisible = false;
+                }
+
+                if (config.Cliente != null)
+                {
+                    clienteFilter = config.Cliente;
+                    ClientesText.IsVisible = false;
+                    
+                }
+
+                if (config.Modo == ConfigChart.ModoVision.Anual && config.Cliente is not null)
+                {
+                    throw new ArgumentException("Esta grafica no soporta vision anual si seleccionas un cliente");
                 }
             }
         }
@@ -128,6 +141,7 @@ namespace GraficosTaller.UI {
             }
             clientes.SelectionChanged += (sender, args) =>
             {
+                clienteFilter = clientes.Items[clientes.SelectedIndex]?.ToString();
                 UpdateChart(reparaciones);
             };
 
@@ -149,7 +163,8 @@ namespace GraficosTaller.UI {
 
         private void UpdateChart(Reparaciones reparaciones)
         {
-            if (Rango.SelectedIndex == 0)
+            
+            if (!mostrandoAnuales)
             {
                 ReparacionesMensuales(annoSelected, reparaciones);
                 
@@ -169,9 +184,13 @@ namespace GraficosTaller.UI {
             List<int> valores = new List<int>();
             Reparaciones? reparacionesCliente;
 
-            if (_clientes != null  && _clientes.Items.Count > 0)
+            if (_clientes != null  && _clientes.Items.Count > 0 && clienteFilter is null)
             {
                 reparacionesCliente = reparaciones.GetReparacionesCliente(_clientes.Items[_clientes?.SelectedIndex ?? 0]?.ToString() ?? "");
+            }
+            else if (clienteFilter is not null)
+            {
+                reparacionesCliente = reparaciones.GetReparacionesCliente(clienteFilter);
             }
             else 
             {
@@ -181,7 +200,7 @@ namespace GraficosTaller.UI {
             for (int i = 1; i <= 12; i++)
             {
                 if(reparacionesCliente == null) valores.Add(0);
-                else if(_clientes != null&& _clientes.Items.Count != 0) valores.Add(reparacionesCliente.GetReparacionesMes(i, anno, isFechaFin)); 
+                else if((_clientes != null && _clientes.Items.Count != 0) || clienteFilter is not null) valores.Add(reparacionesCliente.GetReparacionesMes(i, anno, isFechaFin)); 
             }
 
             this.Chart.Values = valores.ToArray();
@@ -214,6 +233,6 @@ namespace GraficosTaller.UI {
         private bool mostrandoAnuales;
         private bool rangoFilter = false;
         private bool isFechaFin = true;
-        private string clienteFilter = "";
+        private string? clienteFilter = null;
     }
 }
