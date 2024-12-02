@@ -2,7 +2,7 @@
 
 namespace GraficosTaller.Corefake;
 
-public class Reparacion
+public class Reparacion : IReparacion
 {
     public required DateTime FechaInicio { get; init; }
     public DateTime? FechaFin { get; set; }
