@@ -11,12 +11,9 @@
              x:Class="TallerDIA.Views.EmpleadosView">
     <UserControl.Styles>
         <Style Selector="Button">
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Width" Value="175"/>
-            <Setter Property="Height" Value="30"/>
-            <Setter Property="CornerRadius" Value="9"/>
-            <Setter Property="Margin" Value="5 10 1 1"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="HorizontalAlignment" Value="Right"></Setter>
+            <Setter Property="VerticalAlignment" Value="Top"></Setter>
         </Style>
     </UserControl.Styles>
     <Design.DataContext>
@@ -25,25 +22,26 @@
         <vm:EmpleadosViewModel/>
     </Design.DataContext>
     <DockPanel Name="PanelMain" >
-        <StackPanel Name="PanelEntrada">
-            <StackPanel Name="ControlPanel">
-                    <TextBlock Name="Titulo" Margin="8" FontWeight="Bold">EMPLEADOS</TextBlock>
-                    <TextBlock Margin="4 5 1 1">DNI:</TextBlock>
-                    <TextBox Name="tbDni" MinWidth="100" Margin="5 5 1 1" Text="{Binding EmpleadoActual.Dni}"></TextBox>
-                    <TextBlock Margin="4 5 1 1">Nombre:</TextBlock>
-                    <TextBox Name="tbNombre" MinWidth="100" Margin="5 5 1 1" Text="{Binding EmpleadoActual.Nombre}"></TextBox>
-                    <TextBlock Margin="4 5 1 1">Email:</TextBlock>
-                    <TextBox Name="tbEmail" MinWidth="100" Margin="5 5 1 1" Text="{Binding EmpleadoActual.Email}"></TextBox>
-                    <Button Name="btAnadirEmpleado" Margin="5 20 1 1" Command="{Binding btAnadirEmpleado_OnClick}">Añadir empleado</Button>
-                    <Button Name="btModificarEmpleado" Command="{Binding btModificarEmpleado_OnClick}">Modificar empleado</Button>
-                    <Button Name="btEliminarEmpleado" Command="{Binding btEliminarEmpleado_OnClick}">Eliminar empleado</Button>
-                    <Button Name="btNuevoEmpleado" Command="{Binding btNuevoEmpleado_OnClick}">Limpiar selección</Button>
-                    <Button Name="btTicketsSelecc" Command="{Binding btTicketsSelecc_OnClick}">Ver tickets del Empleado</Button>
-            </StackPanel>
-        </StackPanel>
-        <DockPanel Name="PanelSalida">
+        <DockPanel Name="PanelEntrada" Dock="Top">
+            <Grid RowDefinitions="1*, 1*, 1*" ColumnDefinitions="1*, 1*, 1*, 1*, 40, 40, 40, 40" >
+                <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" Name="Titulo" FontSize="18" Margin="10">Listado de empleados</TextBlock>
+                <TextBlock Grid.Column="0" Grid.Row="1">DNI:</TextBlock>
+                <TextBox Grid.Column="0" Grid.Row="2" Margin="3 0 0 3" Name="tbDni" MinWidth="90" Text="{Binding EmpleadoActual.Dni}"></TextBox>
+                <TextBlock Grid.Column="1" Grid.Row="1">Nombre:</TextBlock>
+                <TextBox Grid.Column="1" Grid.Row="2" Margin="3 0 0 3" Name="tbNombre" MinWidth="90" Text="{Binding EmpleadoActual.Nombre}"></TextBox>
+                <TextBlock Grid.Column="2" Grid.Row="1">Email:</TextBlock>
+                <TextBox Grid.Column="2" Grid.Row="2" Margin="3 0 0 3" Name="tbEmail" MinWidth="90" Text="{Binding EmpleadoActual.Email}"></TextBox>
+                <Button Grid.Column="3" Grid.Row="2" icon:Attached.Icon="mdi-account-plus" Name="btAnadirEmpleado" Command="{Binding btAnadirEmpleado_OnClick}"></Button>
+                <Button Grid.Column="4" Grid.Row="2" icon:Attached.Icon="mdi-account-minus" Name="btEliminarEmpleado" Command="{Binding btEliminarEmpleado_OnClick}"></Button>
+                <Button Grid.Column="5" Grid.Row="2" icon:Attached.Icon="mdi-account-sync" Name="btModificarEmpleado" Command="{Binding btModificarEmpleado_OnClick}"></Button>
+                <Button Grid.Column="6" Grid.Row="2" icon:Attached.Icon="mdi-plus" Name="btNuevoEmpleado" Command="{Binding btNuevoEmpleado_OnClick}"></Button>
+                <Button Grid.Column="7" Grid.Row="2" icon:Attached.Icon="mdi-eye-arrow-right" Name="btTicketsSelecc" Command="{Binding btTicketsSelecc_OnClick}"></Button>
+            </Grid>
+        </DockPanel>
+        <DockPanel Name="PanelSalida"  Dock="Bottom">
             <DockPanel Name="PanelData" Dock="Top" VerticalAlignment="Stretch">
-                <DataGrid x:Name="DgEmpleados" Margin="20"  ItemsSource="{Binding Empleados}" 
+                <DataGrid x:Name="DgEmpleados"
+                          ItemsSource="{Binding Empleados}" 
                           HorizontalAlignment="Right" VerticalAlignment="Stretch"
                           MinHeight="250"
                           BorderThickness="1" BorderBrush="Purple" CanUserReorderColumns="true"  IsReadOnly="True" SelectedItem="{Binding EmpleadoSeleccionado}">
@@ -55,18 +53,18 @@
                 </DataGrid>
             </DockPanel>
             <DockPanel Name="PanelAvisos" Dock="Bottom" >
-                <Border Margin="30 20 20 20" BorderThickness="1" BorderBrush="Purple">
-                    <StackPanel Margin="70 10 20 20">
-                        <TextBlock MinWidth="200" Margin="7" Name="tblAvisos" FontWeight="Bold" Text="{Binding Aviso}">Bienvenido a la ventana de gestón de Empleados del Taller.</TextBlock>
-                        <TextBlock MinWidth="200" Margin="6" Name="tblSeleccionado" FontWeight="Bold">EMPLEADO SELECCIONADO:</TextBlock>
-                        <TextBlock FontWeight="Bold" Margin="6">DNI:</TextBlock>
-                        <TextBlock Name="tblSelecDni" Text="{Binding EmpleadoSeleccionado.Dni}"></TextBlock>
-                        <TextBlock FontWeight="Bold" Margin="6">Nombre:</TextBlock>
-                        <TextBlock Name="tblSelecNombre" Text="{Binding EmpleadoSeleccionado.Nombre}"></TextBlock>
-                        <TextBlock FontWeight="Bold" Margin="6">Email:</TextBlock>
-                        <TextBlock Name="tblSelecEmail" Text="{Binding EmpleadoSeleccionado.Email}"></TextBlock>
-                    </StackPanel>
-                </Border>
+                <StackPanel>
+                    <TextBlock MinWidth="200" Margin="7" Name="tblAvisos" FontWeight="Bold" Text="{Binding Aviso}">Bienvenido a la ventana de gestón de Empleados del Taller.</TextBlock>
+                    <Border BorderThickness="1" BorderBrush="Purple">
+                    </Border>
+                    <TextBlock MinWidth="200" Margin="6" Name="tblSeleccionado" FontWeight="Bold">EMPLEADO SELECCIONADO:</TextBlock>
+                    <TextBlock FontWeight="Bold" Margin="3">DNI:</TextBlock>
+                    <TextBlock Name="tblSelecDni" Text="{Binding EmpleadoSeleccionado.Dni}"></TextBlock>
+                    <TextBlock FontWeight="Bold" Margin="3">Nombre:</TextBlock>
+                    <TextBlock Name="tblSelecNombre" Text="{Binding EmpleadoSeleccionado.Nombre}"></TextBlock>
+                    <TextBlock FontWeight="Bold" Margin="3">Email:</TextBlock>
+                    <TextBlock Name="tblSelecEmail" Text="{Binding EmpleadoSeleccionado.Email}"></TextBlock>
+                </StackPanel>
             </DockPanel>
         </DockPanel>
     </DockPanel>

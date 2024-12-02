@@ -10,6 +10,7 @@ using TallerDIA.ViewModels;
 namespace TallerDIA.ViewModels;
 public partial class EmpleadosViewModel : ViewModelBase
 {
+    
     public EmpleadosViewModel()
     {
         Empleados = ControlesEmpleado.ObtenerListaEmpleados();/**/
@@ -57,7 +58,6 @@ public partial class EmpleadosViewModel : ViewModelBase
         }
         //MostrarTickets(empleado);
     }*/
-
     private ObservableCollection<Empleado> _Empleados;
     public  ObservableCollection<Empleado>  Empleados
     {

@@ -8,6 +8,8 @@ namespace TallerDIA.Utils;
 
 public static class ControlesEmpleado
 {
+    public static List<Empleado> empleadosEstatica { get; set; }
+
     public static ObservableCollection<Empleado> ObtenerListaEmpleados()
     {
         DateTime reparacion1 = new DateTime(2019,06,11,10,15,10);
@@ -22,6 +24,7 @@ public static class ControlesEmpleado
         {
             empleado1,empleado2
         };
+        empleadosEstatica=empleados;
         ObservableCollection<Empleado> emps = new ObservableCollection<Empleado>(empleados);/**/
         return emps;
     }
@@ -55,7 +58,7 @@ public static class ControlesEmpleado
     {
         String regexEmail = @"^[\w.-]+@[\w.-]+\.\w+$";
         String regexDni = @"^[0-9]{8}[a-zA-Z]$";
-        if (Regex.IsMatch(regexDni, empleado.Dni) && Regex.IsMatch(regexEmail, empleado.Email) )
+        if (Regex.IsMatch(empleado.Dni.Trim(), regexDni) && Regex.IsMatch(empleado.Email.Trim(), regexEmail) )
         {
             return true;
         }
