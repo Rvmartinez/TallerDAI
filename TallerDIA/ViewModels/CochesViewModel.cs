@@ -11,6 +11,21 @@ using Avalonia;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
 using ColorTextBlock.Avalonia;
+using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
+using CommunityToolkit.Mvvm.Input;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks.Dataflow;
+using TallerDIA.Models;
+using TallerDIA.ViewModels;
+using TallerDIA.Views.Dialogs;
+using MsBox.Avalonia;
+using MsBox.Avalonia.Enums;
+using System.Threading.Tasks;
 
 namespace TallerDIA.ViewModels;
 

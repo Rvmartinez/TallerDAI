@@ -14,18 +14,9 @@
     mc:Ignorable="d">
     <UserControl.Styles>
         <Style Selector="Button">
-<<<<<<< HEAD
             <Setter Property="FontSize" Value="24"/>
             <Setter Property="HorizontalAlignment" Value="Right"></Setter>
             <Setter Property="VerticalAlignment" Value="Top"></Setter>
-=======
-            <Setter Property="FontSize" Value="16" />
-            <Setter Property="FontWeight" Value="Bold" />
-            <Setter Property="Width" Value="175" />
-            <Setter Property="Height" Value="30" />
-            <Setter Property="CornerRadius" Value="9" />
-            <Setter Property="Margin" Value="5 10 1 1" />
->>>>>>> fc05d5429068af5b079b460ba4faf9691c330000
         </Style>
         <Style Selector="Button#btAnadirEmpleado">
             <Setter Property="ToolTip.Tip" Value="Añadir empleado."></Setter>    
@@ -51,7 +42,6 @@
         -->
         <vm:EmpleadosViewModel />
     </Design.DataContext>
-<<<<<<< HEAD
     <DockPanel Name="PanelMain" >
         <DockPanel Name="PanelEntrada" Dock="Top">
             <Grid RowDefinitions="1*, 1*, 1*" ColumnDefinitions="1*, 1*, 1*, 1*, 40, 40, 40, 40" >
@@ -76,64 +66,7 @@
                           HorizontalAlignment="Right" VerticalAlignment="Stretch"
                           MinHeight="250"
                           BorderThickness="1" BorderBrush="Purple" CanUserReorderColumns="true"  IsReadOnly="True" SelectedItem="{Binding EmpleadoSeleccionado}">
-=======
-    <DockPanel Name="PanelMain">
-        <StackPanel Name="PanelEntrada">
-            <StackPanel Name="ControlPanel">
-                <TextBlock
-                    Name="Titulo"
-                    Margin="8"
-                    FontWeight="Bold">
-                    EMPLEADOS
-                </TextBlock>
-                <TextBlock Margin="4,5,1,1">DNI:</TextBlock>
-                <TextBox
-                    Name="tbDni"
-                    MinWidth="100"
-                    Margin="5,5,1,1"
-                    Text="{Binding EmpleadoActual.Dni}" />
-                <TextBlock Margin="4,5,1,1">Nombre:</TextBlock>
-                <TextBox
-                    Name="tbNombre"
-                    MinWidth="100"
-                    Margin="5,5,1,1"
-                    Text="{Binding EmpleadoActual.Nombre}" />
-                <TextBlock Margin="4,5,1,1">Email:</TextBlock>
-                <TextBox
-                    Name="tbEmail"
-                    MinWidth="100"
-                    Margin="5,5,1,1"
-                    Text="{Binding EmpleadoActual.Email}" />
-                <Button
-                    Name="btAnadirEmpleado"
-                    Margin="5,20,1,1"
-                    Command="{Binding btAnadirEmpleado_OnClick}">
-                    Añadir empleado
-                </Button>
-                <Button Name="btModificarEmpleado" Command="{Binding btModificarEmpleado_OnClick}">Modificar empleado</Button>
-                <Button Name="btEliminarEmpleado" Command="{Binding btEliminarEmpleado_OnClick}">Eliminar empleado</Button>
-                <Button Name="btNuevoEmpleado" Command="{Binding btNuevoEmpleado_OnClick}">Limpiar selección</Button>
-            </StackPanel>
-        </StackPanel>
-        <DockPanel Name="PanelSalida">
-            <DockPanel
-                Name="PanelData"
-                VerticalAlignment="Stretch"
-                Dock="Top">
-                <DataGrid
-                    x:Name="DgEmpleados"
-                    MinHeight="250"
-                    Margin="20"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Stretch"
-                    BorderBrush="Purple"
-                    BorderThickness="1"
-                    CanUserReorderColumns="true"
-                    IsReadOnly="True"
-                    ItemsSource="{Binding Empleados}"
-                    SelectedItem="{Binding EmpleadoSeleccionado}">
->>>>>>> fc05d5429068af5b079b460ba4faf9691c330000
-                    <DataGrid.Columns>
+                <DataGrid.Columns>
                         <DataGridTextColumn
                             Width="auto"
                             Binding="{Binding Dni, Mode=TwoWay}"
@@ -149,42 +82,10 @@
                     </DataGrid.Columns>
                 </DataGrid>
             </DockPanel>
-<<<<<<< HEAD
             <DockPanel Name="PanelAvisos" Dock="Bottom" >
                 <StackPanel>
                     <TextBlock MinWidth="200" Margin="7" Name="tblAvisos" FontWeight="Bold" Text="{Binding Aviso}">Bienvenido a la ventana de gestón de Empleados del Taller.</TextBlock>
                 </StackPanel>
-=======
-            <DockPanel Name="PanelAvisos" Dock="Bottom">
-                <Border
-                    Margin="30,20,20,20"
-                    BorderBrush="Purple"
-                    BorderThickness="1">
-                    <StackPanel Margin="70,10,20,20">
-                        <TextBlock
-                            Name="tblAvisos"
-                            MinWidth="200"
-                            Margin="7"
-                            FontWeight="Bold"
-                            Text="{Binding Aviso}">
-                            Bienvenido a la ventana de gestón de Empleados del Taller.
-                        </TextBlock>
-                        <TextBlock
-                            Name="tblSeleccionado"
-                            MinWidth="200"
-                            Margin="6"
-                            FontWeight="Bold">
-                            EMPLEADO SELECCIONADO:
-                        </TextBlock>
-                        <TextBlock Margin="6" FontWeight="Bold">DNI:</TextBlock>
-                        <TextBlock Name="tblSelecDni" Text="{Binding EmpleadoSeleccionado.Dni}" />
-                        <TextBlock Margin="6" FontWeight="Bold">Nombre:</TextBlock>
-                        <TextBlock Name="tblSelecNombre" Text="{Binding EmpleadoSeleccionado.Nombre}" />
-                        <TextBlock Margin="6" FontWeight="Bold">Email:</TextBlock>
-                        <TextBlock Name="tblSelecEmail" Text="{Binding EmpleadoSeleccionado.Email}" />
-                    </StackPanel>
-                </Border>
->>>>>>> fc05d5429068af5b079b460ba4faf9691c330000
             </DockPanel>
         </DockPanel>
     </DockPanel>
