@@ -6,7 +6,6 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using TallerDIA.Utils;
 using TallerDIA.ViewModels;
-using Test4TallerAfc.ViewModels;
 
 namespace TallerDIA.ViewModels
 {
@@ -31,12 +30,13 @@ namespace TallerDIA.ViewModels
         [ObservableProperty]
         private ViewModelBase _currentPage = new HomeViewModel();
 
-        public ObservableCollection<PaneListItemTemplate> PaneItems { get; } = new()
-        {
+        public ObservableCollection<PaneListItemTemplate> PaneItems { get; } =
+        [
             new PaneListItemTemplate(typeof(HomeViewModel),"mdi-home"),
             new PaneListItemTemplate(typeof(ClientesViewModel),"mdi-account-multiple"),
-            new PaneListItemTemplate(typeof(EmpleadosViewModel),"mdi-account-multiple")
-        };
+            new PaneListItemTemplate(typeof(EmpleadosViewModel),"mdi-account-hard-hat"),
+            new PaneListItemTemplate(typeof(CochesViewModel),"mdi-car-back")
+        ];
 
         [ObservableProperty]
         private PaneListItemTemplate _selectedPaneItem;

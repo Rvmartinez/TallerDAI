@@ -12,6 +12,7 @@ using TallerDIA.ViewModels;
 using TallerDIA.Views.Dialogs;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
+using System.Threading.Tasks;
 
 namespace TallerDIA.ViewModels;
 
@@ -24,7 +25,6 @@ public partial class ClientesViewModel : ViewModelBase
         set
         {
             SetProperty(ref _SelectedClient, value);
-            OnSelectedChanged(value);
         }
     }
 
@@ -38,51 +38,25 @@ public partial class ClientesViewModel : ViewModelBase
         }
     }
 
-    private async void OnSelectedChanged(Cliente value)
+    [RelayCommand]
+    public async Task EditClientCommand()
     {
-        if (value == null) return;
+        var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop ? desktop.MainWindow : null;
 
-        if(ToDelete)
+        var ClienteDlg = new ClienteDlg(SelectedClient);
+        await ClienteDlg.ShowDialog(mainWindow);
+
+        if (!ClienteDlg.IsCancelled)
         {
-            var box = MessageBoxManager
-           .GetMessageBoxStandard("Atención", "Los datos se borrarán irreversiblemente.¿Desea continuar?", ButtonEnum.OkCancel);
+            Cliente toupdate = Clientes.Where(c => c.IdCliente == SelectedClient.IdCliente).FirstOrDefault();
+            toupdate.DNI = ClienteDlg.DniTB.Text;
+            toupdate.Nombre = ClienteDlg.NombreTB.Text;
+            toupdate.Email = ClienteDlg.EmailTB.Text;
 
-            var result = await box.ShowAsync();
-            if (result == ButtonResult.Ok)
-            {
+            SelectedClient = null;
+            ForceUpdateUI();
 
-                SelectedClient = null;
-                BajaCliente(value);
-            }else
-            {
-
-                SelectedClient = null;
-                return;
-            }
         }
-        else
-        {
-            var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop ? desktop.MainWindow : null;
-
-            var ClienteDlg = new ClienteDlg(value);
-            await ClienteDlg.ShowDialog(mainWindow);
-
-            if (!ClienteDlg.IsCancelled)
-            {
-                //AddCliente(new Cliente() { DNI = ClienteDlg.DniTB.Text, Email = ClienteDlg.EmailTB.Text, Nombre = ClienteDlg.NombreTB.Text, IdCliente = this.GetLastClientId() });
-
-                Cliente toupdate = Clientes.Where(c => c.IdCliente == value.IdCliente).FirstOrDefault();
-                toupdate.DNI = ClienteDlg.DniTB.Text;
-                toupdate.Nombre = ClienteDlg.NombreTB.Text;
-                toupdate.Email = ClienteDlg.EmailTB.Text;
-
-                ForceUpdateUI();
-
-            }
-        }
-
-
-        
     }
 
     private ObservableCollection<Cliente> _Clientes;
@@ -114,13 +88,29 @@ public partial class ClientesViewModel : ViewModelBase
         };
     }
     [RelayCommand]
-    public async void OnDeleteCommand()
+    public async Task OnDeleteCommand()
     {
-        ToDelete = !ToDelete;
+        var box = MessageBoxManager
+           .GetMessageBoxStandard("Atención", "Los datos se borrarán irreversiblemente.¿Desea continuar?", ButtonEnum.OkCancel);
+
+        var result = await box.ShowAsync();
+        if (result == ButtonResult.Ok)
+        {
+
+            BajaCliente(SelectedClient);
+            SelectedClient = null;
+
+        }
+        else
+        {
+
+            SelectedClient = null;
+            return;
+        }
     }
 
     [RelayCommand]
-    public async void AddClientCommand()
+    public async Task AddClientCommand()
     {
         var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop ? desktop.MainWindow : null;
         var ClienteDlg = new ClienteDlg();

@@ -1,5 +1,5 @@
 <UserControl
-    x:Class="TallerDIA.Views.ClientesView"
+    x:Class="TallerDIA.Views.CochesView"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -7,11 +7,16 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:TallerDIA.Models"
     xmlns:util="using:TallerDIA.Utils"
+    xmlns:utils="clr-namespace:TallerDIA.Utils"
     xmlns:vm="using:TallerDIA.ViewModels"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    x:DataType="vm:ClientesViewModel"
+    x:DataType="vm:CochesViewModel"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <!--  Registro del conversor  -->
+        <utils:BooleanToTBColorConverter x:Key="BooleanToTBColorConverter" />
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
@@ -30,7 +35,7 @@
                 Grid.Column="0"
                 Margin="10"
                 FontSize="18"
-                Text="Listado de Clientes" />
+                Text="Listado de Coches" />
             <StackPanel
                 Grid.Column="1"
                 HorizontalAlignment="Right"
@@ -38,30 +43,25 @@
                 <Button
                     Margin="0,0,15,0"
                     icon:Attached.Icon="mdi-account-plus"
-                    Command="{Binding AddClientCommand}"
+                    Command="{Binding SubirCocheCommand}"
                     FontSize="24" />
                 <Button
-                    Margin="0,0,15,0"
-                    icon:Attached.Icon="mdi-account-edit"
-                    Command="{Binding EditClientCommand}"
-                    FontSize="24" />
-                <Button
-                    Margin="0,0,15,0"
                     icon:Attached.Icon="mdi-account-minus"
-                    Command="{Binding OnDeleteCommand}"
+                    Background="{Binding ToDelete, Converter={StaticResource BooleanToTBColorConverter}}"
+                    Command="{Binding BorrarCocheCommand}"
                     FontSize="24" />
-
             </StackPanel>
         </Grid>
         <DataGrid
-            x:Name="dgClientes"
+            Name="DatagridCoches"
             Grid.Row="1"
+            AutoGenerateColumns="False"
             BorderBrush="Purple"
             BorderThickness="1"
             CanUserReorderColumns="true"
             IsReadOnly="True"
-            ItemsSource="{Binding Clientes}"
-            SelectedItem="{Binding SelectedClient}">
+            ItemsSource="{Binding Coches}"
+            SelectedItem="{Binding SelectedCar}">
             <DataGrid.Styles>
                 <Style Selector="DataGridColumnHeader">
                     <Setter Property="FontSize" Value="15" />
@@ -70,22 +70,9 @@
                 </Style>
             </DataGrid.Styles>
             <DataGrid.Columns>
-                <DataGridTextColumn
-                    Width="auto"
-                    Binding="{Binding IdCliente}"
-                    Header="ID" />
-                <DataGridTextColumn
-                    Width="*"
-                    Binding="{Binding DNI}"
-                    Header="DNI" />
-                <DataGridTextColumn
-                    Width="*"
-                    Binding="{Binding Nombre}"
-                    Header="Nombre" />
-                <DataGridTextColumn
-                    Width="*"
-                    Binding="{Binding Email}"
-                    Header="Email" />
+                <DataGridTextColumn Binding="{Binding Matricula}" Header="Matricula" />
+                <DataGridTextColumn Binding="{Binding Marca}" Header="Marca" />
+                <DataGridTextColumn Binding="{Binding Modelo}" Header="Modelo" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
