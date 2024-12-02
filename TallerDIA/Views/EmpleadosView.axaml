@@ -61,8 +61,16 @@
         </DockPanel>
         <DockPanel Name="PanelSalida"  Dock="Bottom">
             <DockPanel Name="PanelData" Dock="Top" VerticalAlignment="Stretch">
+                <Grid Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" Watermark="Búsqueda" Text="{Binding FilterText}"></TextBox>
+                    <ComboBox Grid.Column="1" ItemsSource="{Binding FilterModes}" SelectedIndex="{Binding SelectedFilterMode}"></ComboBox>
+                </Grid>
                 <DataGrid x:Name="DgEmpleados"
-                          ItemsSource="{Binding Empleados}" 
+                          ItemsSource="{Binding FilteredItems}"
                           HorizontalAlignment="Right" VerticalAlignment="Stretch"
                           MinHeight="250"
                           BorderThickness="1" BorderBrush="Purple" CanUserReorderColumns="true"  IsReadOnly="True" SelectedItem="{Binding EmpleadoSeleccionado}">
