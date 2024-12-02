@@ -5,7 +5,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Threading.Tasks.Dataflow;
 using TallerDIA.Models;
 using TallerDIA.ViewModels;
@@ -13,12 +15,14 @@ using TallerDIA.Views.Dialogs;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
 using System.Threading.Tasks;
+using TallerDIA.Utils;
 
 namespace TallerDIA.ViewModels;
 
-public partial class ClientesViewModel : ViewModelBase
+public partial class ClientesViewModel : FilterViewModel<Cliente>
 {
     private Cliente _SelectedClient;
+
     public Cliente SelectedClient
     {
         get => _SelectedClient;
@@ -60,10 +64,12 @@ public partial class ClientesViewModel : ViewModelBase
     }
 
     private ObservableCollection<Cliente> _Clientes;
-
-    public  ObservableCollection<Cliente> Clientes
+    public ObservableCollection<Cliente> Clientes
     {
-        get => _Clientes;
+        get
+        {
+            return _Clientes;
+        }
         set
         {
             SetProperty(ref _Clientes, value);
@@ -121,7 +127,13 @@ public partial class ClientesViewModel : ViewModelBase
             Cliente c  = new Cliente() { DNI = ClienteDlg.DniTB.Text, Email = ClienteDlg.EmailTB.Text, Nombre = ClienteDlg.NombreTB.Text, IdCliente = this.GetLastClientId()+1 };
             if (CanAddCliente(c))
             {
-                Clientes.Add(c);
+                List<Cliente> temp = Clientes.ToList();
+                Clientes.Clear();
+
+                temp.Add(c);
+                Clientes = new ObservableCollection<Cliente>(temp);
+                OnPropertyChanged(nameof(Clientes));
+
             }
         }
         
@@ -160,4 +172,34 @@ public partial class ClientesViewModel : ViewModelBase
         
     }
 
+    public override ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>(["Nombre","DNI","Email","ID Cliente"]);
+
+    public override ObservableCollection<Cliente> FilteredItems
+    {
+        get
+        {
+            if (FilterText != "")
+            {
+
+                switch (FilterModes[SelectedFilterMode])
+                {
+                    case "Nombre":
+                        return new ObservableCollection<Cliente>(Clientes.Where(c => c.Nombre.Contains(FilterText)));
+                    case "DNI":
+                        return new ObservableCollection<Cliente>(Clientes.Where(c => c.DNI.Contains(FilterText)));
+                    case "Email":
+                        return new ObservableCollection<Cliente>(Clientes.Where(c => c.Email.Contains(FilterText)));
+                    case "ID Cliente":
+                        return new ObservableCollection<Cliente>(Clientes.Where(c => c.IdCliente.ToString().Contains(FilterText)));
+                    default:
+                        // maybe this should be an exception or unreachable
+                        return Clientes;
+                }
+            }
+            else
+            {
+                return Clientes;
+            }
+        }
+    }
 }

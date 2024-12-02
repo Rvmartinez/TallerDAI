@@ -68,10 +68,17 @@
             </StackPanel>
         </StackPanel>
         <DockPanel Name="PanelSalida">
-            <DockPanel
+            <StackPanel
                 Name="PanelData"
-                VerticalAlignment="Stretch"
-                Dock="Top">
+                VerticalAlignment="Stretch">
+                <Grid Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" Watermark="Búsqueda" Text="{Binding FilterText}"></TextBox>
+                    <ComboBox Grid.Column="1" ItemsSource="{Binding FilterModes}" SelectedIndex="{Binding SelectedFilterMode}"></ComboBox>
+                </Grid>
                 <DataGrid
                     x:Name="DgEmpleados"
                     MinHeight="250"
@@ -82,7 +89,7 @@
                     BorderThickness="1"
                     CanUserReorderColumns="true"
                     IsReadOnly="True"
-                    ItemsSource="{Binding Empleados}"
+                    ItemsSource="{Binding FilteredItems}"
                     SelectedItem="{Binding EmpleadoSeleccionado}">
                     <DataGrid.Columns>
                         <DataGridTextColumn
@@ -99,7 +106,7 @@
                             Header="Email" />
                     </DataGrid.Columns>
                 </DataGrid>
-            </DockPanel>
+            </StackPanel>
             <DockPanel Name="PanelAvisos" Dock="Bottom">
                 <Border
                     Margin="30,20,20,20"

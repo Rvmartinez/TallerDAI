@@ -1,13 +1,14 @@
-﻿using CommunityToolkit.Mvvm.Input;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.InteropServices.JavaScript;
+using CommunityToolkit.Mvvm.Input;
 using TallerDIA.Models;
 using TallerDIA.Utils;
 using TallerDIA.ViewModels;
 namespace TallerDIA.ViewModels;
-public partial class EmpleadosViewModel : ViewModelBase
+public partial class EmpleadosViewModel : FilterViewModel<Empleado>
 {
     public EmpleadosViewModel()
     {
@@ -129,7 +130,6 @@ public partial class EmpleadosViewModel : ViewModelBase
         }
         EmpleadoActual=new Empleado();
     }
-
     [RelayCommand]
     public void btModificarEmpleado_OnClick()
     {
@@ -180,4 +180,48 @@ public partial class EmpleadosViewModel : ViewModelBase
         ActualizarDgEmpleados();
         Aviso = "Entradas y empleado seleccionado reseteados.";
     }
-}
+
+    public override ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>(["DNI","Nombre","Email","Tickets anteriores a", "Tickets posteriores a"]);
+
+    public override ObservableCollection<Empleado> FilteredItems
+    {
+        get
+        {
+            if (FilterText != "")
+            {
+                DateTime date;
+                try
+                {
+                    switch (FilterModes[SelectedFilterMode])
+                    {
+                        case "DNI":
+                            return new ObservableCollection<Empleado>(Empleados.Where(e => e.Dni.Contains(FilterText)));
+                        case "Nombre":
+                            return new ObservableCollection<Empleado>(Empleados.Where(e => e.Nombre.Contains(FilterText)));
+                        case "Email":
+                            return new ObservableCollection<Empleado>(Empleados.Where(e => e.Email.Contains(FilterText)));
+                        case "Tickets anteriores a":
+                            date = DateTime.Parse(FilterText);
+                            return new ObservableCollection<Empleado>(Empleados.Where(e => e.Tickets.Any(t => t.Date <= date)));
+                        case "Tickets posteriores a":
+                            date = DateTime.Parse(FilterText);
+                            return new ObservableCollection<Empleado>(Empleados.Where(e => e.Tickets.Any(t => t.Date >= date)));
+                        default:
+                            return Empleados;
+                    }
+                }
+                catch (FormatException e)
+                {
+                    //TODO: find a good way to communicate this to the user
+                    Console.WriteLine("Fecha de busqueda no válida");
+                    return Empleados;
+                }
+            }
+            else
+            {
+                return Empleados;
+            }
+        }
+    }
+};
+
