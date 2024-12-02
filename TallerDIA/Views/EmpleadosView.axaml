@@ -15,6 +15,22 @@
             <Setter Property="HorizontalAlignment" Value="Right"></Setter>
             <Setter Property="VerticalAlignment" Value="Top"></Setter>
         </Style>
+        <Style Selector="Button#btAnadirEmpleado">
+            <Setter Property="ToolTip.Tip" Value="Añadir empleado."></Setter>    
+        </Style>
+        <Style Selector="Button#btEliminarEmpleado">
+            <Setter Property="ToolTip.Tip" Value="Eliminar empleado seleccionado."></Setter>        
+        </Style>
+        <Style Selector="Button#btModificarEmpleado">
+            <Setter Property="ToolTip.Tip" Value="Modificar empleado seleccionado."></Setter>        
+        </Style>
+        <Style Selector="Button#btNuevoEmpleado">
+            <Setter Property="ToolTip.Tip" Value="Refrescar selección."></Setter>        
+        </Style>
+        <Style Selector="Button#btTicketsSelecc">
+            <Setter Property="ToolTip.Tip" Value="Ver reparaciones del empleado seleccionado."></Setter>        
+        </Style>
+        
     </UserControl.Styles>
     <Design.DataContext>
         <!-- This only sets the DataContext for the previewer in an IDE,
@@ -55,15 +71,6 @@
             <DockPanel Name="PanelAvisos" Dock="Bottom" >
                 <StackPanel>
                     <TextBlock MinWidth="200" Margin="7" Name="tblAvisos" FontWeight="Bold" Text="{Binding Aviso}">Bienvenido a la ventana de gestón de Empleados del Taller.</TextBlock>
-                    <Border BorderThickness="1" BorderBrush="Purple">
-                    </Border>
-                    <TextBlock MinWidth="200" Margin="6" Name="tblSeleccionado" FontWeight="Bold">EMPLEADO SELECCIONADO:</TextBlock>
-                    <TextBlock FontWeight="Bold" Margin="3">DNI:</TextBlock>
-                    <TextBlock Name="tblSelecDni" Text="{Binding EmpleadoSeleccionado.Dni}"></TextBlock>
-                    <TextBlock FontWeight="Bold" Margin="3">Nombre:</TextBlock>
-                    <TextBlock Name="tblSelecNombre" Text="{Binding EmpleadoSeleccionado.Nombre}"></TextBlock>
-                    <TextBlock FontWeight="Bold" Margin="3">Email:</TextBlock>
-                    <TextBlock Name="tblSelecEmail" Text="{Binding EmpleadoSeleccionado.Email}"></TextBlock>
                 </StackPanel>
             </DockPanel>
         </DockPanel>

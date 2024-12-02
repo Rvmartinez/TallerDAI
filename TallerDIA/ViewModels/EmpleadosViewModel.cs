@@ -88,6 +88,7 @@ public partial class EmpleadosViewModel : ViewModelBase
         set
         {
             SetProperty(ref _EmpleadoSeleccionado, value);
+            EmpleadoActual=_EmpleadoSeleccionado;
         }
     }
 
@@ -122,8 +123,8 @@ public partial class EmpleadosViewModel : ViewModelBase
     {
         Console.Out.WriteLine("Intentando introducir...");
         if (ControlesEmpleado.FiltrarEntradasEmpleado(EmpleadoActual) &&
-            ControlesEmpleado.BuscarEmpleado(Empleados.ToList(), EmpleadoActual) == null &&
-            ControlesEmpleado.FiltrarEmpleadoRegex(EmpleadoActual))
+            ControlesEmpleado.BuscarEmpleado(Empleados.ToList(), EmpleadoActual) == null)
+            //&& ControlesEmpleado.FiltrarEmpleadoRegex(EmpleadoActual))
         {
             Empleados.Add(EmpleadoActual);
             //EmpleadoActual.Tickets = new List<DateTime>();
@@ -146,9 +147,8 @@ public partial class EmpleadosViewModel : ViewModelBase
             ControlesEmpleado.FiltrarEntradasEmpleado(EmpleadoSeleccionado) &&
             ControlesEmpleado.BuscarEmpleado(Empleados.ToList(), EmpleadoSeleccionado) != null)
         {
-            Empleados.Remove(EmpleadoSeleccionado);
+            Empleados[Empleados.IndexOf(EmpleadoSeleccionado)] = EmpleadoActual;
             //EmpleadoActual.Tickets = new List<DateTime>();
-            Empleados.Add(EmpleadoActual);
             ActualizarDgEmpleados();
             Console.Out.WriteLine("Modificado exitoso.");
             Aviso = "Empleado modificado exitosamente.";
