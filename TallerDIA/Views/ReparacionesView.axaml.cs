@@ -12,4 +12,6 @@ public partial class ReparacionesView : UserControl
         InitializeComponent();
         DataContext = new ReparacionesViewModel();
     }
+
+   
 }

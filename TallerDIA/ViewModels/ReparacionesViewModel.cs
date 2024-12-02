@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using TallerDIA.Models;
+using TallerDIA.Views;
 using TallerDIA.Views.Dialogs;
 
 namespace TallerDIA.ViewModels
@@ -56,6 +57,7 @@ namespace TallerDIA.ViewModels
 
 
         private bool _mostrarTerminados;
+        private bool _mostrarNoTerminados;
         public bool MostrarTerminados
         {
             get => _mostrarTerminados;
@@ -65,6 +67,8 @@ namespace TallerDIA.ViewModels
                 List<Reparacion> aux = reparacionesBackup.Where(r => !r.FechaFin.Equals(new DateTime())).ToList();
                 if (aux.Count == 0 || _mostrarTerminados)
                 {
+                    _mostrarNoTerminados = false;
+                    
                     Reparaciones = new ObservableCollection<Reparacion>(aux);
                 }
                 
@@ -74,7 +78,7 @@ namespace TallerDIA.ViewModels
         }
         
         
-        private bool _mostrarNoTerminados;
+        
         public bool MostrarNoTerminados
         {
             get => _mostrarNoTerminados;
@@ -82,8 +86,9 @@ namespace TallerDIA.ViewModels
             {
                 SetProperty(ref _mostrarNoTerminados, value);
                 List<Reparacion> aux = reparacionesBackup.Where(r => r.FechaFin.Equals(new DateTime())).ToList();
-                if (aux.Count == 0 || _mostrarNoTerminados){
-                    
+                if (aux.Count == 0 || _mostrarNoTerminados)
+                {
+                    _mostrarTerminados = false;
                     Reparaciones = new ObservableCollection<Reparacion>(aux);
                 }
                 else
