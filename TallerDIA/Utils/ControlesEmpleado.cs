@@ -18,8 +18,8 @@ public static class ControlesEmpleado
         DateTime reparacion4 = new DateTime(2021,01,10,7,45,22);
         List<DateTime> reparaciones1 = new List<DateTime>{reparacion1,reparacion2};
         List<DateTime> reparaciones2 = new List<DateTime>{reparacion3,reparacion4};
-        Empleado empleado1 = new Empleado("12345678A", "Abelardo", "averelardo@hotcorreo.coom", reparaciones1);
-        Empleado empleado2 = new Empleado("22345678B", "Luffy", "onepieceismid@ymail.com", reparaciones2);
+        Empleado empleado1 = new Empleado("12345678A", "Abelardo", "averelardo@hotcorreo.coom");
+        Empleado empleado2 = new Empleado("22345678B", "Luffy", "onepieceismid@ymail.com");
         List<Empleado> empleados = new List<Empleado> 
         {
             empleado1,empleado2

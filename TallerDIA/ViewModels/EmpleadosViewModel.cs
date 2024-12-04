@@ -112,9 +112,10 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
     // Funcion para que el datagrid muestre los datos de la lista propiedad "Empleados".
     public void ActualizarDgEmpleados()
     {
-        List<Empleado> empleados = Empleados.ToList();
-        Empleados.Clear();
-        Empleados = new ObservableCollection<Empleado>(empleados);
+        //List<Empleado> empleados = Empleados.ToList();
+        ObservableCollection<Empleado> EmpleadosNueva = new ObservableCollection<Empleado>(Empleados);
+       // Empleados.Clear();
+        Empleados = new ObservableCollection<Empleado>(EmpleadosNueva);
     }
     
     // EVENTOS DE CONTROLADOR.
@@ -129,7 +130,7 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
         {
             Empleados.Add(EmpleadoActual);
             //EmpleadoActual.Tickets = new List<DateTime>();
-            ActualizarDgEmpleados();
+            //ActualizarDgEmpleados();
             Console.Out.WriteLine("Insertado exitoso.");
             Aviso = "Empleado insertado exitosamente.";
         }
@@ -148,9 +149,12 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
             ControlesEmpleado.FiltrarEntradasEmpleado(EmpleadoSeleccionado) &&
             ControlesEmpleado.BuscarEmpleado(Empleados.ToList(), EmpleadoSeleccionado) != null)
         {
-            Empleados[Empleados.IndexOf(EmpleadoSeleccionado)] = EmpleadoActual;
+            //List<Empleado> nEmpleados = new List<Empleado>(Empleados);
+            
+            Empleados[Empleados.IndexOf(EmpleadoSeleccionado)] = new Empleado(EmpleadoActual.Dni, EmpleadoSeleccionado.Nombre, EmpleadoActual.Email);
+            EmpleadoSeleccionado = new Empleado(EmpleadoActual.Dni, EmpleadoSeleccionado.Nombre, EmpleadoActual.Email);
             //EmpleadoActual.Tickets = new List<DateTime>();
-            ActualizarDgEmpleados();
+            //ActualizarDgEmpleados();
             Console.Out.WriteLine("Modificado exitoso.");
             Aviso = "Empleado modificado exitosamente.";
         }
@@ -169,7 +173,7 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
             ControlesEmpleado.BuscarEmpleado(Empleados.ToList(), EmpleadoSeleccionado) != null)
         {
             Empleados.Remove(EmpleadoSeleccionado);
-            ActualizarDgEmpleados();
+            //ActualizarDgEmpleados();
             Console.Out.WriteLine("Eliminado exitoso.");
             Aviso = "Empleado eliminado exitosamente.";
         }
@@ -179,14 +183,14 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
             Aviso = "Fallo al modificar, no existe ese empleado.";
 
         }
-        EmpleadoActual=new Empleado();
+        //EmpleadoActual=new Empleado();
     }
     [RelayCommand]
     public void btNuevoEmpleado_OnClick()
     {
         EmpleadoSeleccionado=new Empleado();
         EmpleadoActual=new Empleado();
-        ActualizarDgEmpleados();
+        //ActualizarDgEmpleados();
         Aviso = "Entradas y empleado seleccionado reseteados.";
     }
 
@@ -196,11 +200,7 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
         //var window = new (EmpleadoSeleccionado);
         //window.Show();
     }
-
-
-
     public override ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>(["DNI","Nombre","Email"]);
-
     public override ObservableCollection<Empleado> FilteredItems
     {
         get

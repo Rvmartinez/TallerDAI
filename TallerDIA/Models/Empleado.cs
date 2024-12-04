@@ -26,7 +26,7 @@ public class Empleado
         this.Email = "";
         //this.Tickets = new List<DateTime>();
     }
-    public Empleado(string dni, string nombre, string email, List<DateTime> tickets)
+    public Empleado(string dni, string nombre, string email)
     {
         this.Dni = dni;
         this.Nombre = nombre;
