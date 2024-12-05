@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Models;
+using TallerDIA.Models;
 
 namespace TallerDIA.Utils;
 

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-namespace Models;
+namespace TallerDIA.Models;
 /*
  *
  Gestión de personal (altas, bajas, modificaciones, consultas(reparaciones asignadas)), salvaguarda y recuperación.

@@ -35,7 +35,9 @@ namespace TallerDIA.ViewModels
             new PaneListItemTemplate(typeof(HomeViewModel),"mdi-home"),
             new PaneListItemTemplate(typeof(ClientesViewModel),"mdi-account-multiple"),
             new PaneListItemTemplate(typeof(EmpleadosViewModel),"mdi-account-hard-hat"),
-            new PaneListItemTemplate(typeof(CochesViewModel),"mdi-car-back")
+            new PaneListItemTemplate(typeof(CochesViewModel),"mdi-car-back"),
+            new PaneListItemTemplate(typeof(ReparacionesViewModel),"mdi-car-cog"),
+
         ];
 
         [ObservableProperty]
@@ -49,5 +51,6 @@ namespace TallerDIA.ViewModels
             CurrentPage = (ViewModelBase)instance;
         }
 
+       
     }
 }
