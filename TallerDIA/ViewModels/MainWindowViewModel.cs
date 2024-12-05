@@ -60,7 +60,8 @@ namespace TallerDIA.ViewModels
             PaneItems = new ObservableCollection<PaneListItemTemplate>
             {
                 new PaneListItemTemplate(typeof(HomeViewModel), "mdi-home"),
-                new PaneListItemTemplate(typeof(ClientesViewModel), "mdi-account-multiple", () => new ClientesViewModel(SharedDB.Instance.Clientes)),
+                //new PaneListItemTemplate(typeof(ClientesViewModel), "mdi-account-multiple", () => new ClientesViewModel(new CarteraClientes())),
+                new PaneListItemTemplate(typeof(ClientesViewModel), "mdi-account-multiple", () => new ClientesViewModel()),
                 new PaneListItemTemplate(typeof(EmpleadosViewModel), "mdi-account-hard-hat"),
                 new PaneListItemTemplate(typeof(CochesViewModel), "mdi-car-back"),
                 new PaneListItemTemplate(typeof(ReparacionesViewModel), "mdi-car-cog")

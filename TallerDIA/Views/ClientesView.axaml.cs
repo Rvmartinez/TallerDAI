@@ -1,6 +1,9 @@
+using System.Collections.ObjectModel;
 using Avalonia;
 using Avalonia.Controls;
+using Avalonia.Input;
 using Avalonia.Markup.Xaml;
+using TallerDIA.Models;
 using TallerDIA.Utils;
 using TallerDIA.ViewModels;
 
@@ -12,7 +15,27 @@ public partial class ClientesView : UserControl
     public ClientesView()
     {
         InitializeComponent();
-        
-        DataContext = viewModel = new ClientesViewModel(SharedDB.Instance.Clientes);
+
+        viewModel = (ClientesViewModel)DataContext;
+    }
+
+
+    protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
+    {
+        base.OnAttachedToVisualTree(e);
+
+        viewModel?.ForceUpdateUI();
+
+    }
+
+    protected override void OnGotFocus(GotFocusEventArgs e)
+    {
+        base.OnGotFocus(e);
+        ObservableCollection<Cliente> c = (ObservableCollection<Cliente>)this.dgClientes.ItemsSource;
+        int x = c.Count;
+
+
+        viewModel = (ClientesViewModel)DataContext;
+        viewModel?.ForceUpdateUI();
     }
 }
