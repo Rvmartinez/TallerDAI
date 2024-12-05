@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.InteropServices.JavaScript;
+using System.Threading.Tasks;
+using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
 using CommunityToolkit.Mvvm.Input;
 using Models;
 using TallerDIA.Models;
 using TallerDIA.Utils;
 using TallerDIA.ViewModels;
+using TallerDIA.Views.Dialogs;
+
 namespace TallerDIA.ViewModels;
 public partial class EmpleadosViewModel : FilterViewModel<Empleado>
 {
@@ -120,6 +125,7 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
     
     // EVENTOS DE CONTROLADOR.
     // Cuando se haga click en el botón correspondiente, se ejecutan respectivamente.
+    /*
     [RelayCommand]
     public void btAnadirEmpleado_OnClick()
     {
@@ -141,6 +147,32 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
         }
         EmpleadoActual=new Empleado();
     }
+    */
+    [RelayCommand]
+    public async Task btAnadirEmpleado_OnClick()
+    {
+        var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop ? desktop.MainWindow : null;
+        var EmpleadoDlg = new EmpleadoDlg();
+        await EmpleadoDlg.ShowDialog(mainWindow);
+
+        if (!EmpleadoDlg.IsCancelled)
+        {
+            Empleado nuevoEmpleado  = new Empleado() { Dni = EmpleadoDlg.DniTB.Text, Email = EmpleadoDlg.EmailTB.Text, Nombre = EmpleadoDlg.NombreTB.Text};
+            if (ControlesEmpleado.FiltrarEntradasEmpleado(nuevoEmpleado) &&
+                ControlesEmpleado.BuscarEmpleado(Empleados.ToList(), nuevoEmpleado) == null)
+                //&& ControlesEmpleado.FiltrarEmpleadoRegex(EmpleadoActual))
+            {
+                List<Empleado> temp = Empleados.ToList();
+                //Empleados.Clear();
+                //temp.Add(nuevoEmpleado);
+                Empleados.Add(nuevoEmpleado);
+                //Empleados = new ObservableCollection<Empleado>(temp);
+                //OnPropertyChanged(nameof(Empleados));
+            }
+        }
+        
+    }
+    /*
     [RelayCommand]
     public void btModificarEmpleado_OnClick()
     {
@@ -164,7 +196,37 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
             Aviso = "Fallo al modificar, no existe ese empleado o hay campos en blanco.";
         }
         EmpleadoActual=new Empleado();
+    }*/
+
+    [RelayCommand]
+    public async Task btModificarEmpleado_OnClick()
+    {
+        var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
+            ? desktop.MainWindow
+            : null;
+        var EmpleadoDlg = new EmpleadoDlg();
+        await EmpleadoDlg.ShowDialog(mainWindow);
+
+        if (!EmpleadoDlg.IsCancelled)
+        {
+            Empleado nuevoEmpleado = new Empleado()
+                { Dni = EmpleadoDlg.DniTB.Text, Email = EmpleadoDlg.EmailTB.Text, Nombre = EmpleadoDlg.NombreTB.Text };
+            if (ControlesEmpleado.FiltrarEntradasEmpleado(EmpleadoSeleccionado) &&
+                ControlesEmpleado.FiltrarEntradasEmpleado(nuevoEmpleado) &&
+                ControlesEmpleado.BuscarEmpleado(Empleados.ToList(), EmpleadoSeleccionado) != null)
+                //&& ControlesEmpleado.FiltrarEmpleadoRegex(EmpleadoActual))
+            {
+                //List<Empleado> temp = Empleados.ToList();
+                //Empleados.Clear();
+                //temp.Add(nuevoEmpleado);
+                Empleados[Empleados.IndexOf(EmpleadoSeleccionado)]=nuevoEmpleado;
+                EmpleadoSeleccionado = nuevoEmpleado;
+                //Empleados = new ObservableCollection<Empleado>(temp);
+                //OnPropertyChanged(nameof(Empleados));
+            }
+        }
     }
+
     [RelayCommand]
     public void btEliminarEmpleado_OnClick()
     {
@@ -193,6 +255,7 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
         //ActualizarDgEmpleados();
         Aviso = "Entradas y empleado seleccionado reseteados.";
     }
+    
 
     [RelayCommand]
     public void btTicketsSelecc_OnClick()

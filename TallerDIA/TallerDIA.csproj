@@ -42,5 +42,9 @@
     <Compile Update="Views\Dialogs\CocheDlg.axaml.cs">
       <DependentUpon>CocheDlg.axaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\Dialogs\EmpleadoDlg.axaml.cs">
+      <DependentUpon>EmpleadoDlg.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 </Project>
