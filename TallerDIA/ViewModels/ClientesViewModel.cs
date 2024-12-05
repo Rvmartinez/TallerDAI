@@ -80,19 +80,8 @@ public partial class ClientesViewModel : FilterViewModel<Cliente>
     public ClientesViewModel(ObservableCollection<Cliente> clientes)
     {
         Clientes = clientes;
-        ToDelete = false;
     }
 
-    public ClientesViewModel()
-    {
-        ToDelete = false;
-        Clientes = new ObservableCollection<Cliente>
-        {
-            new Cliente { DNI = "12345678", Nombre = "Juan Perez", Email = "juan.perez@example.com",IdCliente=1  },
-            new Cliente { DNI = "87654321", Nombre = "Ana Lopez", Email = "ana.lopez@example.com" ,IdCliente=2 },
-            new Cliente { DNI = "11223344", Nombre = "Carlos Garcia", Email = "carlos.garcia@example.com",IdCliente=3  }
-        };
-    }
     [RelayCommand]
     public async Task OnDeleteCommand()
     {

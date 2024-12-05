@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
+using TallerDIA.Utils;
 using TallerDIA.ViewModels;
 
 namespace TallerDIA.Views;
@@ -11,6 +12,7 @@ public partial class ClientesView : UserControl
     public ClientesView()
     {
         InitializeComponent();
-        DataContext = viewModel = new ClientesViewModel();
+        
+        DataContext = viewModel = new ClientesViewModel(SharedDB.Instance.Clientes);
     }
 }
