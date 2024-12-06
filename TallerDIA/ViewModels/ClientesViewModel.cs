@@ -116,7 +116,7 @@ public partial class ClientesViewModel : FilterViewModel<Cliente>
     public void ForceUpdateUI()
     {
 
-        List<Cliente> list = SharedDB.Instance.Clientes.ToList();
+        List<Cliente> list = SharedDB.Instance.Clientes.Clientes.ToList();
         foreach (Cliente cliente in list)
         {
             CarteraClientes.Add(cliente);
