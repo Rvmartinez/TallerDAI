@@ -10,6 +10,8 @@ namespace TallerDIA.Views
         {
             InitializeComponent();
             DataContext = _vm = new MainWindowViewModel();
+
         }
+
     }
 }

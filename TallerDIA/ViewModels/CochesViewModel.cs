@@ -1,4 +1,5 @@
 ﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -118,12 +119,12 @@ public partial class CochesViewModel : FilterViewModel<Coche>
 
     public async void CochesClientes(Cliente cli)
     {
-        var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
+       var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
             ? desktop.MainWindow
             : null;
         var cliDlg = new ClienteDlg(SelectedCar.Owner);
         await cliDlg.ShowDialog(mainWindow);
-        
+
     }
 
     public override ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>(["Matricula","Marca","Modelo"]);
