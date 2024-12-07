@@ -95,7 +95,7 @@ public partial class ClientesViewModel : FilterViewModel<Cliente>
     {
         Window  mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop ? desktop.MainWindow : null;
         ClienteDlg ClienteDlg = new ClienteDlg();
-        await ClienteDlg.(mainWindow);
+        await ClienteDlg.ShowDialog(mainWindow);
 
         if (!ClienteDlg.IsCancelled)
         {
