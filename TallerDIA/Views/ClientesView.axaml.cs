@@ -28,7 +28,7 @@ public partial class ClientesView : UserControl
 
     }
 
-    protected override void OnGotFocus(GotFocusEventArgs e)
+   /* protected override void OnGotFocus(GotFocusEventArgs e)
     {
         base.OnGotFocus(e);
         ObservableCollection<Cliente> c = (ObservableCollection<Cliente>)this.dgClientes.ItemsSource;
@@ -37,5 +37,5 @@ public partial class ClientesView : UserControl
 
         viewModel = (ClientesViewModel)DataContext;
         viewModel?.ForceUpdateUI();
-    }
+    }*/
 }

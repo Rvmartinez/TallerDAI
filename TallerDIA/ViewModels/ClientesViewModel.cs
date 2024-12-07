@@ -17,6 +17,7 @@ using MsBox.Avalonia.Enums;
 using System.Threading.Tasks;
 using TallerDIA.Utils;
 using System.IO;
+using Avalonia.Controls;
 
 namespace TallerDIA.ViewModels;
 
@@ -49,7 +50,7 @@ public partial class ClientesViewModel : FilterViewModel<Cliente>
 
     public ClientesViewModel()
     {
-        CarteraClientes = new CarteraClientes(SharedDB.Instance.Clientes);
+        CarteraClientes = new CarteraClientes(SharedDB.Instance.CarteraClientes.Clientes);
     }
 
     [RelayCommand]
@@ -92,9 +93,9 @@ public partial class ClientesViewModel : FilterViewModel<Cliente>
     [RelayCommand]
     public async Task AddClientCommand()
     {
-        var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop ? desktop.MainWindow : null;
-        var ClienteDlg = new ClienteDlg();
-        await ClienteDlg.ShowDialog(mainWindow);
+        Window  mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop ? desktop.MainWindow : null;
+        ClienteDlg ClienteDlg = new ClienteDlg();
+        await ClienteDlg.(mainWindow);
 
         if (!ClienteDlg.IsCancelled)
         {
@@ -102,8 +103,13 @@ public partial class ClientesViewModel : FilterViewModel<Cliente>
             string dni = ClienteDlg.DniTB.Text;
             string email = ClienteDlg.EmailTB.Text;
             string nombre = ClienteDlg.NombreTB.Text;
-            SharedDB.Instance.AddClient(
-                new Cliente() { DNI = dni, Email = email, Nombre = nombre, IdCliente = 0 });
+
+            if(!SharedDB.Instance.AddClient(
+                new Cliente() { DNI = dni, Email = email, Nombre = nombre, IdCliente = 0 }))
+            {
+                var box = MessageBoxManager
+                            .GetMessageBoxStandard("Atención", "Ya existe un cliente con ese DNI o Email", ButtonEnum.Ok);
+            }
 
             ForceUpdateUI();
         }
@@ -116,13 +122,15 @@ public partial class ClientesViewModel : FilterViewModel<Cliente>
     public void ForceUpdateUI()
     {
 
-        List<Cliente> list = SharedDB.Instance.Clientes.Clientes.ToList();
+        List<Cliente> list = SharedDB.Instance.CarteraClientes.Clientes.ToList();
+        CarteraClientes.Clear();
+
         foreach (Cliente cliente in list)
         {
             CarteraClientes.Add(cliente);
         }
         OnPropertyChanged(nameof(CarteraClientes));
-        OnPropertyChanged(nameof(FilteredItems));
+       //OnPropertyChanged(nameof(FilteredItems));
 
 
     }

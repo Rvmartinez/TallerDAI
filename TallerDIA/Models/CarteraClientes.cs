@@ -11,6 +11,7 @@ namespace TallerDIA.Models
     public class CarteraClientes
     {
         private ObservableCollection<Cliente> _Clientes;
+
         public ObservableCollection<Cliente> Clientes
         {
             get => _Clientes;
@@ -68,6 +69,19 @@ namespace TallerDIA.Models
             return false;
         }
 
+        public bool RemoveCliente(Cliente cl)
+        {
+
+            Cliente selectedClient = Clientes.Where(c => c.IdCliente == cl.IdCliente).First();
+            if (selectedClient != null)
+            {
+                Clientes.Remove(selectedClient);
+                return true;
+
+            }
+            return false;
+        }
+
         /// <summary>
         /// Devuelve el Cliente que se encuentre en la i posición.
         /// </summary>
@@ -113,6 +127,12 @@ namespace TallerDIA.Models
                 toret.Append("\n");
             }
             return toret.ToString();
+        }
+
+
+        public void Clear()
+        {
+            Clientes.Clear();
         }
     }
 }
