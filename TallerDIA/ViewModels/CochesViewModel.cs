@@ -34,12 +34,8 @@ public partial class CochesViewModel : FilterViewModel<Coche>
 
     public CochesViewModel()
     {
-        var c1 = new Cliente { DNI = "12345678", Nombre = "Juan Perez", Email = "juan.perez@example.com", IdCliente = 1 };
-        var c2 = new Cliente { DNI = "87654321", Nombre = "Ana Lopez", Email = "ana.lopez@example.com", IdCliente = 2 };
-        var c3 = new Cliente { DNI = "11223344", Nombre = "Carlos Garcia", Email = "carlos.garcia@example.com", IdCliente = 3 };
-        _garaje.Add(new Coche("4089fks", Coche.Marcas.Citroen, "c3",c1));
-        _garaje.Add(new Coche("1234trt", Coche.Marcas.Ferrari, "rojo",c2));
-        _garaje.Add(new Coche("9876akd", Coche.Marcas.Lamborghini, "huracan",c3));
+        
+        _garaje.AddRange(SharedDB.Instance.Garaje.Coches);
     }
 
     public CochesViewModel(IEnumerable<Coche> coches)
@@ -60,7 +56,7 @@ public partial class CochesViewModel : FilterViewModel<Coche>
         if (result == ButtonResult.Ok)
         {
 
-            _garaje.RemoveMatricula(SelectedCar.Matricula);
+            this.RemoveCoche(SelectedCar.Matricula);
             SelectedCar = null;
 
         }
@@ -80,12 +76,16 @@ public partial class CochesViewModel : FilterViewModel<Coche>
             : null;
         var cocheDlg = new CocheDlg();
         await cocheDlg.ShowDialog(mainWindow);
-
+        
+        //-------------------------Faltaria ver como seleccionar cliente(lo mas facil seria un dialog)----------------------
+        Cliente c = new Cliente
+            { DNI = "12345678", Nombre = "Juan Perez", Email = "juan.perez@example.com", IdCliente = 34 };
+        
         if (!cocheDlg.IsCanceled)
         {
             Coche.Marcas marcaConcreta = Enum.Parse<Coche.Marcas>(cocheDlg.MarcasCb.SelectedItem.ToString());
-            Coche car = new Coche(cocheDlg.MatriculaTb.Text, marcaConcreta, cocheDlg.ModeloTb.Text);
-            _garaje.Add(car);
+            Coche car = new Coche(cocheDlg.MatriculaTb.Text, marcaConcreta, cocheDlg.ModeloTb.Text, c);
+            this.AddCoche(car);
         }
     }
 
@@ -102,12 +102,12 @@ public partial class CochesViewModel : FilterViewModel<Coche>
         cocheDlg.ModeloTb.IsEnabled = false;
         await cocheDlg.ShowDialog(mainWindow);
 
-        Coche antiguo = new Coche(SelectedCar.Matricula, SelectedCar.Marca, SelectedCar.Modelo);
+        Coche antiguo = new Coche(SelectedCar.Matricula, SelectedCar.Marca, SelectedCar.Modelo, SelectedCar.Owner);
 
         if (!cocheDlg.IsCanceled)
         {
-            _garaje.RemoveMatricula(SelectedCar.Matricula);
-            _garaje.Add(new Coche(cocheDlg.MatriculaTb.Text, antiguo.Marca, antiguo.Modelo));
+            Coche nuevo = new Coche(cocheDlg.MatriculaTb.Text, antiguo.Marca, antiguo.Modelo, antiguo.Owner);
+            this.EditCoche(antiguo,nuevo);
         }
     }
 
@@ -127,6 +127,35 @@ public partial class CochesViewModel : FilterViewModel<Coche>
         var cliDlg = new ClienteDlg(SelectedCar.Owner);
         await cliDlg.ShowDialog(mainWindow);
 
+    }
+
+    public void AddCoche(Coche coche)
+    {
+        _garaje.Add(coche);
+        SharedDB.Instance.AddCar(coche);
+        ToString();
+    }
+
+    public void RemoveCoche(string matricula)
+    {
+        _garaje.RemoveMatricula(matricula);
+        SharedDB.Instance.RemoveCar(matricula);
+        ToString();
+    }
+
+    public void EditCoche(Coche antiguo, Coche nuevo)
+    {
+        _garaje.RemoveMatricula(antiguo.Matricula);
+        _garaje.Add(nuevo);
+        
+        SharedDB.Instance.RemoveCar(antiguo.Matricula);
+        SharedDB.Instance.AddCar(nuevo);
+        ToString();
+    }
+
+    public void ToString()
+    {
+        Console.WriteLine(SharedDB.Instance.Garaje);
     }
 
     public override ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>(["Matricula","Marca","Modelo"]);
