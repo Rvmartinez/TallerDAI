@@ -1,0 +1,113 @@
+<UserControl
+     x:Class="TallerDIA.Views.ReparacionesView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:gestiónDeReparaciones="using:TallerDIA.ViewModels"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:icon="https://github.com/projektanker/icons.avalonia"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:DataType="gestiónDeReparaciones:ReparacionesViewModel"
+    mc:Ignorable="d">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel
+            Grid.Row="0"
+            HorizontalAlignment="Stretch"
+            Orientation="Horizontal" />
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock
+                Grid.Column="0"
+                Margin="10"
+                FontSize="18"
+                Text="Listado de Reparaciones" />
+            <StackPanel
+                Grid.Column="1"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+                <Button
+                    Margin="0,0,15,0"
+                    icon:Attached.Icon="mdi-plus-circle"
+                    Command="{Binding AddRepaisCommand}"
+                    FontSize="24" />
+                <Button
+                    Margin="0,0,15,0"
+                    icon:Attached.Icon="mdi-pencil"
+                    
+                    FontSize="24" />
+                <Button
+                    Margin="0,0,15,0"
+                    icon:Attached.Icon="mdi-minus-circle"
+                    Command="{Binding ButtonEliminarReparacionCommand}"
+                    FontSize="24" />
+                <Button
+                    Margin="0,0,15,0"
+                    icon:Attached.Icon="mdi-information"
+                    Command="{Binding ButtonNevegarCommand}"
+                    FontSize="24" />
+                <Button
+                    Margin="0,0,15,0"
+                    icon:Attached.Icon="mdi-calendar-check"
+                    Command="{Binding ButtonFinalizarReparacionCommand}"
+                    
+                    FontSize="24" />
+                
+                <CheckBox
+                    Name="CheckTerminados"
+                    Content="Reparaciones terminadas"
+                    Margin="0,0,15,0"
+                    IsChecked="{Binding MostrarTerminados}"
+                    IsVisible="True" />
+                <CheckBox
+                    Name="CheckNoTerminados"
+                    Content="Reparaciones sin terminar"
+                    Margin="0,0,15,0"
+                    IsChecked="{Binding MostrarNoTerminados}"
+                    IsVisible="True" />
+
+
+            </StackPanel>
+        </Grid>
+        <DataGrid
+            x:Name="DgReparaciones"
+            Grid.Row="1"
+            BorderBrush="Purple"
+            BorderThickness="1"
+            CanUserReorderColumns="true"
+            IsReadOnly="True"
+            ItemsSource="{Binding Reparaciones}"
+            SelectedItem="{Binding SelectedRepair}">
+            <DataGrid.Styles>
+                <Style Selector="DataGridColumnHeader">
+                    <Setter Property="FontSize" Value="15" />
+                    <Setter Property="HorizontalAlignment" Value="Center" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                </Style>
+            </DataGrid.Styles>
+            <DataGrid.Columns>
+
+                        <DataGridTextColumn Header="Asunto" IsReadOnly="False" Binding="{Binding Asunto}" />
+
+                        <DataGridTextColumn Header="Nota" IsReadOnly="False" Binding="{Binding Nota}" />
+
+                        <DataGridTextColumn Header="Fecha Inicio" IsReadOnly="True" Binding="{Binding FechaInicio}" />
+
+                        <DataGridTextColumn Header="Fecha Fin" IsReadOnly="True" Binding="{Binding FechaFin}" />
+
+                        <DataGridTextColumn Header="Cliente" IsReadOnly="True" Binding="{Binding Cliente.Nombre}" />
+
+                        <DataGridTextColumn Header="Empleado" IsReadOnly="True" Binding="{Binding Empleado.Nombre}" />
+
+                    </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

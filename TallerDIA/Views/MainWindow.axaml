@@ -14,9 +14,6 @@
     Background="#808080"
     Icon="/Assets/avalonia-logo.ico"
     mc:Ignorable="d">
-    <Design.DataContext>
-        <vm:MainWindowViewModel />
-    </Design.DataContext>
 
     <SplitView
         Background="Black"

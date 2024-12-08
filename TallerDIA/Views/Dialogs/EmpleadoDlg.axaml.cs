@@ -3,7 +3,6 @@ using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
-using Models;
 using TallerDIA.Models;
 
 namespace TallerDIA.Views.Dialogs;

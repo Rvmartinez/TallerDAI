@@ -1,7 +1,7 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
-using Models;
+using TallerDIA.Models;
 using TallerDIA.ViewModels;
 
 namespace TallerDIA.Views;

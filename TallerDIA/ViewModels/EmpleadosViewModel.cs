@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using CommunityToolkit.Mvvm.Input;
-using Models;
 using TallerDIA.Models;
 using TallerDIA.Utils;
 using TallerDIA.ViewModels;
@@ -19,7 +18,7 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
     
     public EmpleadosViewModel()
     {
-        Empleados = ControlesEmpleado.ObtenerListaEmpleados();/**/
+        Empleados = new ObservableCollection<Empleado>();//ControlesEmpleado.ObtenerListaEmpleados();/**/
         EmpleadoActual = new Empleado();
         EmpleadoSeleccionado = new Empleado();
         Console.Out.WriteLine("EmpleadosViewModel en marcha...");
@@ -28,7 +27,7 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
 
     public EmpleadosViewModel(Empleado empleado)
     {
-        Empleados = ControlesEmpleado.ObtenerListaEmpleados();
+        Empleados = new ObservableCollection<Empleado>();//ControlesEmpleado.ObtenerListaEmpleados();
         EmpleadoActual = new Empleado();
         if (ControlesEmpleado.FiltrarEntradasEmpleado(empleado) && ControlesEmpleado.BuscarEmpleado(Empleados.ToList(), empleado) != null)
         {

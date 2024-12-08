@@ -23,14 +23,20 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <TextBox Grid.Column="0" Watermark="Búsqueda" Text="{Binding FilterText}"></TextBox>
-            <ComboBox Grid.Column="1" ItemsSource="{Binding FilterModes}" SelectedIndex="{Binding SelectedFilterMode}"></ComboBox>
+            <TextBox
+                Grid.Column="0"
+                Text="{Binding FilterText}"
+                Watermark="Búsqueda" />
+            <ComboBox
+                Grid.Column="1"
+                ItemsSource="{Binding FilterModes}"
+                SelectedIndex="{Binding SelectedFilterMode}" />
         </Grid>
         <StackPanel
             Grid.Row="1"
             HorizontalAlignment="Stretch"
             Orientation="Horizontal" />
-        <Grid Grid.Row = "1">
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="*" />
@@ -60,6 +66,14 @@
                     Command="{Binding OnDeleteCommand}"
                     FontSize="24" />
 
+                <Button
+                    Margin="0,0,15,0"
+                    icon:Attached.Icon="mdi-account-minus"
+                    Command="{Binding ForceUpdateUI}"
+                    FontSize="24" />
+
+
+
             </StackPanel>
         </Grid>
         <DataGrid
@@ -69,7 +83,7 @@
             BorderThickness="1"
             CanUserReorderColumns="true"
             IsReadOnly="True"
-            ItemsSource="{Binding FilteredItems }"
+            ItemsSource="{Binding FilteredItems}"
             SelectedItem="{Binding SelectedClient}">
             <DataGrid.Styles>
                 <Style Selector="DataGridColumnHeader">

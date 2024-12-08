@@ -1,34 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text.RegularExpressions;
-using Models;
+using TallerDIA.Models;
 
 namespace TallerDIA.Utils;
 
 public static class ControlesEmpleado
 {
-    public static List<Empleado> empleadosEstatica { get; set; }
-
-    public static ObservableCollection<Empleado> ObtenerListaEmpleados()
-    {
-        DateTime reparacion1 = new DateTime(2019,06,11,10,15,10);
-        DateTime reparacion2 = new DateTime(2020,05,07,9,10,1);
-        DateTime reparacion3 = new DateTime(2018,10,08,18,1,59);
-        DateTime reparacion4 = new DateTime(2021,01,10,7,45,22);
-        List<DateTime> reparaciones1 = new List<DateTime>{reparacion1,reparacion2};
-        List<DateTime> reparaciones2 = new List<DateTime>{reparacion3,reparacion4};
-        Empleado empleado1 = new Empleado("12345678A", "Abelardo", "averelardo@hotcorreo.coom");
-        Empleado empleado2 = new Empleado("22345678B", "Luffy", "onepieceismid@ymail.com");
-        List<Empleado> empleados = new List<Empleado> 
-        {
-            empleado1,empleado2
-        };
-        empleadosEstatica=empleados;
-        ObservableCollection<Empleado> emps = new ObservableCollection<Empleado>(empleados);/**/
-        return emps;
-    }
-
     public static bool FiltrarEntradasEmpleado(Empleado empleado)
     {
         if (empleado != null)
@@ -51,19 +28,6 @@ public static class ControlesEmpleado
         else
         {
             Console.Out.WriteLine("Empleado nulo.");
-            return false;
-        }
-    }
-    public static bool FiltrarEmpleadoRegex(Empleado empleado)
-    {
-        String regexEmail = @"^[\w.-]+@[\w.-]+\.\w+$";
-        String regexDni = @"^[0-9]{8}[a-zA-Z]$";
-        if (Regex.IsMatch(empleado.Dni.Trim(), regexDni) && Regex.IsMatch(empleado.Email.Trim(), regexEmail) )
-        {
-            return true;
-        }
-        else
-        {
             return false;
         }
     }

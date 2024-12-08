@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="11.1.0" />
+    <PackageReference Include="Avalonia.Controls.DataGrid" Version="11.1.0" />
     <PackageReference Include="Avalonia.Desktop" Version="11.1.0" />
     <PackageReference Include="Avalonia.Themes.Fluent" Version="11.1.0" />
     <PackageReference Include="Avalonia.Fonts.Inter" Version="11.1.0" />
@@ -39,11 +40,12 @@
       <DependentUpon>EmpleadosMW.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\Dialogs\CocheDlg.axaml.cs">
-      <DependentUpon>CocheDlg.axaml</DependentUpon>
+    <Compile Update="Views\Dialogs\ReparacionDlg.axaml.cs">
+      <DependentUpon>ReparacionDlg.axaml</DependentUpon>
+      <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\Dialogs\EmpleadoDlg.axaml.cs">
-      <DependentUpon>EmpleadoDlg.axaml</DependentUpon>
+    <Compile Update="Views\Dialogs\ReparacionNavegarDlg.axaml.cs">
+      <DependentUpon>ReparacionNavegarDlg.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
