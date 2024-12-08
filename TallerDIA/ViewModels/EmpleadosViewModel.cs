@@ -205,6 +205,7 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
             ? desktop.MainWindow
             : null;
         var EmpleadoDlg = new EmpleadoDlg();
+        
         await EmpleadoDlg.ShowDialog(mainWindow);
 
         if (!EmpleadoDlg.IsCancelled)
