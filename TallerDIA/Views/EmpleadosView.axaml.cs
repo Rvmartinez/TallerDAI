@@ -22,10 +22,10 @@ public partial class EmpleadosView : UserControl
 
     }
     
-    public EmpleadosView(Empleado empleado)
+    /*public EmpleadosView(Empleado empleado)
     {
         InitializeComponent();
         DataContext = viewModel = new EmpleadosViewModel(empleado);
 
-    }
+    }*/
 }

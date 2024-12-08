@@ -15,21 +15,64 @@ using TallerDIA.Views.Dialogs;
 namespace TallerDIA.ViewModels;
 public partial class EmpleadosViewModel : FilterViewModel<Empleado>
 {
+    private Empleado _EmpleadoActual;
+    public Empleado EmpleadoActual
+    {
+        get => _EmpleadoActual;
+        set
+        {
+            //_EmpleadoActual = value;
+            SetProperty(ref _EmpleadoActual, value);
+        }
+    }
+    
+    private ObservableCollection<Empleado> _Empleados;
+    public  ObservableCollection<Empleado>  Empleados
+    {
+        get => _Empleados;
+        set
+        {
+            //Empleados = value;
+            //_Empleados = value;
+            SetProperty(ref _Empleados, value);
+        }
+    }
+    
+    private RegistroEmpleados _registroEmpleados;
+    public RegistroEmpleados RegistroEmpleados
+    {
+        get
+        {
+            return _registroEmpleados;
+        }
+        set
+        {
+            SetProperty(ref _registroEmpleados, value);
+
+        }
+    }
+    
     
     public EmpleadosViewModel()
     {
-        Empleados = new ObservableCollection<Empleado>();//ControlesEmpleado.ObtenerListaEmpleados();/**/
+        RegistroEmpleados = new RegistroEmpleados(SharedDB.Instance.RegistroEmpleados.Empleados);
+        Empleados=new ObservableCollection<Empleado>(SharedDB.Instance.RegistroEmpleados.Empleados.ToList());
+        
+        /*
+        Empleados = new ObservableCollection<Empleado>();//ControlesEmpleado.ObtenerListaEmpleados();
         EmpleadoActual = new Empleado();
         EmpleadoSeleccionado = new Empleado();
         Console.Out.WriteLine("EmpleadosViewModel en marcha...");
-        Aviso = "Bienvenido a la ventana de gestón de Empleados del Taller.";
+        Aviso = "Bienvenido a la ventana de gestón de Empleados del Taller.";*/
     }
+    
+    
 
-    public EmpleadosViewModel(Empleado empleado)
+    /*public EmpleadosViewModel(Empleado empleado)
     {
         Empleados = new ObservableCollection<Empleado>();//ControlesEmpleado.ObtenerListaEmpleados();
         EmpleadoActual = new Empleado();
-        if (ControlesEmpleado.FiltrarEntradasEmpleado(empleado) && ControlesEmpleado.BuscarEmpleado(Empleados.ToList(), empleado) != null)
+        if (SharedDB.Instance.FiltrarEntradasEmpleado(empleado) && ControlesEmpleado.BuscarEmpleado(Empleados.ToList(), empleado) != null)
         {
             EmpleadoSeleccionado=empleado;
             Aviso = "Empleado mostrado con éxito.";
@@ -40,7 +83,7 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
             Aviso = "Error al introducir empleado.";
             Console.Out.WriteLine("EmpleadosViewModel en marcha pero sin mostrar el Empleado seleccionado...");
         }
-    }
+    }/*
 
 
     // Cuando el usuario haga click en una fila del datagrid, se mostrarán los datos de ese Empleado
@@ -63,28 +106,7 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
         }
         //MostrarTickets(empleado);
     }*/
-    private ObservableCollection<Empleado> _Empleados;
-    public  ObservableCollection<Empleado>  Empleados
-    {
-        get => _Empleados;
-        set
-        {
-            //Empleados = value;
-            //_Empleados = value;
-            SetProperty(ref _Empleados, value);
-        }
-    }
     
-    private Empleado _EmpleadoActual;
-    public Empleado EmpleadoActual
-    {
-        get => _EmpleadoActual;
-        set
-        {
-            //_EmpleadoActual = value;
-            SetProperty(ref _EmpleadoActual, value);
-        }
-    }
     
     private Empleado _EmpleadoSeleccionado;
     public Empleado EmpleadoSeleccionado
@@ -117,6 +139,7 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
     public void ActualizarDgEmpleados()
     {
         //List<Empleado> empleados = Empleados.ToList();
+        Empleados =  new ObservableCollection<Empleado>(RegistroEmpleados.Empleados);
         ObservableCollection<Empleado> EmpleadosNueva = new ObservableCollection<Empleado>(Empleados);
        // Empleados.Clear();
         Empleados = new ObservableCollection<Empleado>(EmpleadosNueva);
@@ -157,14 +180,15 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
         if (!EmpleadoDlg.IsCancelled)
         {
             Empleado nuevoEmpleado  = new Empleado() { Dni = EmpleadoDlg.DniTB.Text, Email = EmpleadoDlg.EmailTB.Text, Nombre = EmpleadoDlg.NombreTB.Text};
-            if (ControlesEmpleado.FiltrarEntradasEmpleado(nuevoEmpleado) &&
-                ControlesEmpleado.BuscarEmpleado(Empleados.ToList(), nuevoEmpleado) == null)
+            if (SharedDB.FiltrarEntradasEmpleado(nuevoEmpleado) &&
+                SharedDB.BuscarEmpleado(Empleados.ToList(), nuevoEmpleado) == null)
                 //&& ControlesEmpleado.FiltrarEmpleadoRegex(EmpleadoActual))
             {
                 List<Empleado> temp = Empleados.ToList();
                 //Empleados.Clear();
                 //temp.Add(nuevoEmpleado);
                 Empleados.Add(nuevoEmpleado);
+                RegistroEmpleados.Add(nuevoEmpleado);
                 //Empleados = new ObservableCollection<Empleado>(temp);
                 //OnPropertyChanged(nameof(Empleados));
             }
@@ -211,14 +235,15 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
         {
             Empleado nuevoEmpleado = new Empleado()
                 { Dni = EmpleadoDlg.DniTB.Text, Email = EmpleadoDlg.EmailTB.Text, Nombre = EmpleadoDlg.NombreTB.Text };
-            if (ControlesEmpleado.FiltrarEntradasEmpleado(EmpleadoSeleccionado) &&
-                ControlesEmpleado.FiltrarEntradasEmpleado(nuevoEmpleado) &&
-                ControlesEmpleado.BuscarEmpleado(Empleados.ToList(), EmpleadoSeleccionado) != null)
+            if (SharedDB.FiltrarEntradasEmpleado(EmpleadoSeleccionado) &&
+                SharedDB.FiltrarEntradasEmpleado(nuevoEmpleado) &&
+                SharedDB.BuscarEmpleado(Empleados.ToList(), EmpleadoSeleccionado) != null)
                 //&& ControlesEmpleado.FiltrarEmpleadoRegex(EmpleadoActual))
             {
                 //List<Empleado> temp = Empleados.ToList();
                 //Empleados.Clear();
                 //temp.Add(nuevoEmpleado);
+                RegistroEmpleados.ActualizarEmpleado(EmpleadoSeleccionado,nuevoEmpleado.Dni,nuevoEmpleado.Nombre,nuevoEmpleado.Email);
                 Empleados[Empleados.IndexOf(EmpleadoSeleccionado)]=nuevoEmpleado;
                 EmpleadoSeleccionado = nuevoEmpleado;
                 //Empleados = new ObservableCollection<Empleado>(temp);
@@ -231,8 +256,8 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
     public void btEliminarEmpleado_OnClick()
     {
         Console.Out.WriteLine("Intentando eliminar...");
-        if (ControlesEmpleado.FiltrarEntradasEmpleado(EmpleadoSeleccionado) && 
-            ControlesEmpleado.BuscarEmpleado(Empleados.ToList(), EmpleadoSeleccionado) != null)
+        if (SharedDB.FiltrarEntradasEmpleado(EmpleadoSeleccionado) && 
+            SharedDB.BuscarEmpleado(Empleados.ToList(), EmpleadoSeleccionado) != null)
         {
             Empleados.Remove(EmpleadoSeleccionado);
             //ActualizarDgEmpleados();
