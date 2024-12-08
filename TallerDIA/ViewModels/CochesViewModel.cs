@@ -102,10 +102,12 @@ public partial class CochesViewModel : FilterViewModel<Coche>
         cocheDlg.ModeloTb.IsEnabled = false;
         await cocheDlg.ShowDialog(mainWindow);
 
+        Coche antiguo = new Coche(SelectedCar.Matricula, SelectedCar.Marca, SelectedCar.Modelo);
+
         if (!cocheDlg.IsCanceled)
         {
             _garaje.RemoveMatricula(SelectedCar.Matricula);
-            _garaje.Add(new Coche(cocheDlg.MatriculaTb.Text, SelectedCar.Marca, SelectedCar.Modelo));
+            _garaje.Add(new Coche(cocheDlg.MatriculaTb.Text, antiguo.Marca, antiguo.Modelo));
         }
     }
 
