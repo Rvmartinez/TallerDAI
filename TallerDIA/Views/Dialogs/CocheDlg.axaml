@@ -7,7 +7,7 @@
     xmlns:models="using:TallerDIA.Models"
     Title="Coche"
     Width="250"
-    Height="250"
+    Height="350"
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -18,7 +18,7 @@
                 x:Name="ErrorMat"
                 Foreground="Red"
                 IsVisible="True"
-                Text="Por favor inserte una matricula" />
+                Text="Matricula invalida o ya en uso" />
             <TextBlock Text="Marca:" />
             <ComboBox x:Name="MarcasCb" SelectionChanged="marcaValida" />
             <TextBlock
@@ -33,6 +33,13 @@
                 Foreground="Red"
                 IsVisible="True"
                 Text="Por favor inserte un modelo" />
+            <TextBlock Text="Dueño del coche:" Name="ClientesTb" IsVisible="False"/>
+            <ComboBox x:Name="ClientesCb" SelectionChanged="clienteValido" IsVisible="False" />
+            <TextBlock
+                x:Name="ErrorCliente"
+                Foreground="Red"
+                IsVisible="False"
+                Text="Por favor seleccione un cliente" />
         </StackPanel>
 
         <StackPanel

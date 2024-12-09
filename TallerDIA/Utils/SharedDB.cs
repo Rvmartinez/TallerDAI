@@ -16,10 +16,12 @@ namespace TallerDIA.Utils
         private static SharedDB _instance;
         public static SharedDB Instance => _instance ??= new SharedDB();
         public CarteraClientes CarteraClientes { get; }
+        public GarajeCoches Garaje { get; }
 
         private SharedDB()
         {
             CarteraClientes = new CarteraClientes(LoadClientesFromXml());
+            Garaje = new GarajeCoches(LoadGarajeCochesXml("coches.xml"));
         }
 
         public ObservableCollection<Cliente> LoadClientesFromXml(string filePath = "")
@@ -29,6 +31,22 @@ namespace TallerDIA.Utils
                 new Cliente { DNI = "12345678", Nombre = "Juan Perez", Email = "juan.perez@example.com", IdCliente = 1 },
                 new Cliente { DNI = "87654321", Nombre = "Ana Lopez", Email = "ana.lopez@example.com", IdCliente = 2 },
                 new Cliente { DNI = "11223344", Nombre = "Carlos Garcia", Email = "carlos.garcia@example.com", IdCliente = 3 }
+            };
+        }
+        
+        public ObservableCollection<Coche> LoadGarajeCochesXml(string filePath)
+        {
+            var c1 = new Cliente
+                { DNI = "12345678", Nombre = "Juan Perez", Email = "juan.perez@example.com", IdCliente = 1 };
+            var c2 = new Cliente
+                { DNI = "87654321", Nombre = "Ana Lopez", Email = "ana.lopez@example.com", IdCliente = 2 };
+            var c3 = new Cliente
+                { DNI = "11223344", Nombre = "Carlos Garcia", Email = "carlos.garcia@example.com", IdCliente = 3 };
+            return new ObservableCollection<Coche>
+            {
+                new Coche("4089fks", Coche.Marcas.Citroen, "c3",c1),
+                new Coche("1234trt", Coche.Marcas.Ferrari, "rojo",c2),
+                new Coche("9876akd", Coche.Marcas.Lamborghini, "huracan",c3),
             };
         }
 
@@ -82,5 +100,35 @@ namespace TallerDIA.Utils
 
             return true;
         }
+        
+        //------------------------------Parte Coches-----------------------------
+
+        public bool RemoveCar(string matricula)
+        {
+            return Garaje.RemoveMatricula(matricula);
+        }
+
+        public bool AddCar(Coche c)
+        {
+            if (c is null) return false;
+            return Garaje.Add(c);
+        }
+
+        public bool EditCarMatricula(Coche antiguo, string matriculaNueva)
+        {
+            if (Garaje.RemoveMatricula(antiguo.Matricula))
+            {
+                return Garaje.Add(new Coche(matriculaNueva, antiguo.Marca, antiguo.Modelo, antiguo.Owner));
+            }
+
+            return false;
+        }
+
+        public Coche getCocheMatricula(Coche c)
+        {
+            return Garaje.GetMatricula(c.Matricula);
+        }
+        
+        //-----------------------------------------------------------------------
     }
 }
