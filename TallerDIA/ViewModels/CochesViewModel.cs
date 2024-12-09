@@ -18,7 +18,7 @@ namespace TallerDIA.ViewModels;
 
 public partial class CochesViewModel : FilterViewModel<Coche>
 {
-    private GarajeCoches _garaje = new GarajeCoches();
+    private GarajeCoches _garaje = SharedDB.Instance.Garaje;
     public ObservableCollection<Coche> Coches => _garaje.Coches;
     
 
@@ -35,7 +35,6 @@ public partial class CochesViewModel : FilterViewModel<Coche>
     public CochesViewModel()
     {
         
-        _garaje.AddRange(SharedDB.Instance.Garaje.Coches);
     }
 
     public CochesViewModel(IEnumerable<Coche> coches)
@@ -132,14 +131,12 @@ public partial class CochesViewModel : FilterViewModel<Coche>
     public void AddCoche(Coche coche)
     {
         _garaje.Add(coche);
-        SharedDB.Instance.AddCar(coche);
         ToString();
     }
 
     public void RemoveCoche(string matricula)
     {
         _garaje.RemoveMatricula(matricula);
-        SharedDB.Instance.RemoveCar(matricula);
         ToString();
     }
 
@@ -148,8 +145,6 @@ public partial class CochesViewModel : FilterViewModel<Coche>
         _garaje.RemoveMatricula(antiguo.Matricula);
         _garaje.Add(nuevo);
         
-        SharedDB.Instance.RemoveCar(antiguo.Matricula);
-        SharedDB.Instance.AddCar(nuevo);
         ToString();
     }
 

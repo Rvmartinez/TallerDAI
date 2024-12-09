@@ -112,6 +112,12 @@ namespace TallerDIA.Utils
         {
             Garaje.Add(c);
         }
+
+        public void EditCarMatricula(Coche antiguo, string matriculaNueva)
+        {
+            Garaje.RemoveMatricula(antiguo.Matricula);
+            Garaje.Add(new Coche(matriculaNueva, antiguo.Marca, antiguo.Modelo, antiguo.Owner));
+        }
         
         //-----------------------------------------------------------------------
     }
