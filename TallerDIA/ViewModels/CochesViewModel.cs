@@ -124,6 +124,9 @@ public partial class CochesViewModel : FilterViewModel<Coche>
             ? desktop.MainWindow
             : null;
         var cliDlg = new ClienteDlg(SelectedCar.Owner);
+        cliDlg.DniTB.IsEnabled = false;
+        cliDlg.EmailTB.IsEnabled = false;
+        cliDlg.NombreTB.IsEnabled = false;
         await cliDlg.ShowDialog(mainWindow);
 
     }

@@ -108,15 +108,27 @@ namespace TallerDIA.Utils
             return Garaje.RemoveMatricula(matricula);
         }
 
-        public void AddCar(Coche c)
+        public bool AddCar(Coche c)
         {
+            if (c is null) return false;
             Garaje.Add(c);
+            return true;
         }
 
-        public void EditCarMatricula(Coche antiguo, string matriculaNueva)
+        public bool EditCarMatricula(Coche antiguo, string matriculaNueva)
         {
-            Garaje.RemoveMatricula(antiguo.Matricula);
-            Garaje.Add(new Coche(matriculaNueva, antiguo.Marca, antiguo.Modelo, antiguo.Owner));
+            if (Garaje.RemoveMatricula(antiguo.Matricula))
+            {
+                Garaje.Add(new Coche(matriculaNueva, antiguo.Marca, antiguo.Modelo, antiguo.Owner));
+                return true;
+            }
+
+            return false;
+        }
+
+        public Coche getCocheMatricula(Coche c)
+        {
+            return Garaje.GetMatricula(c.Matricula);
         }
         
         //-----------------------------------------------------------------------
