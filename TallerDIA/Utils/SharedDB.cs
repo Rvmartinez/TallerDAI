@@ -16,10 +16,12 @@ namespace TallerDIA.Utils
         private static SharedDB _instance;
         public static SharedDB Instance => _instance ??= new SharedDB();
         public CarteraClientes CarteraClientes { get; }
+        public RegistroEmpleados RegistroEmpleados { get; }
 
         private SharedDB()
         {
             CarteraClientes = new CarteraClientes(LoadClientesFromXml());
+            RegistroEmpleados = new RegistroEmpleados(LoadEmpleadosFromXml());
         }
 
         public ObservableCollection<Cliente> LoadClientesFromXml(string filePath = "")
@@ -82,5 +84,59 @@ namespace TallerDIA.Utils
 
             return true;
         }
+        
+        
+        
+        
+        
+        ///////////////// SECCION DE EMPLEADOS DE ALEX ////////////////////////
+        
+        public ObservableCollection<Empleado> LoadEmpleadosFromXml(string filePath = "")
+        {
+            return new ObservableCollection<Empleado>
+            {
+                new Empleado { Dni = "12345678A", Nombre = "Gonzalo Gonzalez", Email = "goonzaloz@gmail.com"},
+                new Empleado { Dni = "87654321B", Nombre = "Bort Sing-Song", Email = "boruto@hotmail.com"},
+                new Empleado { Dni = "99999999Z", Nombre = "Missing No", Email = "error@example.org"}
+            };
+        }
+        
+        public static bool FiltrarEntradasEmpleado(Empleado empleado)
+        {
+            if (empleado != null)
+            {
+                if (empleado.Email == null || empleado.Nombre == null || empleado.Email == null)
+                {
+                    Console.Out.WriteLine("Empleado con algun campo nulo.");
+                    return false;
+                }
+                else if (empleado.Email.Trim()=="" || empleado.Nombre.Trim() == "" || empleado.Email.Trim()=="")
+                {
+                    Console.Out.WriteLine("Empleado con algun campo no introducido.");
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            else
+            {
+                Console.Out.WriteLine("Empleado nulo.");
+                return false;
+            }
+        }
+        public static Empleado BuscarEmpleado(List<Empleado> listaEmpleados,Empleado empleado)
+        {
+            if (listaEmpleados!=null && listaEmpleados.IndexOf(listaEmpleados.Find(x => x.Dni == empleado.Dni)) != -1)
+            {
+                return empleado;
+            }
+            else
+            {
+                return null;
+            }
+        }
+        
     }
 }
