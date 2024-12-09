@@ -76,7 +76,7 @@ public partial class CocheDlg : Window
         if (mat == null || mat == "") return false;
         foreach (var coche in SharedDB.Instance.Garaje.Coches)
         {
-            if (coche.Matricula == mat)
+            if (coche.Matricula == mat.ToUpper())
             {
                 return false;
             }
