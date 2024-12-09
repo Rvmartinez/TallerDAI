@@ -18,12 +18,12 @@ public partial class ClienteDlg : Window
         EmailTB.Text = c.Email;
         NombreTB.Text = c.Nombre;
         DniTB.Text = c.DNI;
-        this.IsCancelled = false;
+        this.IsCancelled = true;
         DniErrorTB.IsVisible = false;
         EmailErrorTB.IsVisible = false;
         BtOk.IsEnabled = false;
-        BtOk.Click += (_, _) => this.OnExit();
-        BtCancel.Click += (_, _) => this.OnCancelClicked();
+        BtOk.Click += (_, _) => this.OnAcceptClicked();
+        BtCancel.Click += (_, _) => this.OnExit();
 
     }
 
@@ -35,13 +35,13 @@ public partial class ClienteDlg : Window
         BtOk.IsEnabled = false;
 
         DniErrorTB.IsVisible = false;
-        BtOk.Click += (_, _) => this.OnExit();
-        BtCancel.Click += (_, _) => this.OnCancelClicked();
+        BtOk.Click += (_, _) => this.OnAcceptClicked();
+        BtCancel.Click += (_, _) => this.OnExit();
     }
 
-    void OnCancelClicked()
+    void OnAcceptClicked()
     {
-        this.IsCancelled = true;
+        this.IsCancelled = false;
         this.OnExit();
     }
 
