@@ -1,4 +1,4 @@
-﻿using System;
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -101,23 +101,13 @@ namespace TallerDIA.Models
             FechaFin = DateTime.Now;
         }
 
-        public int? GetMes(Boolean fin)
-        {
-            if(fin)
-            {
-                return FechaFin.Month;
-            }
-            else
-            {
-                return FechaInicio.Month;
-            }
-        }
-
+       
+            
         public int? GetAnno(Boolean fin)
         {
             if(fin)
             {
-                return FechaFin.Year;
+                return _fechaFin?.Year ?? null;
             }
             else
             {
@@ -125,7 +115,18 @@ namespace TallerDIA.Models
             }
         }
         
-        
+        public int? GetMes(Boolean fin)
+        {
+            if(fin)
+            {
+                return _fechaFin?.Month ?? null;
+            }
+            else
+            {
+                return FechaInicio.Month;
+            }
+        }
+
     }
     
 }
