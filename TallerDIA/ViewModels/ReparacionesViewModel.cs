@@ -269,7 +269,31 @@ namespace TallerDIA.ViewModels
                 
             }
         }
+        
+        public int GetReparacionesAnno(int anno, Boolean fin)
+        {
+            throw new NotImplementedException();
+        }
 
-       
+       public int GetReparacionesMes(int mes, int anno, Boolean fin)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Reparaciones GetReparacionesCliente(String cliente)
+        {
+            Reparaciones rep = new Reparaciones();
+            throw new NotImplementedException();
+        }
+
+        public string[] GetClientesReparaciones()
+        {
+            throw new NotImplementedException();
+        }
+
+        public int[] GetAnnosReparaciones(Boolean fin)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -96,9 +96,31 @@ namespace TallerDIA.Models
             FechaFin = DateTime.Now;
         }
 
-        /*public override string ToString()
+        public int? GetMes(Boolean fin)
         {
-            return "Fecha Inicio: " + FechaInicio.ToString("dd/MM/yyyy") + ", Asunto: " + Asunto + ", Nota: " + Nota + "Fecha Fin: " + FechaInicio.ToString("dd/MM/yyyy") + ", Cliente: " + ClienteNombre + ", Empleado: " + EmpleadoNombre;
-        }*/
+            if(fin)
+            {
+                return FechaFin.Month;
+            }
+            else
+            {
+                return FechaInicio.Month;
+            }
+        }
+
+        public int? GetAnno(Boolean fin)
+        {
+            if(fin)
+            {
+                return FechaFin.Year;
+            }
+            else
+            {
+                return FechaInicio.Year;
+            }
+        }
+        
+        
     }
+    
 }
