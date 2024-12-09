@@ -128,7 +128,7 @@ namespace GraficosTaller.UI {
         {
             List<int> valores = new List<int>();
             List<int> annos = new List<int>();
-            foreach (var anno in reparaciones.GetAnnosReparaciones(isFechaFin))
+            foreach (var anno in reparaciones.GetAnnosReparaciones(isFechaFin).Reverse())
             {
                 valores.Add(reparaciones.GetReparacionesAnno(anno, isFechaFin));
                 annos.Add(anno);

@@ -10,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
+using GraficosTaller.UI;
 using TallerDIA.Models;
 using TallerDIA.Views;
 using TallerDIA.Views.Dialogs;
@@ -269,6 +270,20 @@ namespace TallerDIA.ViewModels
                 
             }
         }
+        
+        public async Task ButtonAbrirGrafica()
+        {
+            var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop ? desktop.MainWindow : null;
+            var colRep = _Reparaciones.OfType<Reparacion>().ToList();
+            var reps = new Reparaciones();
+            reps.AnadirReparaciones(colRep);
+            var reparacionNavegarDlg = new ChartWindow(reps, null);
+            await reparacionNavegarDlg.ShowDialog(mainWindow);
+
+            
+        }
+        
+        
 
        
     }
