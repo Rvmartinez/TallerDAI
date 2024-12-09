@@ -100,5 +100,28 @@ namespace TallerDIA.Models
         {
             return "Fecha Inicio: " + FechaInicio.ToString("dd/MM/yyyy") + ", Asunto: " + Asunto + ", Nota: " + Nota + "Fecha Fin: " + FechaInicio.ToString("dd/MM/yyyy") + ", Cliente: " + ClienteNombre + ", Empleado: " + EmpleadoNombre;
         }*/
+        public int? GetAnno(Boolean fin)
+        {
+            if(fin)
+            {
+                return _fechaFin?.Year ?? null;
+            }
+            else
+            {
+                return FechaInicio.Year;
+            }
+        }
+        
+        public int? GetMes(Boolean fin)
+        {
+            if(fin)
+            {
+                return _fechaFin?.Month ?? null;
+            }
+            else
+            {
+                return FechaInicio.Month;
+            }
+        }
     }
 }
