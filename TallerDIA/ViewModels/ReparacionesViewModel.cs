@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using TallerDIA.Models;
+using TallerDIA.Utils;
 using TallerDIA.Views;
 using TallerDIA.Views.Dialogs;
 
@@ -65,7 +66,7 @@ namespace TallerDIA.ViewModels
             {
                 SetProperty(ref _mostrarTerminados, value);
                 List<Reparacion> aux = reparacionesBackup.Where(r => !r.FechaFin.Equals(new DateTime())).ToList();
-                if (aux.Count == 0 || _mostrarTerminados)
+                if (_mostrarTerminados)
                 {
                     _mostrarNoTerminados = false;
                     
@@ -74,6 +75,8 @@ namespace TallerDIA.ViewModels
                 
                 else
                     Reparaciones = new ObservableCollection<Reparacion>(reparacionesBackup);
+
+                
             }
         }
         
@@ -86,7 +89,7 @@ namespace TallerDIA.ViewModels
             {
                 SetProperty(ref _mostrarNoTerminados, value);
                 List<Reparacion> aux = reparacionesBackup.Where(r => r.FechaFin.Equals(new DateTime())).ToList();
-                if (aux.Count == 0 || _mostrarNoTerminados)
+                if (_mostrarNoTerminados)
                 {
                     _mostrarTerminados = false;
                     Reparaciones = new ObservableCollection<Reparacion>(aux);
@@ -104,8 +107,7 @@ namespace TallerDIA.ViewModels
 
          static Empleado empleado2 = new Empleado("20345678C", "Marisa Almanera", "mars.alma@example.com", false);
         */
-        static List<Cliente> _clientes = new List<Cliente> { _cliente1, _cliente2, _cliente3, _cliente4 };
-
+        
         //static List<Empleado> empleados = new List<Empleado> { empleado1, empleado2 };
 
         //List<String> clientesSorce = new List<String>();
@@ -114,25 +116,22 @@ namespace TallerDIA.ViewModels
         
         public ReparacionesViewModel()
         {
-            Reparaciones = new ObservableCollection<Reparacion>();
-            Cliente c1 = new Cliente { DNI = "12345678", Nombre = "Juan Perez", Email = "juan.perez@example.com", IdCliente = 1 };
-            Cliente c2 = new Cliente { DNI = "11223344", Nombre = "Carlos Garcia", Email = "carlos.garcia@example.com", IdCliente = 2 };
-            Empleado emp = new Empleado { Dni = "111", Email = "111",Nombre="rrr"};
-            Reparaciones.Add(new Reparacion("asunto1", "nota1", c1, emp));
-            Reparaciones.Add(new Reparacion("asunto2", "nota1", c2, emp));
-            Reparaciones.Add(new Reparacion("asunto3", "nota1", c1, emp));
-            Reparaciones[0].FechaFin = DateTime.Now;
-            reparacionesBackup = Reparaciones.ToList();
-           /* 
-            foreach (Cliente cliente in _clientes)
+
+            _Reparaciones = new ObservableCollection<Reparacion>();
+            for (int i = 0; i < SharedDB.Instance.Reparaciones.Count; i++)
             {
-                clientesSorce.Add(cliente.DNI + "_" + cliente.Nombre);
+                _Reparaciones.Add(SharedDB.Instance.Reparaciones.Get(i));
             }
-            */
-           /* foreach (Empleado empleado in empleados)
-            {
-                empleadosSorce.Add(empleado.Dni + "_" + empleado.Nombre);
-            }*/
+            /*
+             foreach (Cliente cliente in _clientes)
+             {
+                 clientesSorce.Add(cliente.DNI + "_" + cliente.Nombre);
+             }
+             */
+            /* foreach (Empleado empleado in empleados)
+             {
+                 empleadosSorce.Add(empleado.Dni + "_" + empleado.Nombre);
+             }*/
         }
 
         #region Popup
@@ -269,7 +268,7 @@ namespace TallerDIA.ViewModels
                 
             }
         }
-
+        
        
     }
 }

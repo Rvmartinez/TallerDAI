@@ -13,5 +13,8 @@ public partial class ReparacionesView : UserControl
         DataContext = new ReparacionesViewModel();
     }
 
-   
+    public void Toogle(bool isChecked)
+    {
+        
+    }
 }
