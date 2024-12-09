@@ -12,20 +12,15 @@ public class Reparaciones
      public int Count => reparaciones.Count;
 
     
-    public Reparaciones()
-    {
-        reparaciones = new ObservableCollection<Reparacion>();
-    }
+     public Reparaciones(IEnumerable<Reparacion> r)
+     {
+         reparaciones = new ObservableCollection<Reparacion>(r);
+     }
     
-    public Reparaciones(IEnumerable<Reparacion> c) : this()
-    {
-        foreach (Reparacion reparacion in c)
-        {
-            reparaciones.Add(reparacion);
-        }
-    }
-
    
+
+    
+
     public void AddRange(IEnumerable<Reparacion> c)
     {
         foreach (Reparacion reparacion in c)
@@ -40,11 +35,29 @@ public class Reparaciones
         reparaciones.Add(reparacion);
     }
     
+    public void Remove(Reparacion reparacion)
+    {
+        reparaciones.Remove(reparacion);
+    }
+    
 
     
     public Reparacion Get(int i)
     {
         return reparaciones[i];
+    }
+    
+    public Reparacion Get(Reparacion reparacion)
+    {
+        
+        foreach (Reparacion rep in reparaciones)
+        {
+            if (rep == reparacion)
+            {
+                return rep;
+            }
+        }
+        return null;
     }
 
     

@@ -33,12 +33,17 @@ namespace TallerDIA.Models
             this._fechaFin = new DateTime();
         }
 
+        public Reparacion()
+        {
+            throw new NotImplementedException();
+        }
+
 
         public Cliente Cliente
         {
             get => _cliente;
 
-            init => _cliente = value;
+            set => _cliente = value;
         }
 
         public Empleado Empleado
@@ -59,7 +64,7 @@ namespace TallerDIA.Models
         public DateTime FechaInicio
         {
             get;
-            init;
+            set;
 
         }
 
