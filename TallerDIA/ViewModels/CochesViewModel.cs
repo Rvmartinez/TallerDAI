@@ -123,11 +123,18 @@ public partial class CochesViewModel : FilterViewModel<Coche>
        var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
             ? desktop.MainWindow
             : null;
-        var cliDlg = new ClienteDlg(SelectedCar.Owner);
-        cliDlg.DniTB.IsEnabled = false;
-        cliDlg.EmailTB.IsEnabled = false;
-        cliDlg.NombreTB.IsEnabled = false;
-        await cliDlg.ShowDialog(mainWindow);
+       var ClienteDlg = new ClienteDlg(SelectedCar.Owner);
+       await ClienteDlg.ShowDialog(mainWindow);
+       
+       if (!ClienteDlg.IsCancelled)
+       {
+           Cliente nuevo = new Cliente
+           {
+               DNI = ClienteDlg.DniTB.Text, Email = ClienteDlg.EmailTB.Text, Nombre = ClienteDlg.NombreTB.Text, IdCliente = 0
+           };
+           SharedDB.Instance.EditClient(SelectedCar.Owner, nuevo);
+           SelectedCar.Owner = nuevo;
+       }
 
     }
 
