@@ -9,6 +9,8 @@ using CommunityToolkit.Mvvm.Input;
 using TallerDIA.Models;
 using TallerDIA.Views.Dialogs;
 using Avalonia;
+using Avalonia.Controls;
+using Avalonia.LogicalTree;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
 using ColorTextBlock.Avalonia;
@@ -76,12 +78,9 @@ public partial class CochesViewModel : FilterViewModel<Coche>
         var cocheDlg = new CocheDlg();
         await cocheDlg.ShowDialog(mainWindow);
         
-        //-------------------------Faltaria ver como seleccionar cliente(lo mas facil seria un dialog)----------------------
-        Cliente c = new Cliente
-            { DNI = "12345678", Nombre = "Juan Perez", Email = "juan.perez@example.com", IdCliente = 34 };
-        
         if (!cocheDlg.IsCanceled)
         {
+            Cliente c = SharedDB.Instance.ConsultaClienteByDni(cocheDlg.ClientesCb.SelectedItem.ToString());
             Coche.Marcas marcaConcreta = Enum.Parse<Coche.Marcas>(cocheDlg.MarcasCb.SelectedItem.ToString());
             Coche car = new Coche(cocheDlg.MatriculaTb.Text, marcaConcreta, cocheDlg.ModeloTb.Text, c);
             this.AddCoche(car);
