@@ -26,6 +26,8 @@ namespace GraficosTaller.UI {
 
             DesplegableAnnos(reparaciones);
 
+            if (annoSelected == 0) annoSelected = Convert.ToInt32(Annos.Items[0]?.ToString());
+
             Annos.IsVisible = false;
             AnnosText.IsVisible = false;
             ReparacionesAnuales(reparaciones);
@@ -142,9 +144,9 @@ namespace GraficosTaller.UI {
 
 
         private Chart Chart;
-        private int annoSelected;
+        private int annoSelected = 0;
         private bool annosFilter = false;
-        private bool mostrandoAnuales;
+        private bool mostrandoAnuales = true;
         private bool rangoFilter = false;
         private bool isFechaFin = true;
     }
