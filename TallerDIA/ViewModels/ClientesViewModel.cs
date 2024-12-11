@@ -50,7 +50,7 @@ public partial class ClientesViewModel : FilterViewModel<Cliente>
 
     public ClientesViewModel()
     {
-        CarteraClientes = new CarteraClientes(SharedDB.Instance.CarteraClientes.Clientes);
+        CarteraClientes = SharedDB.Instance.CarteraClientes;
     }
 
     [RelayCommand]
@@ -130,7 +130,6 @@ public partial class ClientesViewModel : FilterViewModel<Cliente>
             CarteraClientes.Add(cliente);
         }
         OnPropertyChanged(nameof(CarteraClientes));
-       //OnPropertyChanged(nameof(FilteredItems));
 
 
     }
@@ -143,7 +142,6 @@ public partial class ClientesViewModel : FilterViewModel<Cliente>
         {
             if (FilterText != "")
             {
-
                 switch (FilterModes[SelectedFilterMode])
                 {
                     case "Nombre":

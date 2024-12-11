@@ -1,4 +1,4 @@
-﻿using System;
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,12 +33,17 @@ namespace TallerDIA.Models
             this._fechaFin = new DateTime();
         }
 
+        public Reparacion()
+        {
+            throw new NotImplementedException();
+        }
+
 
         public Cliente Cliente
         {
             get => _cliente;
 
-            init => _cliente = value;
+            set => _cliente = value;
         }
 
         public Empleado Empleado
@@ -59,7 +64,7 @@ namespace TallerDIA.Models
         public DateTime FechaInicio
         {
             get;
-            init;
+            set;
 
         }
 
@@ -96,9 +101,32 @@ namespace TallerDIA.Models
             FechaFin = DateTime.Now;
         }
 
-        /*public override string ToString()
+       
+            
+        public int? GetAnno(Boolean fin)
         {
-            return "Fecha Inicio: " + FechaInicio.ToString("dd/MM/yyyy") + ", Asunto: " + Asunto + ", Nota: " + Nota + "Fecha Fin: " + FechaInicio.ToString("dd/MM/yyyy") + ", Cliente: " + ClienteNombre + ", Empleado: " + EmpleadoNombre;
-        }*/
+            if(fin)
+            {
+                return _fechaFin?.Year ?? null;
+            }
+            else
+            {
+                return FechaInicio.Year;
+            }
+        }
+        
+        public int? GetMes(Boolean fin)
+        {
+            if(fin)
+            {
+                return _fechaFin?.Month ?? null;
+            }
+            else
+            {
+                return FechaInicio.Month;
+            }
+        }
+
     }
+    
 }
