@@ -116,6 +116,32 @@ public partial class ClientesViewModel : FilterViewModel<Cliente>
 
     }
 
+    public async Task ButtonAbrirGrafica()
+    { 
+        if (SelectedClient != null)
+        {
+            /*var mainWindow =
+                Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
+                    ? desktop.MainWindow
+                    : null;
+            var colRep = _Reparaciones.OfType<Reparacion>().ToList();
+            var reps = new Reparaciones();
+            reps.AnadirReparaciones(colRep);
+            var reparacionNavegarDlg = new ChartWindow(reps, new ConfigChart() { FechaFin = false });
+            await reparacionNavegarDlg.ShowDialog(mainWindow);*/
+        }
+        else
+        {
+            var message = MessageBoxManager.GetMessageBoxStandard("No hay un cliente seleccionado",
+                "No hay un cliente seleccionado", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Warning,
+                WindowStartupLocation.CenterOwner);
+
+            var respuesta = await message.ShowAsync();
+        }
+    }
+
+
+
 
 
     [RelayCommand]

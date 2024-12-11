@@ -282,7 +282,7 @@ namespace TallerDIA.ViewModels
                 var colRep = _Reparaciones.OfType<Reparacion>().ToList();
                 var reps = new Reparaciones();
                 reps.AnadirReparaciones(colRep);
-                var reparacionNavegarDlg = new ChartWindow(reps, null);
+                var reparacionNavegarDlg = new ChartWindow(reps, new ConfigChart(){FechaFin = false});
                 await reparacionNavegarDlg.ShowDialog(mainWindow);
             }
             else

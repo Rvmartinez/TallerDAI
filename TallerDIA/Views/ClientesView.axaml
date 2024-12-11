@@ -71,6 +71,12 @@
                     icon:Attached.Icon="mdi-account-minus"
                     Command="{Binding ForceUpdateUI}"
                     FontSize="24" />
+                <Button
+                    Margin="0,0,15,0"
+                    icon:Attached.Icon="mdi-file-chart"
+                    Command="{Binding ButtonAbrirGrafica}"
+                    
+                    FontSize="24" />
 
 
 
