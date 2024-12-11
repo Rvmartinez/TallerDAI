@@ -1,27 +1,73 @@
-﻿using System;
+
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Text;
+using System.Xml.Linq;
+
+
 using System.Collections.Generic;
 using System.Linq;
+
 
 namespace TallerDIA.Models;
 
 public class Reparaciones
 {
-    private List<Reparacion> ReparacionesLista { get; set; }
 
-    public Reparaciones()
+     private ObservableCollection<Reparacion> reparaciones;
+
+     public int Count => reparaciones.Count;
+
+    
+     public Reparaciones(IEnumerable<Reparacion> r)
+     {
+         reparaciones = new ObservableCollection<Reparacion>(r);
+     }
+    
+   
+
+    
+
+    public void AddRange(IEnumerable<Reparacion> c)
     {
-        ReparacionesLista = new List<Reparacion>();
+        foreach (Reparacion reparacion in c)
+        {
+            reparaciones.Add(reparacion);
+        }
     }
 
-    public void AnadirReparacion(Reparacion reparacion)
+    
+    public void Add(Reparacion reparacion)
     {
-        ReparacionesLista.Add(reparacion);
+        reparaciones.Add(reparacion);
+    }
+    
+    public void Remove(Reparacion reparacion)
+    {
+        reparaciones.Remove(reparacion);
+    }
+    
+
+    
+    public Reparacion Get(int i)
+    {
+        return reparaciones[i];
+    }
+    
+    public Reparacion Get(Reparacion reparacion)
+    {
+        
+        foreach (Reparacion rep in reparaciones)
+        {
+            if (rep == reparacion)
+            {
+                return rep;
+            }
+        }
+        return null;
     }
 
-    public void AnadirReparaciones(List<Reparacion> reparacionesLista)
-    {
-        ReparacionesLista.AddRange(reparacionesLista);
-    }
+   
     
     
 
@@ -73,4 +119,5 @@ public class Reparaciones
 
 
     }
+
 }

@@ -17,11 +17,35 @@ namespace TallerDIA.Utils
         public static SharedDB Instance => _instance ??= new SharedDB();
         public CarteraClientes CarteraClientes { get; }
         public GarajeCoches Garaje { get; }
+        public Reparaciones Reparaciones { get; }
 
         private SharedDB()
         {
             CarteraClientes = new CarteraClientes(LoadClientesFromXml());
             Garaje = new GarajeCoches(LoadGarajeCochesXml("coches.xml"));
+            Reparaciones = new Reparaciones(LoadReparacionesFromXml());
+            Console.WriteLine("Comprobar lista reparaciones");
+            for (int i = 0; i < Reparaciones.Count; i++)
+            {
+                Console.WriteLine(Reparaciones.Get(i).ToString());
+            }
+            
+        }
+
+        private ObservableCollection<Reparacion> LoadReparacionesFromXml(string filePath = "")
+        {
+            Cliente c1 = new Cliente { DNI = "12345678", Nombre = "Juan Perez", Email = "juan.perez@example.com", IdCliente = 1 };
+            Cliente c2 = new Cliente { DNI = "11223344", Nombre = "Carlos Garcia", Email = "carlos.garcia@example.com", IdCliente = 2 };
+            Empleado emp = new Empleado { Dni = "111", Email = "111",Nombre="rrr"};
+            Empleado emp2 = new Empleado { Dni = "222", Email = "222",Nombre="ccc"};
+           return new ObservableCollection<Reparacion>
+            {
+                new Reparacion("asunto1", "nota1", c1, emp),
+                new Reparacion("asunto2", "nota2", c2, emp),
+                new Reparacion("asunto3", "nota3", c1, emp2)
+                
+            };
+           
         }
 
         public ObservableCollection<Cliente> LoadClientesFromXml(string filePath = "")
@@ -53,8 +77,8 @@ namespace TallerDIA.Utils
 
         private bool CanAddCliente(Cliente cliente)
         {
-
-            Cliente aux = CarteraClientes.Clientes.Where(c => c.DNI.ToLower() == cliente.DNI.ToLower() || c.Email.ToLower() == cliente.Email.ToLower()).First();
+            
+            Cliente aux = CarteraClientes.Clientes.Where(c => c.DNI.ToLower() == cliente.DNI.ToLower() || c.Email.ToLower() == cliente.Email.ToLower()).FirstOrDefault();
 
             return  aux == null;
         }
@@ -62,6 +86,10 @@ namespace TallerDIA.Utils
         public void BajaCliente(Cliente cliente)
         {
             CarteraClientes.RemoveCliente(cliente);
+        }
+        public void EliminarReparacion(Reparacion reparacion)
+        {
+            Reparaciones.Remove(reparacion);
         }
 
         public void BajaClienteByDNI(string dni)
@@ -74,6 +102,26 @@ namespace TallerDIA.Utils
         private int GetLastClientId()
         {
             return CarteraClientes.Clientes.OrderByDescending(c => c.IdCliente).FirstOrDefault().IdCliente;
+        }
+        
+        public bool EditReparacion(Reparacion reparacion,Reparacion updated)
+        {
+            Reparacion toupdate = Reparaciones.Get(reparacion);
+
+            if (toupdate == null)
+            {
+                return false;
+            }
+            else
+            {
+                toupdate.Cliente = updated.Cliente;
+                toupdate.FechaFin = updated.FechaFin;
+                toupdate.FechaInicio = updated.FechaInicio;
+                toupdate.Asunto = updated.Asunto;
+                toupdate.Nota = updated.Nota;
+            }
+
+            return true;
         }
 
 
@@ -101,8 +149,6 @@ namespace TallerDIA.Utils
             return true;
         }
         
-        //------------------------------Parte Coches-----------------------------
-
         public bool RemoveCar(string matricula)
         {
             return Garaje.RemoveMatricula(matricula);
@@ -129,6 +175,12 @@ namespace TallerDIA.Utils
             return Garaje.GetMatricula(c.Matricula);
         }
         
-        //-----------------------------------------------------------------------
+        public bool AddReparacion(Reparacion r)
+        {
+           
+            Reparaciones.Add(r);
+
+            return true;
+        }
     }
 }
