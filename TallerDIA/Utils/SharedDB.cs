@@ -35,8 +35,8 @@ namespace TallerDIA.Utils
 
         private bool CanAddCliente(Cliente cliente)
         {
-
-            Cliente aux = CarteraClientes.Clientes.Where(c => c.DNI.ToLower() == cliente.DNI.ToLower() || c.Email.ToLower() == cliente.Email.ToLower()).First();
+            
+            Cliente aux = CarteraClientes.Clientes.Where(c => c.DNI.ToLower() == cliente.DNI.ToLower() || c.Email.ToLower() == cliente.Email.ToLower()).FirstOrDefault();
 
             return  aux == null;
         }
