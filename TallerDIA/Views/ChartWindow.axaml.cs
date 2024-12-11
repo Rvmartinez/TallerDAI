@@ -26,6 +26,9 @@ namespace GraficosTaller.UI {
 
             DesplegableAnnos(reparaciones);
 
+            
+            if (annoSelected == 0) annoSelected = Convert.ToInt32(Annos.Items[0]?.ToString());
+
             Annos.IsVisible = false;
             AnnosText.IsVisible = false;
             ReparacionesAnuales(reparaciones);
@@ -86,9 +89,13 @@ namespace GraficosTaller.UI {
             {
                 if(!Annos.Items.Contains(anno)) Annos.Items.Add(anno);
             }
-            Annos.SelectedIndex=0;
-            Annos.IsVisible = true;
-            AnnosText.IsVisible = true;
+
+            if (Annos.Items.Count > 0)
+            {
+                Annos.SelectedIndex = 0;
+                Annos.IsVisible = true;
+                AnnosText.IsVisible = true;
+            }
         }
 
         private void UpdateChart(Reparaciones reparaciones)
@@ -128,7 +135,7 @@ namespace GraficosTaller.UI {
         {
             List<int> valores = new List<int>();
             List<int> annos = new List<int>();
-            foreach (var anno in reparaciones.GetAnnosReparaciones(isFechaFin))
+            foreach (var anno in reparaciones.GetAnnosReparaciones(isFechaFin).Reverse())
             {
                 valores.Add(reparaciones.GetReparacionesAnno(anno, isFechaFin));
                 annos.Add(anno);
@@ -142,9 +149,9 @@ namespace GraficosTaller.UI {
 
 
         private Chart Chart;
-        private int annoSelected;
+        private int annoSelected = 0;
         private bool annosFilter = false;
-        private bool mostrandoAnuales;
+        private bool mostrandoAnuales = true;
         private bool rangoFilter = false;
         private bool isFechaFin = true;
     }

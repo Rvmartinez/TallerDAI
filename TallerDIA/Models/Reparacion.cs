@@ -107,7 +107,14 @@ namespace TallerDIA.Models
         {
             if(fin)
             {
-                return _fechaFin?.Year ?? null;
+                if(FechaFin.Equals(new DateTime()))
+                {
+                    return null;
+                }
+                else
+                {
+                    return FechaFin.Year;
+                }
             }
             else
             {
@@ -119,7 +126,14 @@ namespace TallerDIA.Models
         {
             if(fin)
             {
-                return _fechaFin?.Month ?? null;
+                if(FechaFin.Equals(new DateTime()))
+                {
+                    return null;
+                }
+                else
+                {
+                    return FechaFin.Month;
+                }
             }
             else
             {

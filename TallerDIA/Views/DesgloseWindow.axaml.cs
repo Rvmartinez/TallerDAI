@@ -231,8 +231,8 @@ namespace GraficosTaller.UI {
         
         private Chart Chart { get; }
         private ComboBox? _clientes = null;
-        private int annoSelected;
-        private bool mostrandoAnuales;
+        private int annoSelected = 0;
+        private bool mostrandoAnuales = true;
         private bool rangoFilter = false;
         private bool isFechaFin = true;
         private string? clienteFilter = null;
