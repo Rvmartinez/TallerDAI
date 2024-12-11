@@ -50,9 +50,17 @@ public class GarajeCoches
     /// Añade la instancia de Coche pasada como argumento al garaje de coches.
     /// </summary>
     /// <param name="coche"></param>
-    public void Add(Coche coche)
+    public bool Add(Coche coche)
     {
+        foreach (Coche c in coches)
+        {
+            if (c.Matricula == coche.Matricula)
+            {
+                return false;
+            }
+        }
         coches.Add(coche);
+        return true;
     }
 
 
