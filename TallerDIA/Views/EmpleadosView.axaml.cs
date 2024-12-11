@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
+using TallerDIA.Models;
 using TallerDIA.ViewModels;
 
 namespace TallerDIA.Views;
@@ -20,4 +21,11 @@ public partial class EmpleadosView : UserControl
         DataContext = viewModel = new EmpleadosViewModel();
 
     }
+    
+    /*public EmpleadosView(Empleado empleado)
+    {
+        InitializeComponent();
+        DataContext = viewModel = new EmpleadosViewModel(empleado);
+
+    }*/
 }
