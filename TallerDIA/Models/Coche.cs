@@ -38,7 +38,7 @@ public class Coche
     }
     public string Modelo { get => modelo; set => modelo = value.ToUpper(); }
     public Cliente Owner { get => owner; set => owner = value; }
-
+/*
     /// <summary>
     /// Crea un coche con su matricula, su marca y su modelo.
     /// La marca a insertar tiene que ser uno de los valores que estan en el enumerado
@@ -52,7 +52,7 @@ public class Coche
         Matricula = matricula.ToUpper();
         Marca = marca;
         Modelo = modelo.ToUpper();
-    }
+    }*/
 
     /// <summary>
     /// Crea un coche con su matricula, su marca, su modelo y el cliente al que pertenece.

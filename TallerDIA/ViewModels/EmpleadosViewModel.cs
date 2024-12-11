@@ -3,68 +3,18 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.InteropServices.JavaScript;
+using System.Threading.Tasks;
+using Avalonia;
+using Avalonia.Controls.ApplicationLifetimes;
 using CommunityToolkit.Mvvm.Input;
 using TallerDIA.Models;
 using TallerDIA.Utils;
 using TallerDIA.ViewModels;
+using TallerDIA.Views.Dialogs;
+
 namespace TallerDIA.ViewModels;
 public partial class EmpleadosViewModel : FilterViewModel<Empleado>
 {
-    public EmpleadosViewModel()
-    {
-        DateTime reparacion1 = new DateTime(2019,06,11,10,15,10);
-        DateTime reparacion2 = new DateTime(2020,05,07,9,10,1);
-        DateTime reparacion3 = new DateTime(2018,10,08,18,1,59);
-        DateTime reparacion4 = new DateTime(2021,01,10,7,45,22);
-        List<DateTime> reparaciones1 = new List<DateTime>{reparacion1,reparacion2};
-        List<DateTime> reparaciones2 = new List<DateTime>{reparacion3,reparacion4};
-        Empleado empleado1 = new Empleado("12345678A", "Abelardo", "averelardo@hotcorreo.coom", reparaciones1);
-        Empleado empleado2 = new Empleado("22345678B", "Luffy", "onepieceismid@ymail.com", reparaciones2);
-        List<Empleado> empleados = new List<Empleado> 
-        {
-            empleado1,empleado2
-        };
-        Empleados = new ObservableCollection<Empleado>(empleados);/**/
-        EmpleadoActual = new Empleado();
-        EmpleadoSeleccionado = new Empleado();
-        Console.Out.WriteLine("EmpleadosViewModel en marcha...");
-        Aviso = "Bienvenido a la ventana de gestón de Empleados del Taller.";
-    }
-    
-    
-    // Cuando el usuario haga click en una fila del datagrid, se mostrarán los datos de ese Empleado
-    // en los TextBoxes correspondientes.
-    // Atada al datagrid en XAML mediante 'SelectionChanged="NuevoEmpleadoSeleccionado"'.
-    /*private void NuevoEmpleadoSeleccionado()
-    {
-        Empleado empleado = EmpleadoActual;
-        if (empleado != null)
-        {
-            tbDni.Text = empleado.Dni.ToString();
-            tbNombre.Text = empleado.Nombre.ToString();
-            tbEmail.Text = empleado.Email.ToString();
-            LbTickets.ItemsSource = new ObservableCollection<DateTime>(BuscarEmpleado(empleado.Dni.ToString()).Tickets);
-            tblAvisos.Text="Nuevo empleado seleccionado.";
-        }
-        else
-        {
-            Console.Out.WriteLine("Seleccion nula.");
-        }
-        //MostrarTickets(empleado);
-    }*/
-
-    private ObservableCollection<Empleado> _Empleados;
-    public  ObservableCollection<Empleado>  Empleados
-    {
-        get => _Empleados;
-        set
-        {
-            //Empleados = value;
-            //_Empleados = value;
-            SetProperty(ref _Empleados, value);
-        }
-    }
-    
     private Empleado _EmpleadoActual;
     public Empleado EmpleadoActual
     {
@@ -76,6 +26,35 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
         }
     }
     
+    private RegistroEmpleados _registroEmpleados;
+    public RegistroEmpleados RegistroEmpleados
+    {
+        get
+        {
+            return _registroEmpleados;
+        }
+        set
+        {
+            SetProperty(ref _registroEmpleados, value);
+
+        }
+    }
+    
+    public EmpleadosViewModel()
+    {
+        RegistroEmpleados = new RegistroEmpleados(SharedDB.Instance.RegistroEmpleados.Empleados);
+        //Empleados=new ObservableCollection<Empleado>(SharedDB.Instance.RegistroEmpleados.Empleados.ToList());
+    } 
+    
+    /*
+public EmpleadosViewModel()
+{
+    RegistroEmpleados = new RegistroEmpleados(SharedDB.Instance.RegistroEmpleados.Empleados);
+    //Empleados=new ObservableCollection<Empleado>(SharedDB.Instance.RegistroEmpleados.Empleados.ToList());
+}
+*/
+    
+    
     private Empleado _EmpleadoSeleccionado;
     public Empleado EmpleadoSeleccionado
     {
@@ -83,6 +62,7 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
         set
         {
             SetProperty(ref _EmpleadoSeleccionado, value);
+            EmpleadoActual=_EmpleadoSeleccionado;
         }
     }
 
@@ -96,71 +76,74 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
             SetProperty(ref _Aviso, value);
         }
     }
+    
+    public void ForceUpdateUI()
+    {
 
-    
-    // FUNCIONES PARA ACTUALIZAR LA INTERFAZ Y FILTRAR LAS ENTRADAS.
-    
-    // Funcion para que el datagrid muestre los datos de la lista propiedad "Empleados".
-    public void ActualizarDgEmpleados()
-    {
-        List<Empleado> empleados = Empleados.ToList();
-        Empleados.Clear();
-        Empleados = new ObservableCollection<Empleado>(empleados);
+        List<Empleado> list = SharedDB.Instance.RegistroEmpleados.Empleados.ToList();
+        RegistroEmpleados.Clear();
+        FilteredItems.Clear();
+
+        foreach (Empleado empleado in list)
+        {
+            FilteredItems.Add(empleado);
+            //RegistroEmpleados.Add(empleado);
+        }
+        OnPropertyChanged(nameof(FilteredItems));
     }
     
-    // EVENTOS DE CONTROLADOR.
-    // Cuando se haga click en el botón correspondiente, se ejecutan respectivamente.
     [RelayCommand]
-    public void btAnadirEmpleado_OnClick()
+    public async Task btAnadirEmpleado_OnClick()
     {
-        Console.Out.WriteLine("Intentando introducir...");
-        if (ControlesEmpleado.FiltrarEntradasEmpleado(EmpleadoActual) &&
-            ControlesEmpleado.BuscarEmpleado(Empleados.ToList(), EmpleadoActual) == null)
+        var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop ? desktop.MainWindow : null;
+        var EmpleadoDlg = new EmpleadoDlg();
+        await EmpleadoDlg.ShowDialog(mainWindow);
+
+        if (!EmpleadoDlg.IsCancelled)
         {
-            Empleados.Add(EmpleadoActual);
-            EmpleadoActual.Tickets = new List<DateTime>();
-            ActualizarDgEmpleados();
-            Console.Out.WriteLine("Insertado exitoso.");
-            Aviso = "Empleado insertado exitosamente.";
+            Empleado nuevoEmpleado  = new Empleado() { Dni = EmpleadoDlg.DniTB.Text, Email = EmpleadoDlg.EmailTB.Text, Nombre = EmpleadoDlg.NombreTB.Text};
+            if (SharedDB.FiltrarEntradasEmpleado(nuevoEmpleado) &&
+                SharedDB.BuscarEmpleado(RegistroEmpleados.Empleados.ToList(), nuevoEmpleado) == null)
+            {
+                RegistroEmpleados.Add(nuevoEmpleado);
+            }
         }
-        else
-        {
-            Console.Out.WriteLine("Insertado fallido.");
-            Aviso = "Fallo al insertar, ya existe ese empleado o hay campos en blanco.";
-        }
-        EmpleadoActual=new Empleado();
     }
+
     [RelayCommand]
-    public void btModificarEmpleado_OnClick()
+    public async Task btModificarEmpleado_OnClick()
     {
-        Console.Out.WriteLine("Intentando modificar...");
-        if (ControlesEmpleado.FiltrarEntradasEmpleado(EmpleadoActual) && 
-            ControlesEmpleado.FiltrarEntradasEmpleado(EmpleadoSeleccionado) &&
-            ControlesEmpleado.BuscarEmpleado(Empleados.ToList(), EmpleadoSeleccionado) != null)
+        var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
+            ? desktop.MainWindow
+            : null;
+        var EmpleadoDlg = new EmpleadoDlg();
+        
+        await EmpleadoDlg.ShowDialog(mainWindow);
+
+        if (!EmpleadoDlg.IsCancelled)
         {
-            Empleados.Remove(EmpleadoSeleccionado);
-            //EmpleadoActual.Tickets = new List<DateTime>();
-            Empleados.Add(EmpleadoActual);
-            ActualizarDgEmpleados();
-            Console.Out.WriteLine("Modificado exitoso.");
-            Aviso = "Empleado modificado exitosamente.";
+            Empleado nuevoEmpleado = new Empleado()
+                { Dni = EmpleadoDlg.DniTB.Text, Email = EmpleadoDlg.EmailTB.Text, Nombre = EmpleadoDlg.NombreTB.Text };
+            if (SharedDB.FiltrarEntradasEmpleado(EmpleadoSeleccionado) &&
+                SharedDB.FiltrarEntradasEmpleado(nuevoEmpleado) &&
+                SharedDB.BuscarEmpleado(RegistroEmpleados.Empleados.ToList(), EmpleadoSeleccionado) != null)
+            {
+                RegistroEmpleados.ActualizarEmpleado(EmpleadoSeleccionado,nuevoEmpleado.Dni,nuevoEmpleado.Nombre,nuevoEmpleado.Email);
+                EmpleadoSeleccionado = nuevoEmpleado;
+                //FilteredItems = new ObservableCollection<Empleado>(RegistroEmpleados.Empleados.ToList());
+                ForceUpdateUI();
+            }
         }
-        else
-        {
-            Console.Out.WriteLine("Modificado fallido.");
-            Aviso = "Fallo al modificar, no existe ese empleado o hay campos en blanco.";
-        }
-        EmpleadoActual=new Empleado();
     }
+
     [RelayCommand]
     public void btEliminarEmpleado_OnClick()
     {
         Console.Out.WriteLine("Intentando eliminar...");
-        if (ControlesEmpleado.FiltrarEntradasEmpleado(EmpleadoSeleccionado) && 
-            ControlesEmpleado.BuscarEmpleado(Empleados.ToList(), EmpleadoSeleccionado) != null)
+        if (SharedDB.FiltrarEntradasEmpleado(EmpleadoSeleccionado) && 
+            SharedDB.BuscarEmpleado(RegistroEmpleados.Empleados.ToList(), EmpleadoSeleccionado) != null)
         {
-            Empleados.Remove(EmpleadoSeleccionado);
-            ActualizarDgEmpleados();
+            RegistroEmpleados.Empleados.Remove(EmpleadoSeleccionado);
             Console.Out.WriteLine("Eliminado exitoso.");
             Aviso = "Empleado eliminado exitosamente.";
         }
@@ -170,19 +153,26 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
             Aviso = "Fallo al modificar, no existe ese empleado.";
 
         }
-        EmpleadoActual=new Empleado();
+        //EmpleadoActual=new Empleado();
     }
     [RelayCommand]
     public void btNuevoEmpleado_OnClick()
     {
         EmpleadoSeleccionado=new Empleado();
         EmpleadoActual=new Empleado();
-        ActualizarDgEmpleados();
         Aviso = "Entradas y empleado seleccionado reseteados.";
     }
+    
 
-    public override ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>(["DNI","Nombre","Email","Tickets anteriores a", "Tickets posteriores a"]);
-
+    [RelayCommand]
+    public void btTicketsSelecc_OnClick()
+    {
+        //var window = new (EmpleadoSeleccionado);
+        //window.Show();
+    }
+    
+    //private ObservableCollection<Empleado> _FilteredItems;
+    public override ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>(["DNI","Nombre","Email"]);
     public override ObservableCollection<Empleado> FilteredItems
     {
         get
@@ -195,33 +185,26 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
                     switch (FilterModes[SelectedFilterMode])
                     {
                         case "DNI":
-                            return new ObservableCollection<Empleado>(Empleados.Where(e => e.Dni.Contains(FilterText)));
+                            return new ObservableCollection<Empleado>(RegistroEmpleados.Empleados.Where(e => e.Dni.Contains(FilterText)));
                         case "Nombre":
-                            return new ObservableCollection<Empleado>(Empleados.Where(e => e.Nombre.Contains(FilterText)));
+                            return new ObservableCollection<Empleado>(RegistroEmpleados.Empleados.Where(e => e.Nombre.Contains(FilterText)));
                         case "Email":
-                            return new ObservableCollection<Empleado>(Empleados.Where(e => e.Email.Contains(FilterText)));
-                        case "Tickets anteriores a":
-                            date = DateTime.Parse(FilterText);
-                            return new ObservableCollection<Empleado>(Empleados.Where(e => e.Tickets.Any(t => t.Date <= date)));
-                        case "Tickets posteriores a":
-                            date = DateTime.Parse(FilterText);
-                            return new ObservableCollection<Empleado>(Empleados.Where(e => e.Tickets.Any(t => t.Date >= date)));
-                        default:
-                            return Empleados;
+                            return new ObservableCollection<Empleado>(RegistroEmpleados.Empleados.Where(e => e.Email.Contains(FilterText)));
+                       default:
+                            return RegistroEmpleados.Empleados;
                     }
                 }
                 catch (FormatException e)
                 {
                     //TODO: find a good way to communicate this to the user
                     Console.WriteLine("Fecha de busqueda no válida");
-                    return Empleados;
+                    return RegistroEmpleados.Empleados;
                 }
             }
             else
             {
-                return Empleados;
+                return RegistroEmpleados.Empleados;
             }
         }
     }
 };
-
