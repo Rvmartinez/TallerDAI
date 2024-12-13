@@ -177,6 +177,7 @@ public EmpleadosViewModel()
     {
         get
         {
+            var text = FilterText.ToLower();
             if (FilterText != "")
             {
                 DateTime date;
@@ -185,11 +186,11 @@ public EmpleadosViewModel()
                     switch (FilterModes[SelectedFilterMode])
                     {
                         case "DNI":
-                            return new ObservableCollection<Empleado>(RegistroEmpleados.Empleados.Where(e => e.Dni.Contains(FilterText)));
+                            return new ObservableCollection<Empleado>(RegistroEmpleados.Empleados.Where(e => e.Dni.ToLower().Contains(text)));
                         case "Nombre":
-                            return new ObservableCollection<Empleado>(RegistroEmpleados.Empleados.Where(e => e.Nombre.Contains(FilterText)));
+                            return new ObservableCollection<Empleado>(RegistroEmpleados.Empleados.Where(e => e.Nombre.ToLower().Contains(text)));
                         case "Email":
-                            return new ObservableCollection<Empleado>(RegistroEmpleados.Empleados.Where(e => e.Email.Contains(FilterText)));
+                            return new ObservableCollection<Empleado>(RegistroEmpleados.Empleados.Where(e => e.Email.ToLower().Contains(text)));
                        default:
                             return RegistroEmpleados.Empleados;
                     }
