@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using TallerDIA.Utils;
 using System.IO;
 using Avalonia.Controls;
+using GraficosTaller.UI;
 
 namespace TallerDIA.ViewModels;
 
@@ -120,23 +121,25 @@ public partial class ClientesViewModel : FilterViewModel<Cliente>
     { 
         if (SelectedClient != null)
         {
-            /*var mainWindow =
+            var mainWindow =
                 Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
                     ? desktop.MainWindow
                     : null;
-            var colRep = _Reparaciones.OfType<Reparacion>().ToList();
-            var reps = new Reparaciones();
-            reps.AnadirReparaciones(colRep);
-            var reparacionNavegarDlg = new ChartWindow(reps, new ConfigChart() { FechaFin = false });
-            await reparacionNavegarDlg.ShowDialog(mainWindow);*/
+            var reps = SharedDB.Instance.Reparaciones;
+   ;
+            var reparacionNavegarDlg = new DesgloseWindow(reps, new ConfigChart() {Modo = ConfigChart.ModoVision.Mensual, Cliente = SelectedClient.Nombre, FechaFin = false });
+            await reparacionNavegarDlg.ShowDialog(mainWindow);
         }
         else
         {
-            var message = MessageBoxManager.GetMessageBoxStandard("No hay un cliente seleccionado",
-                "No hay un cliente seleccionado", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Warning,
-                WindowStartupLocation.CenterOwner);
-
-            var respuesta = await message.ShowAsync();
+            var mainWindow =
+                Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
+                    ? desktop.MainWindow
+                    : null;
+            var reps = SharedDB.Instance.Reparaciones;
+            ;
+            var reparacionNavegarDlg = new DesgloseWindow(reps, new ConfigChart() {Modo = ConfigChart.ModoVision.Anual, FechaFin = false });
+            await reparacionNavegarDlg.ShowDialog(mainWindow);
         }
     }
 
