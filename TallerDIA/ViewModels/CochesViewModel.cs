@@ -131,6 +131,7 @@ public partial class CochesViewModel : FilterViewModel<Coche>
            {
                DNI = ClienteDlg.DniTB.Text, Email = ClienteDlg.EmailTB.Text, Nombre = ClienteDlg.NombreTB.Text, IdCliente = 0
            };
+           SharedDB.Instance.EditClient(SelectedCar.Owner, nuevo);
            foreach (var car in _garaje.Coches)
            {
                if (car.Owner.DNI == cli.DNI)
@@ -138,7 +139,6 @@ public partial class CochesViewModel : FilterViewModel<Coche>
                    car.Owner = nuevo;
                }
            }
-           SharedDB.Instance.EditClient(SelectedCar.Owner, nuevo);
            SelectedCar.Owner = nuevo;
        }
 
