@@ -17,6 +17,11 @@ public class Reparaciones
 {
 
      private ObservableCollection<Reparacion> reparaciones;
+     
+     public ObservableCollection<Reparacion> Reps
+     {
+         get => reparaciones;
+     }
 
      public int Count => reparaciones.Count;
 

@@ -11,20 +11,8 @@ public partial class ReparacionesView : UserControl
     public ReparacionesView()
     {
         InitializeComponent();
-        dataContext = new ReparacionesViewModel();
+        
     }
 
-    public  void Toogle()
-    {
-        this.CheckTerminados = this.GetControl<CheckBox>( "CheckTerminados" );
-        this.CheckNoTerminados = this.GetControl<CheckBox>( "CheckNoTerminados" );
-
-        if (CheckTerminados.IsChecked == true)
-        {
-            CheckNoTerminados.IsChecked = false;
-        }else if (CheckNoTerminados.IsChecked == true)
-        {
-            CheckTerminados.IsChecked = false;
-        }
-    }
+   
 }

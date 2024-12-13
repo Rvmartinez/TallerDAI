@@ -19,6 +19,8 @@ public partial class ReparacionDlg : Window
     public ReparacionDlg(Reparacion r)
     
     {
+        InitializeComponent();
+
         List<String> _clientes = new List<String>();
         for (int i = 0; i < SharedDB.Instance.CarteraClientes.Count; i++)
         {
@@ -35,7 +37,6 @@ public partial class ReparacionDlg : Window
         NotaTb.Text = r.Nota;
         ClienteTb.Text = r.Cliente.DNI + "_" + r.Cliente.Nombre;
         EmpleadoTb.Text = r.Empleado.Dni + "_" + r.Empleado.Nombre;
-        InitializeComponent();
         BtOk.Click += (_, _) => _ = this.OnAcceptClicked();
         BtCancel.Click += (_, _) => this.OnCancelClicked();
         ClienteTb.ItemsSource = _clientes;

@@ -43,7 +43,7 @@
                 <Button
                     Margin="0,0,15,0"
                     icon:Attached.Icon="mdi-pencil"
-                    
+                    Command="{Binding ModifyRepaisCommand}"
                     FontSize="24" />
                 <Button
                     Margin="0,0,15,0"
@@ -69,18 +69,7 @@
                     
                     FontSize="24" />
                 
-                <CheckBox
-                    Name="CheckTerminados"
-                    Content="Reparaciones terminadas"
-                    Margin="0,0,15,0"
-                    IsChecked="{Binding MostrarTerminados}"
-                    IsVisible="True" />
-                <CheckBox
-                    Name="CheckNoTerminados"
-                    Content="Reparaciones sin terminar"
-                    Margin="0,0,15,0"
-                    IsChecked="{Binding MostrarNoTerminados}"
-                    IsVisible="True" />
+               
 
 
             </StackPanel>
