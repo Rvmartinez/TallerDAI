@@ -20,7 +20,7 @@ using TallerDIA.Views.Dialogs;
 namespace TallerDIA.ViewModels
 {
 
-    public partial class ReparacionesViewModel : ViewModelBase
+    public partial class ReparacionesViewModel : FilterViewModel<Reparacion>
     {
         static Cliente _cliente1 = new Cliente
         {
@@ -386,6 +386,52 @@ namespace TallerDIA.ViewModels
         
         
 
-       
+
+        public override ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>(["Asunto","Nota","Fecha entre", "Nombre cliente", "DNI cliente", "Nombre empleado","DNI empleado"]);
+
+        public override ObservableCollection<Reparacion> FilteredItems
+        {
+            get
+            {
+                if (FilterText != "")
+                {
+                    var Text = FilterText.ToLower();
+                    switch (FilterModes[SelectedFilterMode])
+                    {
+                        case "Asunto":
+                            return new ObservableCollection<Reparacion>(Reparaciones.Where(r => r.Asunto.ToLower().Contains(Text)));
+                        case "Nota":
+                            return new ObservableCollection<Reparacion>(Reparaciones.Where(r => r.Nota.ToLower().Contains(Text)));
+                        case "Fecha entre":
+                            try
+                            {
+                                var date = DateTime.Parse(Text);
+                                return new ObservableCollection<Reparacion>(
+                                    Reparaciones.Where(r => r.FechaInicio <= date && r.FechaFin >= date));
+                            }
+                            catch (FormatException ex)
+                            {
+                                //TODO: SHOW THIS TO THE USER
+                                Console.Out.WriteLine("Fecha no válida");
+                                return Reparaciones;
+                            }
+                        case "Nombre cliente":
+                            return new ObservableCollection<Reparacion>(Reparaciones.Where(r => r.Cliente.Nombre.ToLower().Contains(Text)));
+                        case "DNI cliente":
+                            return new ObservableCollection<Reparacion>(Reparaciones.Where(r => r.Cliente.DNI.ToLower().Contains(Text)));
+                        case "Nombre empleado":
+                            return new ObservableCollection<Reparacion>(Reparaciones.Where(r => r.Empleado.Nombre.ToLower().Contains(Text)));
+                        case "DNI empleado":
+                            return new ObservableCollection<Reparacion>(Reparaciones.Where(r => r.Empleado.Dni.ToLower().Contains(Text)));
+                        default:
+                            return Reparaciones;
+                    }
+                }
+                else
+                {
+                    return Reparaciones;
+                }
+            }
+        }
     }
 }
