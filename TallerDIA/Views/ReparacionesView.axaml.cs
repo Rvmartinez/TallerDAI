@@ -7,14 +7,24 @@ namespace TallerDIA.Views;
 
 public partial class ReparacionesView : UserControl
 {
+    public static ReparacionesViewModel dataContext;
     public ReparacionesView()
     {
         InitializeComponent();
-        DataContext = new ReparacionesViewModel();
+        dataContext = new ReparacionesViewModel();
     }
 
-    public void Toogle(bool isChecked)
+    public  void Toogle()
     {
-        
+        this.CheckTerminados = this.GetControl<CheckBox>( "CheckTerminados" );
+        this.CheckNoTerminados = this.GetControl<CheckBox>( "CheckNoTerminados" );
+
+        if (CheckTerminados.IsChecked == true)
+        {
+            CheckNoTerminados.IsChecked = false;
+        }else if (CheckNoTerminados.IsChecked == true)
+        {
+            CheckTerminados.IsChecked = false;
+        }
     }
 }

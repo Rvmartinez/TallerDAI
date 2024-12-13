@@ -142,6 +142,10 @@ namespace TallerDIA.Models
             }
         }
 
+        public override string ToString()
+        {
+            return "" + Asunto + "," + Nota + "," + Cliente.ToString() + "," + Empleado.ToString();
+        }
     }
     
 }
