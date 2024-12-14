@@ -18,7 +18,8 @@ using System.Threading.Tasks;
 using TallerDIA.Utils;
 using System.IO;
 using Avalonia.Controls;
-using GraficosTaller.UI;
+using DesgloseWindow = TallerDIA.Views.DesgloseWindow;
+using ConfigChart = TallerDIA.Views.ConfigChart;
 
 namespace TallerDIA.ViewModels;
 

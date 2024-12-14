@@ -10,11 +10,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
-using GraficosTaller.UI;
 using TallerDIA.Models;
 using TallerDIA.Utils;
-using TallerDIA.Views;
 using TallerDIA.Views.Dialogs;
+using ChartWindow = TallerDIA.Views.ChartWindow;
+using ConfigChart = TallerDIA.Views.ConfigChart;
 
 namespace TallerDIA.ViewModels
 {
@@ -272,14 +272,13 @@ namespace TallerDIA.ViewModels
         
         public async Task ButtonAbrirGrafica()
         {
-            if (_Reparaciones.Count > 0)
+            if (SharedDB.Instance.Reparaciones.Count > 0)
             {
                 var mainWindow =
                     Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
                         ? desktop.MainWindow
                         : null;
-                var colRep = _Reparaciones.OfType<Reparacion>().ToList();
-                var reps = new Reparaciones(colRep);
+                var reps = SharedDB.Instance.Reparaciones;
                 var reparacionNavegarDlg = new ChartWindow(reps, new ConfigChart(){FechaFin = false});
                 await reparacionNavegarDlg.ShowDialog(mainWindow);
             }
