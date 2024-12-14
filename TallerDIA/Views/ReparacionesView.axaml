@@ -19,11 +19,21 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0" Margin="5">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="auto" />
             </Grid.ColumnDefinitions>
-            <TextBox Grid.Column="0" Watermark="Búsqueda" Text="{Binding FilterText}"></TextBox>
-            <ComboBox Grid.Column="1" ItemsSource="{Binding FilterModes}" SelectedIndex="{Binding SelectedFilterMode}"></ComboBox>
+            <TextBlock Grid.Column="0" Margin="10">Fecha entre</TextBlock>
+            <DatePicker Grid.Column="1" Margin="5" SelectedDate="{Binding MinDate}"></DatePicker>
+            <TextBlock Grid.Column="2" Margin="10"> Y </TextBlock>
+            <DatePicker Grid.Column="3" Margin="5" SelectedDate="{Binding MaxDate}"></DatePicker>
+            
+
+            <TextBox Grid.Column="4"  Margin="10" Watermark="Búsqueda" Text="{Binding FilterText}"></TextBox>
+            <ComboBox Grid.Column="5" Margin="10" ItemsSource="{Binding FilterModes}" SelectedIndex="{Binding SelectedFilterMode}"></ComboBox>
         </Grid>
         <StackPanel
             Grid.Row="1"
