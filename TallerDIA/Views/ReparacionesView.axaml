@@ -14,6 +14,7 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
+            <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <StackPanel
@@ -84,14 +85,22 @@
 
             </StackPanel>
         </Grid>
+        <Grid Grid.Row="1" Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="0" Watermark="Búsqueda" Text="{Binding FilterText}"></TextBox>
+            <ComboBox Grid.Column="1" ItemsSource="{Binding FilterModes}" SelectedIndex="{Binding SelectedFilterMode}"></ComboBox>
+        </Grid>
         <DataGrid
             x:Name="DgReparaciones"
-            Grid.Row="1"
+            Grid.Row="2"
             BorderBrush="Purple"
             BorderThickness="1"
             CanUserReorderColumns="true"
             IsReadOnly="True"
-            ItemsSource="{Binding Reparaciones}"
+            ItemsSource="{Binding FilteredItems}"
             SelectedItem="{Binding SelectedRepair}">
             <DataGrid.Styles>
                 <Style Selector="DataGridColumnHeader">
