@@ -9,14 +9,8 @@ namespace TallerDIA.Views.Dialogs;
 public partial class ReparacionNavegarDlg : Window
 {
 
+
     
-    public ReparacionNavegarDlg(Reparacion r)
-    {
-        InitializeComponent();
-       
-        BtCancel.Click += (_, _) => this.OnCancelClicked();
-        
-    }
 
    
 
@@ -24,16 +18,22 @@ public partial class ReparacionNavegarDlg : Window
     {
         InitializeComponent();
         
-       BtTrabajador.Click += (_, _) => this.OnBtTrabajadorClicked();
+       BtEmpleado.Click += (_, _) => this.OnBtEmpleadoClicked();
         BtCancel.Click += (_, _) => this.OnCancelClicked();
+        BtCliente.Click += (_, _) => this.OnBtClienteClicked();
         
     }
 
-     void OnBtTrabajadorClicked()
-    {
-       //MainWindowViewModel mainWindow = Application.Current.ApplicationLifetime as MainWindowViewModel;
-       //mainWindow.GoToTrabajador();
-    }
+     void OnBtEmpleadoClicked()
+     {
+         this.VerEmpleado = true;
+         this.OnExit();
+     }
+     void OnBtClienteClicked()
+     {
+         this.VerCliente = true;
+         this.OnExit();
+     }
 
     void OnCancelClicked()
     {
@@ -47,6 +47,16 @@ public partial class ReparacionNavegarDlg : Window
     }
 
     public bool IsCancelled
+    {
+        get;
+        private set;
+    }
+    public bool VerEmpleado
+    {
+        get;
+        private set;
+    }
+    public bool VerCliente
     {
         get;
         private set;

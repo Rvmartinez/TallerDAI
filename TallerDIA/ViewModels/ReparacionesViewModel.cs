@@ -23,7 +23,8 @@ namespace TallerDIA.ViewModels
     public partial class ReparacionesViewModel : FilterViewModel<Reparacion>
     {
         
-       
+        private bool _mostrarTerminados =false;
+        private bool _mostrarNoTerminados =false;
 
         private Reparaciones _reparaciones = SharedDB.Instance.Reparaciones;
         public Reparaciones ReparacionesColection
@@ -46,20 +47,20 @@ namespace TallerDIA.ViewModels
             }
         }
 
-
-
-       
-
-        public object AddReparacion { get; }
-
-
-
-
-
-
         public ReparacionesViewModel()
         {
+           
+        }
 
+
+        public ReparacionesViewModel(Empleado empleado)
+        {
+            ReparacionesColection.Reps =  new ObservableCollection<Reparacion>(ReparacionesColection.Reps.Where(r => r.Empleado == empleado));
+        }
+        
+        public ReparacionesViewModel(Cliente cliente)
+        {
+            ReparacionesColection.Reps =  new ObservableCollection<Reparacion>(ReparacionesColection.Reps.Where(r => r.Cliente == cliente));
         }
 
         #region Popup
@@ -131,18 +132,22 @@ namespace TallerDIA.ViewModels
                 switch (respuesta)
                 {
                     case ButtonResult.Yes:
-                        
 
+                        Reparacion r;
                         foreach (Reparacion rep in ReparacionesColection.Reps)
                         {
                             if (rep.Equals(SelectedRepair))
                             {
                                 Console.WriteLine("Reparacion encontrada");
                                 Console.WriteLine(rep.ToString());
-                                rep.asignarFechaFin();
-                                
+                                r = rep;
+                                r.asignarFechaFin();
+                                SharedDB.Instance.EditReparacion(SelectedRepair,r);
+                                ForceUpdateUI();
+                                Console.WriteLine(r.ToString());
+                                break;
                             }
-                            Console.WriteLine(rep.ToString());
+                           
                         }
                        
 
@@ -241,7 +246,7 @@ namespace TallerDIA.ViewModels
 
 
 
-            if (SelectedRepair == null)
+            if (SelectedRepair == null || SelectedRepair.FechaFin != new DateTime())
             {
                 return; 
             }
@@ -330,7 +335,72 @@ namespace TallerDIA.ViewModels
 
 
         }
-        
+
+
+        public bool MostrarTerminados
+        {
+            get => _mostrarTerminados;
+            set
+            {
+                SetProperty(ref _mostrarTerminados, value);
+                List<Reparacion> aux = ReparacionesColection.Reps.Where(r => !r.FechaFin.Equals(new DateTime())).ToList();
+                if (_mostrarTerminados)
+                {
+                    ReparacionesColection.Reps=new ObservableCollection<Reparacion>();
+                    ReparacionesColection.Reps = new ObservableCollection<Reparacion>(aux);
+                    
+                    
+                  
+                    
+                   
+                }
+
+                else if(!_mostrarTerminados)
+                {
+                    ReparacionesColection.Reps= null;
+                    ReparacionesColection.Reps = new ObservableCollection<Reparacion>(SharedDB.Instance.Reparaciones.Reps);
+                    
+                }
+                    
+
+                
+            }
+        }
+
+       
+
+
+        public bool MostrarNoTerminados
+        {
+            get => _mostrarNoTerminados;
+            set
+            {
+                SetProperty(ref _mostrarNoTerminados, value);
+                List<Reparacion> aux = ReparacionesColection.Reps.Where(r => r.FechaFin.Equals(new DateTime())).ToList();
+                if (_mostrarNoTerminados && !_mostrarTerminados)
+                {
+                    
+                    
+                    ReparacionesColection.Reps.Clear();
+                    
+                    foreach (Reparacion rep in aux)
+                    {
+                        ReparacionesColection.Reps.Add(rep);
+                    }
+                   
+                }
+                
+                else 
+                    ForceUpdateUI();
+
+                
+            }
+        }
+
+
+
+
+
         [RelayCommand]
         public async Task ButtonNevegarCommand()
         {
@@ -340,9 +410,16 @@ namespace TallerDIA.ViewModels
 
             if (!reparacionNavegarDlg.IsCancelled)
             {
-                // Cliente c  = new Cliente() { DNI = ClienteDlg.DniTB.Text, Email = ClienteDlg.EmailTB.Text, Nombre = ClienteDlg.NombreTB.Text, IdCliente = this.GetLastClientId()+1 };
-               
-                //Reparaciones.Add(c);
+                return;
+
+            }
+
+            if (reparacionNavegarDlg.VerEmpleado)
+            {
+                
+            }
+            if (reparacionNavegarDlg.VerCliente)
+            {
                 
             }
         }

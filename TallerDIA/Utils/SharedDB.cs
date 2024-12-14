@@ -118,14 +118,10 @@ namespace TallerDIA.Utils
             {
                 return false;
             }
+            Reparaciones.Remove(toupdate);
+            Reparaciones.Add(updated);
             
-            
-               //toupdate.Cliente = updated.Cliente;
-                //toupdate.FechaFin = updated.FechaFin;
-                //toupdate.FechaInicio = updated.FechaInicio;
-                toupdate.Asunto = updated.Asunto;
-                toupdate.Nota = updated.Nota;
-                toupdate.Empleado = updated.Empleado;
+               
                 return true;
             
 

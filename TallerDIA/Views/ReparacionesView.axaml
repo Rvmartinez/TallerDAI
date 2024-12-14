@@ -68,6 +68,24 @@
                     Command="{Binding ButtonAbrirGrafica}"
                     
                     FontSize="24" />
+                <Button
+                    Margin="0,0,15,0"
+                    icon:Attached.Icon="mdi-restore"
+                    Command="{Binding ForceUpdateUI}"
+                    
+                    FontSize="24" />
+                <CheckBox
+                    Name="CheckTerminados"
+                    Content="Reparaciones terminadas"
+                    Margin="0,0,15,0"
+                    IsChecked="{Binding MostrarTerminados}"
+                    IsVisible="False" />
+                <CheckBox
+                    Name="CheckNoTerminados"
+                    Content="Reparaciones sin terminar"
+                    Margin="0,0,15,0"
+                    IsChecked="{Binding MostrarNoTerminados}"
+                    IsVisible="False" />
                 
                
 
@@ -114,5 +132,7 @@
 
                     </DataGrid.Columns>
         </DataGrid>
+        
     </Grid>
+    
 </UserControl>

@@ -21,6 +21,7 @@ public class Reparaciones
      public ObservableCollection<Reparacion> Reps
      {
          get => reparaciones;
+         set => reparaciones = value;
      }
 
      public int Count => reparaciones.Count;

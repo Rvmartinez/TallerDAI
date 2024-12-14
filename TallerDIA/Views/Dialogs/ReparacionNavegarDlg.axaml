@@ -27,7 +27,7 @@
 					HorizontalAlignment="Center"
 					
 					Content="Ver Cliente"/>
-			<Button x:Name="BtTrabajador"
+			<Button x:Name="BtEmpleado"
 			        Margin="5"
 			        HorizontalContentAlignment="Center"
 			        HorizontalAlignment="Center"
