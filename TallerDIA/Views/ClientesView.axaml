@@ -39,6 +39,7 @@
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <TextBlock
@@ -77,9 +78,8 @@
                     Command="{Binding ButtonAbrirGrafica}"
                     
                     FontSize="24" />
-
-
-
+                <Button Grid.Column="1" Command="{Binding NavegarReparacionesCommand}">OWO</Button>
+                
             </StackPanel>
         </Grid>
         <DataGrid

@@ -57,6 +57,8 @@ namespace TallerDIA.ViewModels
              *  SharedDB.Instance.LoadClientesFromXml(clientesFilePath);
              */
             SharedDB.Instance.LoadClientesFromXml();
+            SharedDB.Instance.MainWindowViewModel = this;
+
             PaneItems = new ObservableCollection<PaneListItemTemplate>
             {
                 new PaneListItemTemplate(typeof(HomeViewModel), "mdi-home"),

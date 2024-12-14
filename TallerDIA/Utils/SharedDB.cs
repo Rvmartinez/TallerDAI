@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using CommunityToolkit.Mvvm.Input;
 using TallerDIA.Models;
+using TallerDIA.ViewModels;
+using TallerDIA.Views;
 using TallerDIA.Views.Dialogs;
 
 namespace TallerDIA.Utils
@@ -21,7 +23,7 @@ namespace TallerDIA.Utils
 
         public GarajeCoches Garaje { get; }
         public Reparaciones Reparaciones { get; }
-
+        public MainWindowViewModel MainWindowViewModel { get; set; }
 
         private SharedDB()
         {

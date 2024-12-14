@@ -189,4 +189,9 @@ public partial class ClientesViewModel : FilterViewModel<Cliente>
             }
         }
     }
+
+    public void NavegarReparacionesCommand()
+    {
+        SharedDB.Instance.MainWindowViewModel.CurrentPage = new ReparacionesViewModel();
+    }
 }
