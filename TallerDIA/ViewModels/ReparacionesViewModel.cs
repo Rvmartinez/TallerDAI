@@ -164,7 +164,7 @@ namespace TallerDIA.ViewModels
         }
 
         
-        public async Task AddRepaisCommand()
+        public async  Task AddRepaisCommand()
         {
             var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop ? desktop.MainWindow : null;
             var ReparacionDlg = new ReparacionDlg();
@@ -172,7 +172,7 @@ namespace TallerDIA.ViewModels
 
             if (!ReparacionDlg.IsCanceled)
             {
-                if ( ReparacionDlg.AsuntoTb.Text == "" || ReparacionDlg.NotaTb.Text == "" )
+                if ( ReparacionDlg.AsuntoTb.Text==null|| ReparacionDlg.NotaTb.Text==null  )
                 {
                     
                     var message = MessageBoxManager.GetMessageBoxStandard("Alerta de campos no completados" ,
@@ -180,7 +180,6 @@ namespace TallerDIA.ViewModels
             
                     await message.ShowAsync();
                     
-           
                 }
                 else if(ReparacionDlg.EmpleadoTb.SelectedItem == null || ReparacionDlg.ClienteTb.SelectedItem == null)
                 {
@@ -227,8 +226,7 @@ namespace TallerDIA.ViewModels
                     
 
                    
-                   // reparacionesBackup = Reparaciones.ToList();
-                    //Reparaciones = new ObservableCollection<Reparacion>(reparacionesBackup);
+                   
                    
                     ReparacionDlg.EmpleadoTb.BorderBrush = Brushes.Black;
                     ReparacionDlg.ClienteTb.BorderBrush = Brushes.Black;
@@ -240,7 +238,7 @@ namespace TallerDIA.ViewModels
         
         }
         
-        [RelayCommand]
+       [RelayCommand]
         public async Task ModifyRepaisCommand()
         {
 
@@ -312,8 +310,23 @@ namespace TallerDIA.ViewModels
 
                     await message.ShowAsync();
                 }
-                    
-               
+
+                if (empleado == SelectedRepair.Empleado)
+                {
+                    var message = MessageBoxManager.GetMessageBoxStandard("Modificacion de datos",
+                        "Se modifico el asunto/nota", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info,
+                        WindowStartupLocation.CenterOwner);
+
+                    await message.ShowAsync();
+                }
+                else
+                {
+                    var message = MessageBoxManager.GetMessageBoxStandard("Modificacion de datos",
+                        "Se modifico el asunto/nota y empleado", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Info,
+                        WindowStartupLocation.CenterOwner);
+
+                    await message.ShowAsync();
+                }
                 Reparacion rep = new Reparacion(ReparacionDlg.AsuntoTb.Text, ReparacionDlg.NotaTb.Text, SelectedRepair.Cliente, empleado);
                         
                 Console.WriteLine(rep.ToString());
@@ -337,65 +350,11 @@ namespace TallerDIA.ViewModels
         }
 
 
-        public bool MostrarTerminados
-        {
-            get => _mostrarTerminados;
-            set
-            {
-                SetProperty(ref _mostrarTerminados, value);
-                List<Reparacion> aux = ReparacionesColection.Reps.Where(r => !r.FechaFin.Equals(new DateTime())).ToList();
-                if (_mostrarTerminados)
-                {
-                    ReparacionesColection.Reps=new ObservableCollection<Reparacion>();
-                    ReparacionesColection.Reps = new ObservableCollection<Reparacion>(aux);
-                    
-                    
-                  
-                    
-                   
-                }
-
-                else if(!_mostrarTerminados)
-                {
-                    ReparacionesColection.Reps= null;
-                    ReparacionesColection.Reps = new ObservableCollection<Reparacion>(SharedDB.Instance.Reparaciones.Reps);
-                    
-                }
-                    
-
-                
-            }
-        }
-
+       
        
 
 
-        public bool MostrarNoTerminados
-        {
-            get => _mostrarNoTerminados;
-            set
-            {
-                SetProperty(ref _mostrarNoTerminados, value);
-                List<Reparacion> aux = ReparacionesColection.Reps.Where(r => r.FechaFin.Equals(new DateTime())).ToList();
-                if (_mostrarNoTerminados && !_mostrarTerminados)
-                {
-                    
-                    
-                    ReparacionesColection.Reps.Clear();
-                    
-                    foreach (Reparacion rep in aux)
-                    {
-                        ReparacionesColection.Reps.Add(rep);
-                    }
-                   
-                }
-                
-                else 
-                    ForceUpdateUI();
-
-                
-            }
-        }
+       
 
 
 

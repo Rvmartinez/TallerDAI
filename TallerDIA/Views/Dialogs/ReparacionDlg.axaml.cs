@@ -82,7 +82,7 @@ public partial class ReparacionDlg : Window
     async Task OnAcceptClicked()
     {
         
-        Console.WriteLine("Aceptando reparacion, Creando nueva reparacion");
+        
         
         IsAcepted = true;
         this.OnExit();
