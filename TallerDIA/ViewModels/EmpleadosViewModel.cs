@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.JavaScript;
+using System.Threading.Tasks;
+using System.Xml;
 using CommunityToolkit.Mvvm.Input;
 using TallerDIA.Models;
 using TallerDIA.Utils;
@@ -18,8 +21,8 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
         DateTime reparacion4 = new DateTime(2021,01,10,7,45,22);
         List<DateTime> reparaciones1 = new List<DateTime>{reparacion1,reparacion2};
         List<DateTime> reparaciones2 = new List<DateTime>{reparacion3,reparacion4};
-        Empleado empleado1 = new Empleado("12345678A", "Abelardo", "averelardo@hotcorreo.coom", reparaciones1);
-        Empleado empleado2 = new Empleado("22345678B", "Luffy", "onepieceismid@ymail.com", reparaciones2);
+        Empleado empleado1 = new Empleado("12345678A", "Abelardo", "averelardo@hotcorreo.coom");
+        Empleado empleado2 = new Empleado("22345678B", "Luffy", "onepieceismid@ymail.com");
         List<Empleado> empleados = new List<Empleado> 
         {
             empleado1,empleado2
@@ -52,6 +55,7 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
         }
         //MostrarTickets(empleado);
     }*/
+    public string ImportPath { get; set; }
 
     private ObservableCollection<Empleado> _Empleados;
     public  ObservableCollection<Empleado>  Empleados
@@ -118,7 +122,6 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
             ControlesEmpleado.BuscarEmpleado(Empleados.ToList(), EmpleadoActual) == null)
         {
             Empleados.Add(EmpleadoActual);
-            EmpleadoActual.Tickets = new List<DateTime>();
             ActualizarDgEmpleados();
             Console.Out.WriteLine("Insertado exitoso.");
             Aviso = "Empleado insertado exitosamente.";
@@ -181,6 +184,46 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
         Aviso = "Entradas y empleado seleccionado reseteados.";
     }
 
+    public async Task guardarPlantillaCommand()
+    {
+        EmpleadoXML.GuardarEmpleados(_Empleados);
+    }
+
+    public async Task ImportarEmpleadosCommand()
+    {
+        Console.WriteLine("Importando Empleados...");
+        Console.WriteLine(ImportPath);
+
+        if (File.Exists(ImportPath))
+        {
+            try
+            {
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.Load(ImportPath);
+                Console.WriteLine("Archivo XML cargado exitosamente.");
+
+                // Mostrar contenido del archivo XML (opcional)
+                Console.WriteLine(xmlDoc.OuterXml);
+                XmlNodeList empleados = xmlDoc.GetElementsByTagName("Empleado");
+
+                foreach (XmlElement empleado in empleados)
+                {
+                    _Empleados.Add(EmpleadoXML.CargarDeXml(empleado));
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al cargar el archivo XML: {ex.Message}");
+            }
+        }
+        else
+        {
+            Console.WriteLine("El archivo no existe. Verifique la ruta.");
+        }
+        
+    }
+
+
     public override ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>(["DNI","Nombre","Email","Tickets anteriores a", "Tickets posteriores a"]);
 
     public override ObservableCollection<Empleado> FilteredItems
@@ -200,12 +243,6 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
                             return new ObservableCollection<Empleado>(Empleados.Where(e => e.Nombre.Contains(FilterText)));
                         case "Email":
                             return new ObservableCollection<Empleado>(Empleados.Where(e => e.Email.Contains(FilterText)));
-                        case "Tickets anteriores a":
-                            date = DateTime.Parse(FilterText);
-                            return new ObservableCollection<Empleado>(Empleados.Where(e => e.Tickets.Any(t => t.Date <= date)));
-                        case "Tickets posteriores a":
-                            date = DateTime.Parse(FilterText);
-                            return new ObservableCollection<Empleado>(Empleados.Where(e => e.Tickets.Any(t => t.Date >= date)));
                         default:
                             return Empleados;
                     }

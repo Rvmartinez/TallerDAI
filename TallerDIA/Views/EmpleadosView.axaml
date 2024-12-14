@@ -65,6 +65,7 @@
                 <Button Name="btModificarEmpleado" Command="{Binding btModificarEmpleado_OnClick}">Modificar empleado</Button>
                 <Button Name="btEliminarEmpleado" Command="{Binding btEliminarEmpleado_OnClick}">Eliminar empleado</Button>
                 <Button Name="btNuevoEmpleado" Command="{Binding btNuevoEmpleado_OnClick}">Limpiar selección</Button>
+                <Button Name="btGuardarPlantilla" Command="{Binding guardarPlantillaCommand}">Guardar plantilla en XML</Button>
             </StackPanel>
         </StackPanel>
         <DockPanel Name="PanelSalida">
@@ -78,6 +79,19 @@
                     </Grid.ColumnDefinitions>
                     <TextBox Grid.Column="0" Watermark="Búsqueda" Text="{Binding FilterText}"></TextBox>
                     <ComboBox Grid.Column="1" ItemsSource="{Binding FilterModes}" SelectedIndex="{Binding SelectedFilterMode}"></ComboBox>
+                </Grid>
+                <Grid Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox Grid.Column="0" Watermark="Absolute path to archive..." Text="{Binding ImportPath}"></TextBox>
+                    <Button
+                        Grid.Column="1"
+                        Margin="0,0,15,0"
+                        icon:Attached.Icon="mdi-file-import"
+                        Command="{Binding ImportarEmpleadosCommand}"
+                        FontSize="24" />
                 </Grid>
                 <DataGrid
                     x:Name="DgEmpleados"
