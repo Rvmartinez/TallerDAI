@@ -8,7 +8,7 @@ public class ClienteXML
 {
     public static void GuardarCartera(CarteraClientes cartera)
     {
-        string rutaArchivo = "/home/lcuas/Documents/UNI/DIA/cartera.xml";
+        string rutaArchivo = "../../../XmlFiles/cartera.xml";
         XmlDocument doc = new XmlDocument();
         XmlElement root = doc.CreateElement("CarteraClientes");
         doc.AppendChild(root);
@@ -46,6 +46,29 @@ public class ClienteXML
         {
             Console.WriteLine("No se ha podido guardar el archivo");
         }
+    }
+    
+    public static void InsertarEnXml(XmlElement parent, XmlDocument doc, string dni, string nombre, string email, int idCliente)
+    {
+        XmlElement clienteElement = doc.CreateElement("Cliente");
+
+        XmlElement dniElement = doc.CreateElement("DNI");
+        dniElement.InnerText = dni;
+        clienteElement.AppendChild(dniElement);
+
+        XmlElement nombreElement = doc.CreateElement("Nombre");
+        nombreElement.InnerText = nombre;
+        clienteElement.AppendChild(nombreElement);
+
+        XmlElement emailElement = doc.CreateElement("Email");
+        emailElement.InnerText = email;
+        clienteElement.AppendChild(emailElement);
+        
+        XmlElement idElement = doc.CreateElement("IdCliente");
+        idElement.InnerText = idCliente.ToString();
+        clienteElement.AppendChild(idElement);
+
+        parent.AppendChild(clienteElement);
     }
     public static Cliente CargarDeXml(XmlElement clienteElement)
     {

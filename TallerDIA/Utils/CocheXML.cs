@@ -8,7 +8,7 @@ public class CocheXML
 {
     public static void GuardarGaraje(GarajeCoches garaje)
     {
-        string rutaArchivo = "/home/lcuas/Documents/UNI/DIA/garaje.xml";
+        string rutaArchivo = "../../../XmlFiles/garaje.xml";
         XmlDocument doc = new XmlDocument();
         XmlElement root = doc.CreateElement("GarajeCoches");
         doc.AppendChild(root);

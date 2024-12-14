@@ -5,12 +5,15 @@ using MsBox.Avalonia.Enums;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 
 using System.Threading.Tasks;
+using System.Xml;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using TallerDIA.Models;
+using TallerDIA.Utils;
 using TallerDIA.Views;
 using TallerDIA.Views.Dialogs;
 
@@ -33,6 +36,8 @@ namespace TallerDIA.ViewModels
         private static List<Reparacion> reparacionesBackup;
 
         private ObservableCollection<Reparacion> _Reparaciones;
+        
+        public string? ImportPath { get; set; }
 
         public ObservableCollection<Reparacion> Reparaciones
         {
@@ -267,6 +272,44 @@ namespace TallerDIA.ViewModels
                
                 //Reparaciones.Add(c);
                 
+            }
+        }
+
+        public async Task GuardarTrabajosCommand()
+        {
+            ReparacionXML.GuardarEnXML(_Reparaciones);
+        }
+        
+        public async Task ImportarReparacionesCommand()
+        {
+            Console.WriteLine("Importando Reparaciones...");
+            Console.WriteLine(ImportPath);
+
+            if (File.Exists(ImportPath))
+            {
+                try
+                {
+                    XmlDocument xmlDoc = new XmlDocument();
+                    xmlDoc.Load(ImportPath);
+                    Console.WriteLine("Archivo XML cargado exitosamente.");
+
+                    // Mostrar contenido del archivo XML (opcional)
+                    Console.WriteLine(xmlDoc.OuterXml);
+                    XmlNodeList reparaciones = xmlDoc.GetElementsByTagName("Reparacion");
+
+                    foreach (XmlElement reparacion in reparaciones)
+                    {
+                        _Reparaciones.Add(ReparacionXML.CargarDeXml(reparacion));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error al cargar el archivo XML: {ex.Message}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("El archivo no existe. Verifique la ruta.");
             }
         }
 
