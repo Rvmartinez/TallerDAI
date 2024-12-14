@@ -11,11 +11,12 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Media;
-using GraficosTaller.UI;
 using TallerDIA.Models;
 using TallerDIA.Utils;
-using TallerDIA.Views;
 using TallerDIA.Views.Dialogs;
+using ChartWindow = TallerDIA.Views.ChartWindow;
+using ConfigChart = TallerDIA.Views.ConfigChart;
+using ReparacionesView = TallerDIA.Views.ReparacionesView;
 
 namespace TallerDIA.ViewModels
 {
@@ -26,8 +27,33 @@ namespace TallerDIA.ViewModels
         private bool _mostrarTerminados =false;
         private bool _mostrarNoTerminados =false;
 
+ Reparaciones_Crear_MOdificaerFunctions_alberto
         private Reparaciones _reparaciones = SharedDB.Instance.Reparaciones;
         public Reparaciones ReparacionesColection
+
+        private DateTimeOffset _minDate  = new DateTimeOffset(new DateTime(2020, 1, 1));
+        private DateTimeOffset _maxDate = new DateTimeOffset(new DateTime(230, 1, 1));
+        public DateTimeOffset MinDate
+        {
+            get => _minDate;
+            set
+            {
+                SetProperty(ref _minDate,value);
+                OnPropertyChanged(nameof(FilteredItems));
+            }
+        }
+
+        public DateTimeOffset MaxDate
+        {
+            get => _maxDate;
+            set
+            {
+                SetProperty(ref _maxDate, value);
+                OnPropertyChanged(nameof(FilteredItems));
+            }
+        }
+
+        public ObservableCollection<Reparacion> Reparaciones
         {
             get => _reparaciones;
             set
@@ -385,14 +411,13 @@ namespace TallerDIA.ViewModels
         
         public async Task ButtonAbrirGrafica()
         {
-            if (_reparaciones.Count > 0)
+            if (SharedDB.Instance.Reparaciones.Count > 0)
             {
                 var mainWindow =
                     Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
                         ? desktop.MainWindow
                         : null;
-                var colRep = ReparacionesColection.Reps.OfType<Reparacion>().ToList();
-                var reps = new Reparaciones(colRep);
+                var reps = SharedDB.Instance.Reparaciones;
                 var reparacionNavegarDlg = new ChartWindow(reps, new ConfigChart(){FechaFin = false});
                 await reparacionNavegarDlg.ShowDialog(mainWindow);
             }
@@ -410,12 +435,14 @@ namespace TallerDIA.ViewModels
         
 
 
-        public override ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>(["Asunto","Nota","Fecha entre", "Nombre cliente", "DNI cliente", "Nombre empleado","DNI empleado"]);
+        public override ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>(["Asunto","Nota", "Nombre cliente", "DNI cliente", "Nombre empleado","DNI empleado"]);
 
         public override ObservableCollection<Reparacion> FilteredItems
         {
             get
             {
+                var aux = Reparaciones.Where(r => r.FechaInicio >= MinDate && r.FechaFin <= MaxDate);
+
                 if (FilterText != "")
                 {
                     var Text = FilterText.ToLower();
@@ -448,6 +475,7 @@ namespace TallerDIA.ViewModels
                             return new ObservableCollection<Reparacion>(ReparacionesColection.Reps.Where(r => r.Empleado.Dni.ToLower().Contains(Text)));
                         default:
                             return ReparacionesColection.Reps;
+
                     }
                 }
                 else

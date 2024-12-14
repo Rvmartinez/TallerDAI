@@ -131,6 +131,7 @@ public partial class CochesViewModel : FilterViewModel<Coche>
            {
                DNI = ClienteDlg.DniTB.Text, Email = ClienteDlg.EmailTB.Text, Nombre = ClienteDlg.NombreTB.Text, IdCliente = 0
            };
+           SharedDB.Instance.EditClient(SelectedCar.Owner, nuevo);
            foreach (var car in _garaje.Coches)
            {
                if (car.Owner.DNI == cli.DNI)
@@ -138,7 +139,6 @@ public partial class CochesViewModel : FilterViewModel<Coche>
                    car.Owner = nuevo;
                }
            }
-           SharedDB.Instance.EditClient(SelectedCar.Owner, nuevo);
            SelectedCar.Owner = nuevo;
        }
 
@@ -175,17 +175,17 @@ public partial class CochesViewModel : FilterViewModel<Coche>
     {
         get
         {
+            var text = FilterText.ToLower();
             if (FilterText != "")
             {
-
                 switch (FilterModes[SelectedFilterMode])
                 {
                     case "Matricula":
-                        return new ObservableCollection<Coche>(Coches.Where(c => c.Matricula.Contains(FilterText)));
+                        return new ObservableCollection<Coche>(Coches.Where(c => c.Matricula.ToLower().Contains(text)));
                     case "Marca":
-                        return new ObservableCollection<Coche>(Coches.Where(c => c.Marca.ToString().Contains(FilterText)));
+                        return new ObservableCollection<Coche>(Coches.Where(c => c.Marca.ToString().ToLower().Contains(text)));
                     case "Modelo":
-                        return new ObservableCollection<Coche>(Coches.Where(c => c.Modelo.Contains(FilterText)));
+                        return new ObservableCollection<Coche>(Coches.Where(c => c.Modelo.ToLower().Contains(text)));
                     default:
                         return Coches;
                 }

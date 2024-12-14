@@ -1,4 +1,4 @@
-﻿namespace GraficosTaller.UI;
+﻿namespace TallerDIA.Views;
 
 /// <summary>
 /// Permite configurar una ventana ChartWindow o DesgloseWindow. Los datos no especificados se especificarán por ComboBox.

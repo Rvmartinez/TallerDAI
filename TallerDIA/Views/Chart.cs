@@ -1,21 +1,16 @@
 // DemoAvalonia (c) 2021/23 Baltasar MIT License <jbgarcia@uvigo.es>
 
 
-using Avalonia.Styling;
-
-namespace DemoAvalonia.UI;
-
-
 using System;
-using System.Data;
-using System.Linq;
-using System.Globalization;
 using System.Collections.Generic;
-
+using System.Data;
+using System.Globalization;
+using System.Linq;
 using Avalonia;
-using Avalonia.Media;
 using Avalonia.Controls;
+using Avalonia.Media;
 
+namespace TallerDIA.Views;
 
 /// <summary>Support for charts</summary>
 public class Chart: Control {

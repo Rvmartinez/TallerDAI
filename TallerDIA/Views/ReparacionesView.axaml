@@ -17,11 +17,29 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="auto" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Margin="10">Fecha entre</TextBlock>
+            <DatePicker Grid.Column="1" Margin="5" SelectedDate="{Binding MinDate}"></DatePicker>
+            <TextBlock Grid.Column="2" Margin="10"> Y </TextBlock>
+            <DatePicker Grid.Column="3" Margin="5" SelectedDate="{Binding MaxDate}"></DatePicker>
+            
+
+            <TextBox Grid.Column="4"  Margin="10" Watermark="Búsqueda" Text="{Binding FilterText}"></TextBox>
+            <ComboBox Grid.Column="5" Margin="10" ItemsSource="{Binding FilterModes}" SelectedIndex="{Binding SelectedFilterMode}"></ComboBox>
+        </Grid>
         <StackPanel
-            Grid.Row="0"
+            Grid.Row="1"
             HorizontalAlignment="Stretch"
             Orientation="Horizontal" />
-        <Grid>
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="auto" />
                 <ColumnDefinition Width="*" />
@@ -81,14 +99,7 @@
 
             </StackPanel>
         </Grid>
-        <Grid Grid.Row="1" Margin="5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-            <TextBox Grid.Column="0" Watermark="Búsqueda" Text="{Binding FilterText}"></TextBox>
-            <ComboBox Grid.Column="1" ItemsSource="{Binding FilterModes}" SelectedIndex="{Binding SelectedFilterMode}"></ComboBox>
-        </Grid>
+
         <DataGrid
             x:Name="DgReparaciones"
             Grid.Row="2"
@@ -121,7 +132,6 @@
 
                     </DataGrid.Columns>
         </DataGrid>
-        
     </Grid>
     
 </UserControl>
