@@ -16,6 +16,7 @@ using TallerDIA.Utils;
 using TallerDIA.Views.Dialogs;
 using ChartWindow = TallerDIA.Views.ChartWindow;
 using ConfigChart = TallerDIA.Views.ConfigChart;
+using ReparacionesView = TallerDIA.Views.ReparacionesView;
 
 namespace TallerDIA.ViewModels
 {
