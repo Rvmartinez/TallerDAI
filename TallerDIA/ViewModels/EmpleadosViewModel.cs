@@ -42,7 +42,8 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
     
     public EmpleadosViewModel()
     {
-        RegistroEmpleados = new RegistroEmpleados(SharedDB.Instance.RegistroEmpleados.Empleados);
+        RegistroEmpleados = SharedDB.Instance.RegistroEmpleados;
+        //RegistroEmpleados = new RegistroEmpleados(SharedDB.Instance.RegistroEmpleados.Empleados);
         //Empleados=new ObservableCollection<Empleado>(SharedDB.Instance.RegistroEmpleados.Empleados.ToList());
     } 
     
@@ -77,15 +78,11 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
     
     public void ForceUpdateUI()
     {
-
         List<Empleado> list = SharedDB.Instance.RegistroEmpleados.Empleados.ToList();
         RegistroEmpleados.Clear();
-        FilteredItems.Clear();
-
         foreach (Empleado empleado in list)
         {
-            FilteredItems.Add(empleado);
-            //RegistroEmpleados.Add(empleado);
+            RegistroEmpleados.Add(empleado);
         }
         OnPropertyChanged(nameof(FilteredItems));
     }
@@ -127,7 +124,7 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
                 SharedDB.BuscarEmpleado(RegistroEmpleados.Empleados.ToList(), EmpleadoSeleccionado) != null)
             {
                 RegistroEmpleados.ActualizarEmpleado(EmpleadoSeleccionado,nuevoEmpleado.Dni,nuevoEmpleado.Nombre,nuevoEmpleado.Email);
-                EmpleadoSeleccionado = nuevoEmpleado;
+                //EmpleadoSeleccionado = nuevoEmpleado;
                 //FilteredItems = new ObservableCollection<Empleado>(RegistroEmpleados.Empleados.ToList());
                 ForceUpdateUI();
             }
@@ -141,7 +138,7 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
         if (SharedDB.FiltrarEntradasEmpleado(EmpleadoSeleccionado) && 
             SharedDB.BuscarEmpleado(RegistroEmpleados.Empleados.ToList(), EmpleadoSeleccionado) != null)
         {
-            RegistroEmpleados.Empleados.Remove(EmpleadoSeleccionado);
+            RegistroEmpleados.RemoveEmpleado(EmpleadoSeleccionado);
             Console.Out.WriteLine("Eliminado exitoso.");
             Aviso = "Empleado eliminado exitosamente.";
         }
@@ -165,8 +162,9 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
     [RelayCommand]
     public void btTicketsSelecc_OnClick()
     {
-        //var window = new (EmpleadoSeleccionado);
-        //window.Show();
+        //ReparacionesViewModel ventanaTickets = new ReparacionesViewModel(EmpleadoSeleccionado);
+        //ventanaTickets.Show();
+        
     }
     
     //private ObservableCollection<Empleado> _FilteredItems;
