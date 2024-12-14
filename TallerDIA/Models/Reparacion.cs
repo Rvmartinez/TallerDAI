@@ -31,7 +31,7 @@ namespace TallerDIA.Models
             this.Nota = nota;
             this.Cliente = cliente;
             this.Empleado = empleado;
-            this._fechaFin = new DateTime();
+            this._fechaFin = new DateTime(01, 12, 01);
         }
 
         public Reparacion()
@@ -108,7 +108,7 @@ namespace TallerDIA.Models
         {
             if(fin)
             {
-                if(FechaFin.Equals(new DateTime()))
+                if(FechaFin.Equals(new DateTime(01, 12, 01)))
                 {
                     return null;
                 }
@@ -127,7 +127,7 @@ namespace TallerDIA.Models
         {
             if(fin)
             {
-                if(FechaFin.Equals(new DateTime()))
+                if(FechaFin.Equals(new DateTime(01, 12, 01)))
                 {
                     return null;
                 }
