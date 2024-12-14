@@ -5,8 +5,11 @@ using System.Linq;
 using System.Runtime.InteropServices.JavaScript;
 using System.Threading.Tasks;
 using Avalonia;
+using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using CommunityToolkit.Mvvm.Input;
+using MsBox.Avalonia;
+using MsBox.Avalonia.Enums;
 using TallerDIA.Models;
 using TallerDIA.Utils;
 using TallerDIA.ViewModels;
@@ -96,11 +99,17 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
 
         if (!EmpleadoDlg.IsCancelled)
         {
+            Console.WriteLine("Intentando insertar...");
             Empleado nuevoEmpleado  = new Empleado() { Dni = EmpleadoDlg.DniTB.Text, Email = EmpleadoDlg.EmailTB.Text, Nombre = EmpleadoDlg.NombreTB.Text};
             if (SharedDB.FiltrarEntradasEmpleado(nuevoEmpleado) &&
                 SharedDB.BuscarEmpleado(RegistroEmpleados.Empleados.ToList(), nuevoEmpleado) == null)
             {
                 RegistroEmpleados.Add(nuevoEmpleado);
+            }
+            else
+            {
+                Console.WriteLine("Fallo al insertar. ");
+                MessageBoxManager.GetMessageBoxStandard("Fallo al insertar. ","No existe el empleado seleccionado o el DNI del empleado introducido ya está en uso. ",ButtonEnum.Ok,Icon.Error,WindowStartupLocation.CenterScreen);
             }
         }
     }
@@ -112,21 +121,30 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
             ? desktop.MainWindow
             : null;
         var EmpleadoDlg = new EmpleadoDlg();
-        
-        await EmpleadoDlg.ShowDialog(mainWindow);
 
+        await EmpleadoDlg.ShowDialog(mainWindow);
         if (!EmpleadoDlg.IsCancelled)
         {
+            Console.Out.WriteLine("Intentando modificar...");
             Empleado nuevoEmpleado = new Empleado()
                 { Dni = EmpleadoDlg.DniTB.Text, Email = EmpleadoDlg.EmailTB.Text, Nombre = EmpleadoDlg.NombreTB.Text };
             if (SharedDB.FiltrarEntradasEmpleado(EmpleadoSeleccionado) &&
-                SharedDB.FiltrarEntradasEmpleado(nuevoEmpleado) &&
-                SharedDB.BuscarEmpleado(RegistroEmpleados.Empleados.ToList(), EmpleadoSeleccionado) != null)
+                SharedDB.FiltrarEntradasEmpleado(nuevoEmpleado))
             {
-                RegistroEmpleados.ActualizarEmpleado(EmpleadoSeleccionado,nuevoEmpleado.Dni,nuevoEmpleado.Nombre,nuevoEmpleado.Email);
-                //EmpleadoSeleccionado = nuevoEmpleado;
-                //FilteredItems = new ObservableCollection<Empleado>(RegistroEmpleados.Empleados.ToList());
-                ForceUpdateUI();
+                if (SharedDB.BuscarEmpleado(RegistroEmpleados.Empleados.ToList(), EmpleadoSeleccionado) != null && (EmpleadoSeleccionado.Dni == nuevoEmpleado.Dni || SharedDB.BuscarEmpleado(RegistroEmpleados.Empleados.ToList(), nuevoEmpleado) == null))
+                {
+                    RegistroEmpleados.ActualizarEmpleado(EmpleadoSeleccionado, nuevoEmpleado.Dni, nuevoEmpleado.Nombre,
+                        nuevoEmpleado.Email);
+                    //EmpleadoSeleccionado = nuevoEmpleado;
+                    //FilteredItems = new ObservableCollection<Empleado>(RegistroEmpleados.Empleados.ToList());
+                    ForceUpdateUI();
+                    Console.Out.WriteLine("Modificado exitoso.");
+                }
+                else
+                {
+                    Console.Out.WriteLine("Fallo al modificar.");
+                    MessageBoxManager.GetMessageBoxStandard("Fallo al modificar. ","No existe el empleado seleccionado o el DNI del empleado introducido ya está en uso. ",ButtonEnum.Ok,Icon.Error,WindowStartupLocation.CenterScreen);
+                }
             }
         }
     }
@@ -134,21 +152,18 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
     [RelayCommand]
     public void btEliminarEmpleado_OnClick()
     {
-        Console.Out.WriteLine("Intentando eliminar...");
         if (SharedDB.FiltrarEntradasEmpleado(EmpleadoSeleccionado) && 
             SharedDB.BuscarEmpleado(RegistroEmpleados.Empleados.ToList(), EmpleadoSeleccionado) != null)
         {
+            Console.Out.WriteLine("Intentando eliminar...");
             RegistroEmpleados.RemoveEmpleado(EmpleadoSeleccionado);
             Console.Out.WriteLine("Eliminado exitoso.");
-            Aviso = "Empleado eliminado exitosamente.";
         }
         else
         {
             Console.Out.WriteLine("Eliminado fallido.");
-            Aviso = "Fallo al modificar, no existe ese empleado.";
-
+            MessageBoxManager.GetMessageBoxStandard("Fallo al eliminar. ","No se encuentra el empleado a eliminar. ",ButtonEnum.Ok,Icon.Error,WindowStartupLocation.CenterScreen);
         }
-        //EmpleadoActual=new Empleado();
     }
     [RelayCommand]
     public void btNuevoEmpleado_OnClick()
