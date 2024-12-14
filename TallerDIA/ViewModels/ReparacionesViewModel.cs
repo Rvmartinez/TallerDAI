@@ -449,25 +449,25 @@ namespace TallerDIA.ViewModels
                     switch (FilterModes[SelectedFilterMode])
                     {
                         case "Asunto":
-                            return new ObservableCollection<Reparacion>(ReparacionesColection.Reps.Where(r => r.Asunto.ToLower().Contains(Text)));
+                            return new ObservableCollection<Reparacion>(aux.Where(r => r.Asunto.ToLower().Contains(Text)));
                         case "Nota":
-                            return new ObservableCollection<Reparacion>(ReparacionesColection.Reps.Where(r => r.Nota.ToLower().Contains(Text)));
+                            return new ObservableCollection<Reparacion>(aux.Where(r => r.Nota.ToLower().Contains(Text)));
                         case "Nombre cliente":
-                            return new ObservableCollection<Reparacion>(ReparacionesColection.Reps.Where(r => r.Cliente.Nombre.ToLower().Contains(Text)));
+                            return new ObservableCollection<Reparacion>(aux.Where(r => r.Cliente.Nombre.ToLower().Contains(Text)));
                         case "DNI cliente":
-                            return new ObservableCollection<Reparacion>(ReparacionesColection.Reps.Where(r => r.Cliente.DNI.ToLower().Contains(Text)));
+                            return new ObservableCollection<Reparacion>(aux.Where(r => r.Cliente.DNI.ToLower().Contains(Text)));
                         case "Nombre empleado":
-                            return new ObservableCollection<Reparacion>(ReparacionesColection.Reps.Where(r => r.Empleado.Nombre.ToLower().Contains(Text)));
+                            return new ObservableCollection<Reparacion>(aux.Where(r => r.Empleado.Nombre.ToLower().Contains(Text)));
                         case "DNI empleado":
-                            return new ObservableCollection<Reparacion>(ReparacionesColection.Reps.Where(r => r.Empleado.Dni.ToLower().Contains(Text)));
+                            return new ObservableCollection<Reparacion>(aux.Where(r => r.Empleado.Dni.ToLower().Contains(Text)));
                         default:
-                            return ReparacionesColection.Reps;
+                            return new ObservableCollection<Reparacion>(aux);
 
                     }
                 }
                 else
                 {
-                    return ReparacionesColection.Reps;
+                    return new ObservableCollection<Reparacion>(aux);
                 }
             }
         }
