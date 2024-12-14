@@ -46,13 +46,11 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
         //Empleados=new ObservableCollection<Empleado>(SharedDB.Instance.RegistroEmpleados.Empleados.ToList());
     } 
     
-    /*
-public EmpleadosViewModel()
-{
-    RegistroEmpleados = new RegistroEmpleados(SharedDB.Instance.RegistroEmpleados.Empleados);
-    //Empleados=new ObservableCollection<Empleado>(SharedDB.Instance.RegistroEmpleados.Empleados.ToList());
-}
-*/
+    public EmpleadosViewModel(Empleado nuevoEmpleadoSeleccionado)
+    {
+        RegistroEmpleados = new RegistroEmpleados(SharedDB.Instance.RegistroEmpleados.Empleados);
+        EmpleadoSeleccionado = nuevoEmpleadoSeleccionado;
+    }
     
     
     private Empleado _EmpleadoSeleccionado;
