@@ -3,7 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
+using System.Xml;
 using Avalonia.Controls.ApplicationLifetimes;
 using CommunityToolkit.Mvvm.Input;
 using TallerDIA.Models;
@@ -126,6 +129,45 @@ public partial class CochesViewModel : FilterViewModel<Coche>
         await cliDlg.ShowDialog(mainWindow);
 
     }
+
+    public async Task GuardarGarajeCommand()
+    {
+        CocheXML.GuardarGaraje(_garaje);
+    }
+    public async Task ImportarCochesCommand()
+    {
+        Console.WriteLine("Importando Coches...");
+        Console.WriteLine(ImportPath);
+
+        if (File.Exists(ImportPath))
+        {
+            try
+            {
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.Load(ImportPath);
+                Console.WriteLine("Archivo XML cargado exitosamente.");
+
+                // Mostrar contenido del archivo XML (opcional)
+                Console.WriteLine(xmlDoc.OuterXml);
+                XmlNodeList coches = xmlDoc.GetElementsByTagName("Coche");
+
+                foreach (XmlElement coche in coches)
+                {
+                    _garaje.Add(CocheXML.CargarDeXml(coche));
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al cargar el archivo XML: {ex.Message}");
+            }
+        }
+        else
+        {
+            Console.WriteLine("El archivo no existe. Verifique la ruta.");
+        }
+    }
+
+    public string? ImportPath { get; set; }
 
     public override ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>(["Matricula","Marca","Modelo"]);
 

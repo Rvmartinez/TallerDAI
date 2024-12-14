@@ -27,6 +27,9 @@ public partial class ClientesView : UserControl
         viewModel?.ForceUpdateUI();
 
     }
+    
+    
+    
 
    /* protected override void OnGotFocus(GotFocusEventArgs e)
     {

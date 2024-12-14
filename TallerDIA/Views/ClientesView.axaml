@@ -16,9 +16,12 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid Margin="5">
+
+        <!-- Filtro por nombres -->
+        <Grid Margin="5" Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
@@ -32,13 +35,29 @@
                 ItemsSource="{Binding FilterModes}"
                 SelectedIndex="{Binding SelectedFilterMode}" />
         </Grid>
-        <StackPanel
-            Grid.Row="1"
-            HorizontalAlignment="Stretch"
-            Orientation="Horizontal" />
-        <Grid Grid.Row="1">
+
+        <!-- Importar archivo -->
+        <Grid Margin="5" Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <TextBox
+                Grid.Column="0"
+                Text="{Binding ImportPath}"
+                Watermark="Absolute path to archive..." />
+            <Button
+                Grid.Column="1"
+                Margin="0,0,15,0"
+                icon:Attached.Icon="mdi-file-import"
+                Command="{Binding ImportarClientesCommand}"
+                FontSize="24" />
+        </Grid>
+
+        <!-- Título y botones -->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <TextBlock
@@ -65,20 +84,22 @@
                     icon:Attached.Icon="mdi-account-minus"
                     Command="{Binding OnDeleteCommand}"
                     FontSize="24" />
-
                 <Button
                     Margin="0,0,15,0"
-                    icon:Attached.Icon="mdi-account-minus"
+                    icon:Attached.Icon="mdi-refresh"
                     Command="{Binding ForceUpdateUI}"
                     FontSize="24" />
-
-
-
+                <Button
+                    Margin="0,0,15,0"
+                    icon:Attached.Icon="mdi-content-save"
+                    Command="{Binding GuardarCarteraCommand}"
+                    FontSize="24" 
+                />
             </StackPanel>
-        </Grid>
+        </Grid> 
         <DataGrid
             x:Name="dgClientes"
-            Grid.Row="2"
+            Grid.Row="3"
             BorderBrush="Purple"
             BorderThickness="1"
             CanUserReorderColumns="true"

@@ -2,6 +2,7 @@
 using Avalonia.Controls.ApplicationLifetimes;
 using CommunityToolkit.Mvvm.Input;
 using System;
+using System.Xml;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,6 +25,8 @@ namespace TallerDIA.ViewModels;
 public partial class ClientesViewModel : FilterViewModel<Cliente>
 {
     private Cliente _SelectedClient;
+    
+    public string ImportPath { get; set; }
 
     public Cliente SelectedClient
     {
@@ -135,6 +138,44 @@ public partial class ClientesViewModel : FilterViewModel<Cliente>
 
     }
 
+    public async Task GuardarCarteraCommand()
+    {
+        ClienteXML.GuardarCartera(_carteraClientes);
+    }
+
+    public async Task ImportarClientesCommand()
+    {
+        Console.WriteLine("Importando Clientes...");
+        Console.WriteLine(ImportPath);
+
+        if (File.Exists(ImportPath))
+        {
+            try
+            {
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.Load(ImportPath);
+                Console.WriteLine("Archivo XML cargado exitosamente.");
+
+                // Mostrar contenido del archivo XML (opcional)
+                Console.WriteLine(xmlDoc.OuterXml);
+                XmlNodeList clientes = xmlDoc.GetElementsByTagName("Cliente");
+
+                foreach (XmlElement cliente in clientes)
+                {
+                    _carteraClientes.Add(ClienteXML.CargarDeXml(cliente));
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al cargar el archivo XML: {ex.Message}");
+            }
+        }
+        else
+        {
+            Console.WriteLine("El archivo no existe. Verifique la ruta.");
+        }
+    }
+
     public override ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>(["Nombre", "DNI", "Email", "ID Cliente"]);
 
     public override ObservableCollection<Cliente> FilteredItems
@@ -165,4 +206,6 @@ public partial class ClientesViewModel : FilterViewModel<Cliente>
             }
         }
     }
+
+
 }
