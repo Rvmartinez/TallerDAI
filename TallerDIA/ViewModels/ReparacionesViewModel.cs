@@ -452,19 +452,6 @@ namespace TallerDIA.ViewModels
                             return new ObservableCollection<Reparacion>(ReparacionesColection.Reps.Where(r => r.Asunto.ToLower().Contains(Text)));
                         case "Nota":
                             return new ObservableCollection<Reparacion>(ReparacionesColection.Reps.Where(r => r.Nota.ToLower().Contains(Text)));
-                        case "Fecha entre":
-                            try
-                            {
-                                var date = DateTime.Parse(Text);
-                                return new ObservableCollection<Reparacion>(
-                                    ReparacionesColection.Reps.Where(r => r.FechaInicio <= date && r.FechaFin >= date));
-                            }
-                            catch (FormatException ex)
-                            {
-                                //TODO: SHOW THIS TO THE USER
-                                Console.Out.WriteLine("Fecha no válida");
-                                return ReparacionesColection.Reps;
-                            }
                         case "Nombre cliente":
                             return new ObservableCollection<Reparacion>(ReparacionesColection.Reps.Where(r => r.Cliente.Nombre.ToLower().Contains(Text)));
                         case "DNI cliente":
