@@ -27,9 +27,9 @@ namespace TallerDIA.ViewModels
         private bool _mostrarTerminados =false;
         private bool _mostrarNoTerminados =false;
 
- Reparaciones_Crear_MOdificaerFunctions_alberto
+ 
         private Reparaciones _reparaciones = SharedDB.Instance.Reparaciones;
-        public Reparaciones ReparacionesColection
+        public Reparaciones ReparacionesColection;
 
         private DateTimeOffset _minDate  = new DateTimeOffset(new DateTime(2020, 1, 1));
         private DateTimeOffset _maxDate = new DateTimeOffset(new DateTime(230, 1, 1));
@@ -53,7 +53,7 @@ namespace TallerDIA.ViewModels
             }
         }
 
-        public ObservableCollection<Reparacion> Reparaciones
+        public Reparaciones Reparaciones
         {
             get => _reparaciones;
             set
@@ -75,7 +75,7 @@ namespace TallerDIA.ViewModels
 
         public ReparacionesViewModel()
         {
-           
+            _reparaciones = SharedDB.Instance.Reparaciones;
         }
 
 
@@ -441,7 +441,7 @@ namespace TallerDIA.ViewModels
         {
             get
             {
-                var aux = Reparaciones.Where(r => r.FechaInicio >= MinDate && r.FechaFin <= MaxDate);
+                var aux = Reparaciones.Reps.Where(r => r.FechaInicio >= MinDate && r.FechaFin <= MaxDate);
 
                 if (FilterText != "")
                 {
