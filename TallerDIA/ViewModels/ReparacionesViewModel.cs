@@ -266,70 +266,59 @@ namespace TallerDIA.ViewModels
 
                 }
 
-                if (ReparacionDlg.EmpleadoTbNuevo.Text.Length <= 0)
-                {
-                    var message2 = MessageBoxManager.GetMessageBoxStandard("Alerta de campos no completados",
-                        "Debe escribir el dni o nombre del empleado  y seleccionar los disponibles",
-                        ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Warning, WindowStartupLocation.CenterOwner);
-
-                    await message2.ShowAsync();
-
-                    return;
-
-
-                }
+                
                 
                 Console.WriteLine("Creando y guradando reparacion");
 
+                string[] empleadoSelect;
+                IEnumerable<Empleado> empleadoI;
+                Empleado empleado;
                 if (ReparacionDlg.EmpleadoTbNuevo.SelectedItem != null)
                 {
-                    string[] empleadoSelect = ReparacionDlg.EmpleadoTbNuevo.SelectedItem.ToString().Split("_");
+                     empleadoSelect = ReparacionDlg.EmpleadoTbNuevo.SelectedItem.ToString().Split("_");
                    
-                    IEnumerable<Empleado> empleadoI = SharedDB.Instance.RegistroEmpleados.Empleados.Where(c => c.Dni.Contains(empleadoSelect[0]) && c.Nombre.Contains(empleadoSelect[1]));
+                   empleadoI = SharedDB.Instance.RegistroEmpleados.Empleados.Where(c => c.Dni.Contains(empleadoSelect[0]) && c.Nombre.Contains(empleadoSelect[1]));
                    
-                    Empleado empleado = empleadoI.First();
+                     empleado = empleadoI.First();
                     
                     Console.WriteLine("Reparacion creada: " + empleado.ToString());
-                   
-                    
-                    if (empleado == null)
-                    {
-                        var message = MessageBoxManager.GetMessageBoxStandard("Alerta datos no encontrados",
-                            "Empleado no encontrado", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Warning,
-                            WindowStartupLocation.CenterOwner);
-
-                        await message.ShowAsync();
-                    }
-                    else
-                    {
 
 
-
-                        Reparacion rep = new Reparacion(ReparacionDlg.AsuntoTb.Text, ReparacionDlg.NotaTb.Text, SelectedRepair.Cliente, empleado);
-                        
-                        Console.WriteLine(rep.ToString());
-                        
-                        SharedDB.Instance.EditReparacion(SelectedRepair, rep);
+                       
                        
 
-                        ReparacionDlg = null;
-                        SelectedRepair = null;
-                        ForceUpdateUI();
 
-
-                    } 
+                    
                 }
                 else
                 {
-                    var message2 = MessageBoxManager.GetMessageBoxStandard("Alerta de campos no completados",
-                        "Debe escribir el dni o nombre del empleado y seleccionar los disponibles",
-                        ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Warning, WindowStartupLocation.CenterOwner);
-
-                    await message2.ShowAsync();
-
-                    return;
+                    
+                   
+                    empleado = SelectedRepair.Empleado;
+                    
+                    Console.WriteLine("Reparacion creada: " + empleado.ToString());
                 }
+                
+                if (empleado == null)
+                {
+                    var message = MessageBoxManager.GetMessageBoxStandard("Alerta datos no encontrados",
+                        "Empleado no encontrado", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Warning,
+                        WindowStartupLocation.CenterOwner);
 
+                    await message.ShowAsync();
+                }
+                    
+               
+                Reparacion rep = new Reparacion(ReparacionDlg.AsuntoTb.Text, ReparacionDlg.NotaTb.Text, SelectedRepair.Cliente, empleado);
+                        
+                Console.WriteLine(rep.ToString());
+                        
+                SharedDB.Instance.EditReparacion(SelectedRepair, rep);
+                       
+
+                ReparacionDlg = null;
+                SelectedRepair = null;
+                ForceUpdateUI();
                
 
 
