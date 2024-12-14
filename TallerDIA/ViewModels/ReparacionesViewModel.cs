@@ -38,6 +38,28 @@ namespace TallerDIA.ViewModels
 
         private ObservableCollection<Reparacion> _Reparaciones;
 
+        private DateTimeOffset _minDate  = new DateTimeOffset(new DateTime(2020, 1, 1));
+        private DateTimeOffset _maxDate = new DateTimeOffset(new DateTime(230, 1, 1));
+        public DateTimeOffset MinDate
+        {
+            get => _minDate;
+            set
+            {
+                SetProperty(ref _minDate,value);
+                OnPropertyChanged(nameof(FilteredItems));
+            }
+        }
+
+        public DateTimeOffset MaxDate
+        {
+            get => _maxDate;
+            set
+            {
+                SetProperty(ref _maxDate, value);
+                OnPropertyChanged(nameof(FilteredItems));
+            }
+        }
+
         public ObservableCollection<Reparacion> Reparaciones
         {
             get => _Reparaciones;
@@ -387,49 +409,38 @@ namespace TallerDIA.ViewModels
         
 
 
-        public override ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>(["Asunto","Nota","Fecha entre", "Nombre cliente", "DNI cliente", "Nombre empleado","DNI empleado"]);
+        public override ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>(["Asunto","Nota", "Nombre cliente", "DNI cliente", "Nombre empleado","DNI empleado"]);
 
         public override ObservableCollection<Reparacion> FilteredItems
         {
             get
             {
+                var aux = Reparaciones.Where(r => r.FechaInicio >= MinDate && r.FechaFin <= MaxDate);
+
                 if (FilterText != "")
                 {
                     var Text = FilterText.ToLower();
                     switch (FilterModes[SelectedFilterMode])
                     {
                         case "Asunto":
-                            return new ObservableCollection<Reparacion>(Reparaciones.Where(r => r.Asunto.ToLower().Contains(Text)));
+                            return new ObservableCollection<Reparacion>(aux.Where(r => r.Asunto.ToLower().Contains(Text)));
                         case "Nota":
-                            return new ObservableCollection<Reparacion>(Reparaciones.Where(r => r.Nota.ToLower().Contains(Text)));
-                        case "Fecha entre":
-                            try
-                            {
-                                var date = DateTime.Parse(Text);
-                                return new ObservableCollection<Reparacion>(
-                                    Reparaciones.Where(r => r.FechaInicio <= date && r.FechaFin >= date));
-                            }
-                            catch (FormatException ex)
-                            {
-                                //TODO: SHOW THIS TO THE USER
-                                Console.Out.WriteLine("Fecha no válida");
-                                return Reparaciones;
-                            }
+                            return new ObservableCollection<Reparacion>(aux.Where(r => r.Nota.ToLower().Contains(Text)));
                         case "Nombre cliente":
-                            return new ObservableCollection<Reparacion>(Reparaciones.Where(r => r.Cliente.Nombre.ToLower().Contains(Text)));
+                            return new ObservableCollection<Reparacion>(aux.Where(r => r.Cliente.Nombre.ToLower().Contains(Text)));
                         case "DNI cliente":
-                            return new ObservableCollection<Reparacion>(Reparaciones.Where(r => r.Cliente.DNI.ToLower().Contains(Text)));
+                            return new ObservableCollection<Reparacion>(aux.Where(r => r.Cliente.DNI.ToLower().Contains(Text)));
                         case "Nombre empleado":
-                            return new ObservableCollection<Reparacion>(Reparaciones.Where(r => r.Empleado.Nombre.ToLower().Contains(Text)));
+                            return new ObservableCollection<Reparacion>(aux.Where(r => r.Empleado.Nombre.ToLower().Contains(Text)));
                         case "DNI empleado":
-                            return new ObservableCollection<Reparacion>(Reparaciones.Where(r => r.Empleado.Dni.ToLower().Contains(Text)));
+                            return new ObservableCollection<Reparacion>(aux.Where(r => r.Empleado.Dni.ToLower().Contains(Text)));
                         default:
-                            return Reparaciones;
+                            return new ObservableCollection<Reparacion>(aux);
                     }
                 }
                 else
                 {
-                    return Reparaciones;
+                    return new ObservableCollection<Reparacion>(aux);
                 }
             }
         }

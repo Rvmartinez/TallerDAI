@@ -170,18 +170,19 @@ public partial class ClientesViewModel : FilterViewModel<Cliente>
     {
         get
         {
+            var text = FilterText.ToLower();
             if (FilterText != "")
             {
                 switch (FilterModes[SelectedFilterMode])
                 {
                     case "Nombre":
-                        return new ObservableCollection<Cliente>(CarteraClientes.Clientes.Where(c => c.Nombre.Contains(FilterText)));
+                        return new ObservableCollection<Cliente>(CarteraClientes.Clientes.Where(c => c.Nombre.ToLower().Contains(text)));
                     case "DNI":
-                        return new ObservableCollection<Cliente>(CarteraClientes.Clientes.Where(c => c.DNI.Contains(FilterText)));
+                        return new ObservableCollection<Cliente>(CarteraClientes.Clientes.Where(c => c.DNI.ToLower().Contains(text)));
                     case "Email":
-                        return new ObservableCollection<Cliente>(CarteraClientes.Clientes.Where(c => c.Email.Contains(FilterText)));
+                        return new ObservableCollection<Cliente>(CarteraClientes.Clientes.Where(c => c.Email.ToLower().Contains(text)));
                     case "ID Cliente":
-                        return new ObservableCollection<Cliente>(CarteraClientes.Clientes.Where(c => c.IdCliente.ToString().Contains(FilterText)));
+                        return new ObservableCollection<Cliente>(CarteraClientes.Clientes.Where(c => c.IdCliente.ToString().ToLower().Contains(text)));
                     default:
                         // maybe this should be an exception or unreachable
                         return CarteraClientes.Clientes;
