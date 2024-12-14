@@ -105,11 +105,13 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
                 SharedDB.BuscarEmpleado(RegistroEmpleados.Empleados.ToList(), nuevoEmpleado) == null)
             {
                 RegistroEmpleados.Add(nuevoEmpleado);
+                Console.WriteLine("Insertado exitoso.");
             }
             else
             {
                 Console.WriteLine("Fallo al insertar. ");
-                MessageBoxManager.GetMessageBoxStandard("Fallo al insertar. ","No existe el empleado seleccionado o el DNI del empleado introducido ya está en uso. ",ButtonEnum.Ok,Icon.Error,WindowStartupLocation.CenterScreen);
+                var message=MessageBoxManager.GetMessageBoxStandard("Fallo al insertar. ","No existe el empleado seleccionado o el DNI del empleado introducido ya está en uso. ",ButtonEnum.Ok,Icon.Error,WindowStartupLocation.CenterScreen);
+                await message.ShowAsync();
             }
         }
     }
@@ -143,14 +145,15 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
                 else
                 {
                     Console.Out.WriteLine("Fallo al modificar.");
-                    MessageBoxManager.GetMessageBoxStandard("Fallo al modificar. ","No existe el empleado seleccionado o el DNI del empleado introducido ya está en uso. ",ButtonEnum.Ok,Icon.Error,WindowStartupLocation.CenterScreen);
+                    var message=MessageBoxManager.GetMessageBoxStandard("Fallo al modificar. ","No existe el empleado seleccionado o el DNI del empleado introducido ya está en uso. ",ButtonEnum.Ok,Icon.Error,WindowStartupLocation.CenterScreen);
+                    await message.ShowAsync();
                 }
             }
         }
     }
 
     [RelayCommand]
-    public void btEliminarEmpleado_OnClick()
+    public async Task btEliminarEmpleado_OnClick()
     {
         if (SharedDB.FiltrarEntradasEmpleado(EmpleadoSeleccionado) && 
             SharedDB.BuscarEmpleado(RegistroEmpleados.Empleados.ToList(), EmpleadoSeleccionado) != null)
@@ -162,11 +165,12 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
         else
         {
             Console.Out.WriteLine("Eliminado fallido.");
-            MessageBoxManager.GetMessageBoxStandard("Fallo al eliminar. ","No se encuentra el empleado a eliminar. ",ButtonEnum.Ok,Icon.Error,WindowStartupLocation.CenterScreen);
+            var message=MessageBoxManager.GetMessageBoxStandard("Fallo al eliminar. ","No se encuentra el empleado a eliminar. ",ButtonEnum.Ok,Icon.Error,WindowStartupLocation.CenterScreen);
+            await message.ShowAsync();
         }
     }
     [RelayCommand]
-    public void btNuevoEmpleado_OnClick()
+    public  async Task btNuevoEmpleado_OnClick()
     {
         EmpleadoSeleccionado=new Empleado();
         EmpleadoActual=new Empleado();
@@ -175,7 +179,7 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
     
 
     [RelayCommand]
-    public void btTicketsSelecc_OnClick()
+    public  async Task btTicketsSelecc_OnClick()
     {
         //ReparacionesViewModel ventanaTickets = new ReparacionesViewModel(EmpleadoSeleccionado);
         //ventanaTickets.Show();
