@@ -51,7 +51,7 @@ namespace TallerDIA.Models
         {
             get => _empleado;
 
-            init => _empleado = value;
+            set => _empleado = value;
         }
 
 

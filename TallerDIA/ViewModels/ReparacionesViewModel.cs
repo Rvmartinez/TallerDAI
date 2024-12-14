@@ -26,10 +26,14 @@ namespace TallerDIA.ViewModels
        
 
         private Reparaciones _reparaciones = SharedDB.Instance.Reparaciones;
-        public ObservableCollection<Reparacion> ReparacionesColection
+        public Reparaciones ReparacionesColection
         {
-            get => _reparaciones.Reps;
-            
+            get => _reparaciones;
+            set
+            {
+                SetProperty(ref _reparaciones, value);
+
+            }
         }
 
         private Reparacion _selectedRepair;
@@ -129,7 +133,7 @@ namespace TallerDIA.ViewModels
                     case ButtonResult.Yes:
                         
 
-                        foreach (Reparacion rep in ReparacionesColection)
+                        foreach (Reparacion rep in ReparacionesColection.Reps)
                         {
                             if (rep.Equals(SelectedRepair))
                             {
@@ -249,7 +253,7 @@ namespace TallerDIA.ViewModels
 
             if (!ReparacionDlg.IsCanceled)
             {
-                
+
                 if (ReparacionDlg.AsuntoTb.Text == "" || ReparacionDlg.NotaTb.Text == "")
                 {
 
@@ -261,61 +265,80 @@ namespace TallerDIA.ViewModels
                     return;
 
                 }
-                 if (ReparacionDlg.EmpleadoTb.Text.Length <= 0 )
+
+                if (ReparacionDlg.EmpleadoTbNuevo.Text.Length <= 0)
                 {
                     var message2 = MessageBoxManager.GetMessageBoxStandard("Alerta de campos no completados",
-                        "Debe escribir el dni o nombre del empleado o cliente y seleccionar los disponibles",
+                        "Debe escribir el dni o nombre del empleado  y seleccionar los disponibles",
                         ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Warning, WindowStartupLocation.CenterOwner);
 
                     await message2.ShowAsync();
-                    
+
                     return;
-                    
-                    
+
+
                 }
                 
-                
-                    Console.WriteLine("Creando y guradando reparacion");
-                    
-                    string[] empleadoSelect = ReparacionDlg.EmpleadoTb.SelectedItem.ToString().Split("_");
+                Console.WriteLine("Creando y guradando reparacion");
 
+                if (ReparacionDlg.EmpleadoTbNuevo.SelectedItem != null)
+                {
+                    string[] empleadoSelect = ReparacionDlg.EmpleadoTbNuevo.SelectedItem.ToString().Split("_");
+                   
+                    IEnumerable<Empleado> empleadoI = SharedDB.Instance.RegistroEmpleados.Empleados.Where(c => c.Dni.Contains(empleadoSelect[0]) && c.Nombre.Contains(empleadoSelect[1]));
+                   
+                    Empleado empleado = empleadoI.First();
                     
+                    Console.WriteLine("Reparacion creada: " + empleado.ToString());
+                   
                     
-                    
+                    if (empleado == null)
                     {
-                        IEnumerable<Empleado> empleadoI = SharedDB.Instance.RegistroEmpleados.Empleados.Where(c =>
-                            c.Dni.Contains(empleadoSelect[0]) && c.Nombre.Contains(empleadoSelect[1]));
-                        Empleado empleado = empleadoI.First();
-                        Console.WriteLine("Reparacion creada: " + empleado.ToString());
-                        if (empleado == null)
-                        {
-                            var message = MessageBoxManager.GetMessageBoxStandard("Alerta datos no encontrados",
-                                "Empleado no encontrado", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Warning,
-                                WindowStartupLocation.CenterOwner);
+                        var message = MessageBoxManager.GetMessageBoxStandard("Alerta datos no encontrados",
+                            "Empleado no encontrado", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Warning,
+                            WindowStartupLocation.CenterOwner);
 
-                            await message.ShowAsync();
-                        }
-                        else
-                        {
-
-
-                            Reparacion rep = new Reparacion(ReparacionDlg.AsuntoTb.Text, ReparacionDlg.NotaTb.Text,
-                                SelectedRepair.Cliente, empleado);
-                            Console.WriteLine(rep.ToString());
-                            SharedDB.Instance.EditReparacion(SelectedRepair, rep);
-                            _reparaciones = SharedDB.Instance.Reparaciones;
-                            ReparacionesColection.Clear();
-                            for (int i = 0; i < _reparaciones.Count; i++)
-                            {
-                                ReparacionesColection.Add(_reparaciones.Get(i));
-                            }
-                            ReparacionDlg = null;
-                            SelectedRepair = null;
-                            //ForceUpdateUI();
-                        }
+                        await message.ShowAsync();
                     }
+                    else
+                    {
+
+
+
+                        Reparacion rep = new Reparacion(ReparacionDlg.AsuntoTb.Text, ReparacionDlg.NotaTb.Text, SelectedRepair.Cliente, empleado);
+                        
+                        Console.WriteLine(rep.ToString());
+                        
+                        SharedDB.Instance.EditReparacion(SelectedRepair, rep);
+                       
+
+                        ReparacionDlg = null;
+                        SelectedRepair = null;
+                        ForceUpdateUI();
+
+
+                    } 
                 }
-            
+                else
+                {
+                    var message2 = MessageBoxManager.GetMessageBoxStandard("Alerta de campos no completados",
+                        "Debe escribir el dni o nombre del empleado y seleccionar los disponibles",
+                        ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Warning, WindowStartupLocation.CenterOwner);
+
+                    await message2.ShowAsync();
+
+                    return;
+                }
+
+               
+
+
+
+
+
+                
+            }
+
 
         }
         
@@ -343,7 +366,7 @@ namespace TallerDIA.ViewModels
                     Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
                         ? desktop.MainWindow
                         : null;
-                var colRep = ReparacionesColection.OfType<Reparacion>().ToList();
+                var colRep = ReparacionesColection.Reps.OfType<Reparacion>().ToList();
                 var reps = new Reparaciones(colRep);
                 var reparacionNavegarDlg = new ChartWindow(reps, new ConfigChart(){FechaFin = false});
                 await reparacionNavegarDlg.ShowDialog(mainWindow);
@@ -374,39 +397,56 @@ namespace TallerDIA.ViewModels
                     switch (FilterModes[SelectedFilterMode])
                     {
                         case "Asunto":
-                            return new ObservableCollection<Reparacion>(ReparacionesColection.Where(r => r.Asunto.ToLower().Contains(Text)));
+                            return new ObservableCollection<Reparacion>(ReparacionesColection.Reps.Where(r => r.Asunto.ToLower().Contains(Text)));
                         case "Nota":
-                            return new ObservableCollection<Reparacion>(ReparacionesColection.Where(r => r.Nota.ToLower().Contains(Text)));
+                            return new ObservableCollection<Reparacion>(ReparacionesColection.Reps.Where(r => r.Nota.ToLower().Contains(Text)));
                         case "Fecha entre":
                             try
                             {
                                 var date = DateTime.Parse(Text);
                                 return new ObservableCollection<Reparacion>(
-                                    ReparacionesColection.Where(r => r.FechaInicio <= date && r.FechaFin >= date));
+                                    ReparacionesColection.Reps.Where(r => r.FechaInicio <= date && r.FechaFin >= date));
                             }
                             catch (FormatException ex)
                             {
                                 //TODO: SHOW THIS TO THE USER
                                 Console.Out.WriteLine("Fecha no válida");
-                                return ReparacionesColection;
+                                return ReparacionesColection.Reps;
                             }
                         case "Nombre cliente":
-                            return new ObservableCollection<Reparacion>(ReparacionesColection.Where(r => r.Cliente.Nombre.ToLower().Contains(Text)));
+                            return new ObservableCollection<Reparacion>(ReparacionesColection.Reps.Where(r => r.Cliente.Nombre.ToLower().Contains(Text)));
                         case "DNI cliente":
-                            return new ObservableCollection<Reparacion>(ReparacionesColection.Where(r => r.Cliente.DNI.ToLower().Contains(Text)));
+                            return new ObservableCollection<Reparacion>(ReparacionesColection.Reps.Where(r => r.Cliente.DNI.ToLower().Contains(Text)));
                         case "Nombre empleado":
-                            return new ObservableCollection<Reparacion>(ReparacionesColection.Where(r => r.Empleado.Nombre.ToLower().Contains(Text)));
+                            return new ObservableCollection<Reparacion>(ReparacionesColection.Reps.Where(r => r.Empleado.Nombre.ToLower().Contains(Text)));
                         case "DNI empleado":
-                            return new ObservableCollection<Reparacion>(ReparacionesColection.Where(r => r.Empleado.Dni.ToLower().Contains(Text)));
+                            return new ObservableCollection<Reparacion>(ReparacionesColection.Reps.Where(r => r.Empleado.Dni.ToLower().Contains(Text)));
                         default:
-                            return ReparacionesColection;
+                            return ReparacionesColection.Reps;
                     }
                 }
                 else
                 {
-                    return ReparacionesColection;
+                    return ReparacionesColection.Reps;
                 }
             }
+        }
+        
+        
+        [RelayCommand]
+        public void ForceUpdateUI()
+        {
+
+            List<Reparacion> list = SharedDB.Instance.Reparaciones.Reps.ToList();
+            ReparacionesColection.Reps.Clear();
+
+            foreach (Reparacion rep in list)
+            {
+                ReparacionesColection.Add(rep);
+            }
+            OnPropertyChanged(nameof(ReparacionesColection));
+
+
         }
     }
 }
