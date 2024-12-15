@@ -158,33 +158,36 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
     [RelayCommand]
     public async Task btEliminarEmpleado_OnClick()
     {
-        var box = MessageBoxManager
-            .GetMessageBoxStandard("Atención", "Los datos se borrarán irreversiblemente.¿Desea continuar?", ButtonEnum.OkCancel);
-
+        var box = MessageBoxManager.GetMessageBoxStandard("Atención", "Los datos se borrarán irreversiblemente.¿Desea continuar?", ButtonEnum.OkCancel);
         var result = await box.ShowAsync();
-
-        if (result == ButtonResult.Ok && SharedDB.FiltrarEntradasEmpleado(EmpleadoSeleccionado) && 
-            SharedDB.BuscarEmpleado(RegistroEmpleados.Empleados.ToList(), EmpleadoSeleccionado) != null)
+        if (result == ButtonResult.Ok)
         {
-            //SharedDB.Instance.Reparaciones.Reps.Where(r => r.Empleado == EmpleadoSeleccionado);
-            foreach (var r in SharedDB.Instance.Reparaciones.Reps)
+            if (SharedDB.FiltrarEntradasEmpleado(EmpleadoSeleccionado) &&
+                SharedDB.BuscarEmpleado(RegistroEmpleados.Empleados.ToList(), EmpleadoSeleccionado) != null)
             {
-                if (r.Empleado.Dni == EmpleadoSeleccionado.Dni)
+                //SharedDB.Instance.Reparaciones.Reps.Where(r => r.Empleado == EmpleadoSeleccionado);
+                foreach (var r in SharedDB.Instance.Reparaciones.Reps)
                 {
-                    r.Empleado.Dni = "00000000O";
-                    r.Empleado.Nombre = "(Empleado Eliminado)";
-                    r.Empleado.Email = "eliminado@eliminado.eliminado";
+                    if (r.Empleado.Dni == EmpleadoSeleccionado.Dni)
+                    {
+                        r.Empleado.Dni = "00000000O";
+                        r.Empleado.Nombre = "(Empleado Eliminado)";
+                        r.Empleado.Email = "eliminado@eliminado.eliminado";
+                    }
                 }
+
+                Console.Out.WriteLine("Intentando eliminar...");
+                RegistroEmpleados.RemoveEmpleado(EmpleadoSeleccionado);
+                Console.Out.WriteLine("Eliminado exitoso.");
             }
-            Console.Out.WriteLine("Intentando eliminar...");
-            RegistroEmpleados.RemoveEmpleado(EmpleadoSeleccionado);
-            Console.Out.WriteLine("Eliminado exitoso.");
-        }
-        else
-        {
-            Console.Out.WriteLine("Eliminado fallido.");
-            var message=MessageBoxManager.GetMessageBoxStandard("Fallo al eliminar. ","No se encuentra el empleado a eliminar. ",ButtonEnum.Ok,Icon.Error,WindowStartupLocation.CenterScreen);
-            await message.ShowAsync();
+            else
+            {
+                Console.Out.WriteLine("Eliminado fallido.");
+                var message = MessageBoxManager.GetMessageBoxStandard("Fallo al eliminar. ",
+                    "No se encuentra el empleado a eliminar. Asegurese de que ha seleccionado un empleado existente.", ButtonEnum.Ok, Icon.Error,
+                    WindowStartupLocation.CenterScreen);
+                await message.ShowAsync();
+            }
         }
     }
     [RelayCommand]

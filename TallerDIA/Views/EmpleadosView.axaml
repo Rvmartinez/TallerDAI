@@ -50,9 +50,9 @@
                 <TextBlock Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1" Name="Titulo" FontSize="18" Margin="10">Listado de empleados</TextBlock>
                 <Button Grid.Column="3" Grid.Row="1" icon:Attached.Icon="mdi-account-plus" Name="btAnadirEmpleado" Command="{Binding btAnadirEmpleado_OnClick}"></Button>
                 <Button Grid.Column="4" Grid.Row="1" icon:Attached.Icon="mdi-account-minus" Name="btEliminarEmpleado" Command="{Binding btEliminarEmpleado_OnClick}"></Button>
-                <Button Grid.Column="5" Grid.Row="1" icon:Attached.Icon="mdi-account-sync" Name="btModificarEmpleado" Command="{Binding btModificarEmpleado_OnClick}"></Button>
+                <Button Grid.Column="5" Grid.Row="1" icon:Attached.Icon="mdi-account-edit" Name="btModificarEmpleado" Command="{Binding btModificarEmpleado_OnClick}"></Button>
                 <Button Grid.Column="6" Grid.Row="1" icon:Attached.Icon="mdi-plus" Name="btNuevoEmpleado" Command="{Binding btNuevoEmpleado_OnClick}"></Button>
-                <Button Grid.Column="7" Grid.Row="1" icon:Attached.Icon="mdi-eye-arrow-right" Name="btTicketsSelecc" Command="{Binding btTicketsSelecc_OnClick}"></Button>
+                <Button Grid.Column="7" Grid.Row="1" icon:Attached.Icon="mdi-account-hard-hat" Name="btTicketsSelecc" Command="{Binding btTicketsSelecc_OnClick}"></Button>
             </Grid>
         </DockPanel>
         <DockPanel Name="PanelSalida"  Dock="Bottom">
