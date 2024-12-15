@@ -48,7 +48,11 @@ namespace TallerDIA.Utils
             {
                 new Reparacion("asunto1", "nota1", c1, emp),
                 new Reparacion("asunto2", "nota2", c2, emp),
-                new Reparacion("asunto3", "nota3", c1, emp2)
+                new Reparacion("asunto3", "nota3", c1, emp2),
+                new Reparacion("asunto3", "nota3",c1, emp2, new DateTime(2020, 01, 10)),
+                new Reparacion("asunto3", "nota3", c1, emp2, new DateTime(2020, 02, 14)),
+                new Reparacion("asunto3", "nota3", c2, emp2, new DateTime(2018, 02, 14)),
+                new Reparacion("asunto3", "nota3", c2, emp2, new DateTime(2020, 12, 14)),
                 
             };
            

@@ -38,13 +38,13 @@ namespace TallerDIA.Views {
             {  
                 annoSelected = Convert.ToInt32((object?)Annos.Items[Annos.SelectedIndex]);
 
-                GenerateClientCombobox(reparaciones, annoSelected);
+                if(clienteFilter is null) GenerateClientCombobox(reparaciones, annoSelected);
                 UpdateChart(reparaciones);
             };
             Computa.SelectionChanged += (sender, args) =>
             {
                 isFechaFin = (Computa.SelectedIndex == 1);
-                GenerateClientCombobox(reparaciones, annoSelected);
+                if(clienteFilter is null) GenerateClientCombobox(reparaciones, annoSelected);
                 UpdateChart(reparaciones);
             };
             

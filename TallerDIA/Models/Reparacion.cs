@@ -35,6 +35,16 @@ namespace TallerDIA.Models
             this.Empleado = empleado;
             this._fechaFin = _BASE_FINFECHA;
         }
+        
+        public Reparacion(string asunto, string nota, Cliente cliente, Empleado empleado, DateTime fechaInicio)
+        {
+            this.FechaInicio = fechaInicio;
+            this.Asunto = asunto;
+            this.Nota = nota;
+            this.Cliente = cliente;
+            this.Empleado = empleado;
+            this._fechaFin = _BASE_FINFECHA;
+        }
 
         public Reparacion()
         {
