@@ -60,26 +60,19 @@ public class ReparacionXML
     public static Reparacion CargarDeXml(XmlElement root)
     {
 
-        // Cargar trabajador encargado (Empleado)
         XmlElement empleadoElement = root["Empleado"];
         Empleado trabajador = EmpleadoXML.CargarDeXml(empleadoElement);
-        Console.WriteLine("Cargado Empleado");
 
         XmlElement clienteElement = root["Cliente"];
         Cliente cliente = ClienteXML.CargarDeXml(clienteElement);
-        Console.WriteLine("Cargado cliente");
 
         string asunto = root["Asunto"].InnerText;
         Console.WriteLine("Cargado asunto");
 
         DateTime fechaInicial = DateTime.Parse(root["FechaInicio"]?.InnerText);
         DateTime fechaFinal = DateTime.Parse(root["FechaFin"]?.InnerText);
-        Console.WriteLine("Cargado Fechas");
 
         string notas = root["Nota"].InnerText;
-        Console.WriteLine("Cargado notas");
-
-        Console.WriteLine("extraidos los elementos del xml...");
 
         return new Reparacion(trabajador, cliente, asunto, fechaInicial, fechaFinal, notas);
     }

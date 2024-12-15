@@ -28,6 +28,9 @@ public class CocheXML
             XmlElement modeloElement = doc.CreateElement("Modelo");
             modeloElement.InnerText = coche.Modelo;
             cocheElement.AppendChild(modeloElement);
+            
+            ClienteXML.InsertarEnXml(cocheElement, doc, coche.Owner.DNI, coche.Owner.Nombre,
+                coche.Owner.Email, coche.Owner.IdCliente);
 
             root.AppendChild(cocheElement);
         }
@@ -49,9 +52,11 @@ public class CocheXML
             string matricula = cocheElement["Matricula"].InnerText;
             string marca = cocheElement["Marca"].InnerText;
             string modelo = cocheElement["Modelo"].InnerText;
+            XmlElement clienteElement = cocheElement["Cliente"];
+            Cliente cliente = ClienteXML.CargarDeXml(clienteElement);
             if (Enum.TryParse(marca, true, out Coche.Marcas marcas))
             {
-                return new Coche(matricula, marcas, modelo);
+                return new Coche(matricula, marcas, modelo, cliente);
             }
             else
             {

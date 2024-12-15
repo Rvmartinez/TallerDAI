@@ -46,7 +46,7 @@ public class EmpleadoXML
 
     public static void InsertarEnXml(XmlElement parent, XmlDocument doc, string dni, string nombre, string email)
     {
-        XmlElement empleadoElement = doc.CreateElement("Cliente");
+        XmlElement empleadoElement = doc.CreateElement("Empleado");
 
         XmlElement dniElement = doc.CreateElement("DNI");
         dniElement.InnerText = dni;
