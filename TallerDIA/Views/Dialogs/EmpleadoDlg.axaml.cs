@@ -26,6 +26,27 @@ public partial class EmpleadoDlg : Window
         BtCancel.Click += (_, _) => this.OnCancelClicked();
 
     }
+    public EmpleadoDlg(Empleado nuevoEmpleado, bool toret)
+    {
+        InitializeComponent();
+        EmailTB.Text = nuevoEmpleado.Email;
+        NombreTB.Text = nuevoEmpleado.Nombre;
+        DniTB.Text = nuevoEmpleado.Dni;
+        this.IsCancelled = false;
+        DniErrorTB.IsVisible = false;
+        EmailErrorTB.IsVisible = false;
+        BtOk.IsEnabled = false;
+        if (toret)
+        {
+            BtOk.IsEnabled = false;
+            EmailTB.IsReadOnly = true;
+            NombreTB.IsReadOnly = true;
+            DniTB.IsReadOnly = true;
+        }
+        
+        BtCancel.Click += (_, _) => this.OnCancelClicked();
+
+    }
 
     public EmpleadoDlg()
     {
