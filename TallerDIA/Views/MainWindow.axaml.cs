@@ -16,11 +16,13 @@ namespace TallerDIA.Views
         }
         private async void OnMainWindowClosing(object? sender, System.ComponentModel.CancelEventArgs e)
         {
+            // Previene el cierre de la ventana hasta que el usuario confirme
             e.Cancel = true;
 
+            // Muestra un mensaje de confirmaciï¿½n
             var box = MessageBoxManager
                 .GetMessageBoxStandard("Cerrar App",
-                                       "¿Estas seguro que quieres salir?",
+                                       "ï¿½Estas seguro que quieres salir?",
                                        ButtonEnum.YesNo,
                                        MsBox.Avalonia.Enums.Icon.Question);
 
