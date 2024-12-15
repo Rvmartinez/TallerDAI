@@ -18,6 +18,8 @@ using System.Threading.Tasks;
 using TallerDIA.Utils;
 using System.IO;
 using Avalonia.Controls;
+using DesgloseWindow = TallerDIA.Views.DesgloseWindow;
+using ConfigChart = TallerDIA.Views.ConfigChart;
 
 namespace TallerDIA.ViewModels;
 
@@ -120,23 +122,25 @@ public partial class ClientesViewModel : FilterViewModel<Cliente>
     { 
         if (SelectedClient != null)
         {
-            /*var mainWindow =
+            var mainWindow =
                 Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
                     ? desktop.MainWindow
                     : null;
-            var colRep = _Reparaciones.OfType<Reparacion>().ToList();
-            var reps = new Reparaciones();
-            reps.AnadirReparaciones(colRep);
-            var reparacionNavegarDlg = new ChartWindow(reps, new ConfigChart() { FechaFin = false });
-            await reparacionNavegarDlg.ShowDialog(mainWindow);*/
+            var reps = SharedDB.Instance.Reparaciones;
+   ;
+            var reparacionNavegarDlg = new DesgloseWindow(reps, new ConfigChart() {Modo = ConfigChart.ModoVision.Mensual, Cliente = SelectedClient.Nombre, FechaFin = false });
+            await reparacionNavegarDlg.ShowDialog(mainWindow);
         }
         else
         {
-            var message = MessageBoxManager.GetMessageBoxStandard("No hay un cliente seleccionado",
-                "No hay un cliente seleccionado", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Warning,
-                WindowStartupLocation.CenterOwner);
-
-            var respuesta = await message.ShowAsync();
+            var mainWindow =
+                Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
+                    ? desktop.MainWindow
+                    : null;
+            var reps = SharedDB.Instance.Reparaciones;
+            ;
+            var reparacionNavegarDlg = new DesgloseWindow(reps, new ConfigChart() {Modo = ConfigChart.ModoVision.Anual, FechaFin = false });
+            await reparacionNavegarDlg.ShowDialog(mainWindow);
         }
     }
 
@@ -166,18 +170,19 @@ public partial class ClientesViewModel : FilterViewModel<Cliente>
     {
         get
         {
+            var text = FilterText.ToLower();
             if (FilterText != "")
             {
                 switch (FilterModes[SelectedFilterMode])
                 {
                     case "Nombre":
-                        return new ObservableCollection<Cliente>(CarteraClientes.Clientes.Where(c => c.Nombre.Contains(FilterText)));
+                        return new ObservableCollection<Cliente>(CarteraClientes.Clientes.Where(c => c.Nombre.ToLower().Contains(text)));
                     case "DNI":
-                        return new ObservableCollection<Cliente>(CarteraClientes.Clientes.Where(c => c.DNI.Contains(FilterText)));
+                        return new ObservableCollection<Cliente>(CarteraClientes.Clientes.Where(c => c.DNI.ToLower().Contains(text)));
                     case "Email":
-                        return new ObservableCollection<Cliente>(CarteraClientes.Clientes.Where(c => c.Email.Contains(FilterText)));
+                        return new ObservableCollection<Cliente>(CarteraClientes.Clientes.Where(c => c.Email.ToLower().Contains(text)));
                     case "ID Cliente":
-                        return new ObservableCollection<Cliente>(CarteraClientes.Clientes.Where(c => c.IdCliente.ToString().Contains(FilterText)));
+                        return new ObservableCollection<Cliente>(CarteraClientes.Clientes.Where(c => c.IdCliente.ToString().ToLower().Contains(text)));
                     default:
                         // maybe this should be an exception or unreachable
                         return CarteraClientes.Clientes;

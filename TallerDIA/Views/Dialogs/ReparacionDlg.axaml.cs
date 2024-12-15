@@ -19,6 +19,8 @@ public partial class ReparacionDlg : Window
     public ReparacionDlg(Reparacion r)
     
     {
+        InitializeComponent();
+
         List<String> _clientes = new List<String>();
         for (int i = 0; i < SharedDB.Instance.CarteraClientes.Count; i++)
         {
@@ -29,17 +31,23 @@ public partial class ReparacionDlg : Window
         for (int i = 0; i < SharedDB.Instance.RegistroEmpleados.Count; i++)
         {
             _empleados.Add(SharedDB.Instance.RegistroEmpleados.Get(i).Dni + "_" + SharedDB.Instance.RegistroEmpleados.Get(i).Nombre);
+            
         }
         
         AsuntoTb.Text = r.Asunto;
         NotaTb.Text = r.Nota;
         ClienteTb.Text = r.Cliente.DNI + "_" + r.Cliente.Nombre;
+        ClienteTb.IsEnabled = false;
         EmpleadoTb.Text = r.Empleado.Dni + "_" + r.Empleado.Nombre;
-        InitializeComponent();
+        EmpleadoTb.SelectedItem = r.Empleado.Dni + "_" + r.Empleado.Nombre;
+        EmpleadoTb.IsEnabled = false;
+        EmpleadoTbNuevo.IsVisible = true;
+        LabelNuevo.IsVisible = true;
         BtOk.Click += (_, _) => _ = this.OnAcceptClicked();
         BtCancel.Click += (_, _) => this.OnCancelClicked();
         ClienteTb.ItemsSource = _clientes;
         EmpleadoTb.ItemsSource= _empleados;
+        EmpleadoTbNuevo.ItemsSource = _empleados;
     }
 
    
@@ -74,7 +82,7 @@ public partial class ReparacionDlg : Window
     async Task OnAcceptClicked()
     {
         
-        Console.WriteLine("Aceptando reparacion, Creando nueva reparacion");
+        
         
         IsAcepted = true;
         this.OnExit();

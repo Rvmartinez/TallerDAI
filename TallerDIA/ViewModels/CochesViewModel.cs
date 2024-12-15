@@ -181,17 +181,17 @@ public partial class CochesViewModel : FilterViewModel<Coche>
     {
         get
         {
+            var text = FilterText.ToLower();
             if (FilterText != "")
             {
-
                 switch (FilterModes[SelectedFilterMode])
                 {
                     case "Matricula":
-                        return new ObservableCollection<Coche>(Coches.Where(c => c.Matricula.Contains(FilterText)));
+                        return new ObservableCollection<Coche>(Coches.Where(c => c.Matricula.ToLower().Contains(text)));
                     case "Marca":
-                        return new ObservableCollection<Coche>(Coches.Where(c => c.Marca.ToString().Contains(FilterText)));
+                        return new ObservableCollection<Coche>(Coches.Where(c => c.Marca.ToString().ToLower().Contains(text)));
                     case "Modelo":
-                        return new ObservableCollection<Coche>(Coches.Where(c => c.Modelo.Contains(FilterText)));
+                        return new ObservableCollection<Coche>(Coches.Where(c => c.Modelo.ToLower().Contains(text)));
                     default:
                         return Coches;
                 }

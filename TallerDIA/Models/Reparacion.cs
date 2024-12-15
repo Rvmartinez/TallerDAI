@@ -10,13 +10,15 @@ namespace TallerDIA.Models
     public class Reparacion
     {
 
-
+       
         private Cliente _cliente;
         private Empleado _empleado;
         private string _asunto;
         private DateTime _fechaInicio;
         private DateTime? _fechaFin;
         private string _nota;
+        private static string toret = "11/11/1111 11:11:11";
+        private static readonly DateTime _BASE_FINFECHA = DateTime.Parse(toret);
 
         public Reparacion(string asunto, string nota)
         {
@@ -31,7 +33,7 @@ namespace TallerDIA.Models
             this.Nota = nota;
             this.Cliente = cliente;
             this.Empleado = empleado;
-            this._fechaFin = new DateTime();
+            this._fechaFin = _BASE_FINFECHA;
         }
 
         public Reparacion()

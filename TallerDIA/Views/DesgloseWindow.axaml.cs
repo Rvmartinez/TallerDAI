@@ -5,12 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Avalonia.Controls;
-using Avalonia.Controls.ApplicationLifetimes;
-using DemoAvalonia.UI;
-using TallerDIA.Views;
 using TallerDIA.Models;
 
-namespace GraficosTaller.UI {
+namespace TallerDIA.Views {
     public partial class DesgloseWindow : Window
     {
         public DesgloseWindow(Reparaciones reparaciones, ConfigChart config)
@@ -25,7 +22,7 @@ namespace GraficosTaller.UI {
            GenerateYearsCombobox(reparaciones);
 
            
-            if (annoSelected == 0) annoSelected = Convert.ToInt32(Annos.Items[0]?.ToString());
+            if (annoSelected == 0) annoSelected = Convert.ToInt32((string?)Annos.Items[0]?.ToString());
 
 
             UpdateChart(reparaciones);
@@ -39,7 +36,7 @@ namespace GraficosTaller.UI {
             };
             Annos.SelectionChanged += (sender, args) =>
             {  
-                annoSelected = Convert.ToInt32(Annos.Items[Annos.SelectedIndex]);
+                annoSelected = Convert.ToInt32((object?)Annos.Items[Annos.SelectedIndex]);
 
                 GenerateClientCombobox(reparaciones, annoSelected);
                 UpdateChart(reparaciones);
