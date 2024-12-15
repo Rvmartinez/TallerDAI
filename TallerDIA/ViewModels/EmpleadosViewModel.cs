@@ -96,7 +96,6 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
         var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop ? desktop.MainWindow : null;
         var EmpleadoDlg = new EmpleadoDlg();
         await EmpleadoDlg.ShowDialog(mainWindow);
-
         if (!EmpleadoDlg.IsCancelled)
         {
             Console.WriteLine("Intentando insertar...");
@@ -123,7 +122,6 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
             ? desktop.MainWindow
             : null;
         var EmpleadoDlg = new EmpleadoDlg();
-
         await EmpleadoDlg.ShowDialog(mainWindow);
         if (!EmpleadoDlg.IsCancelled)
         {
@@ -135,10 +133,9 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
             {
                 if (SharedDB.BuscarEmpleado(RegistroEmpleados.Empleados.ToList(), EmpleadoSeleccionado) != null && (EmpleadoSeleccionado.Dni == nuevoEmpleado.Dni || SharedDB.BuscarEmpleado(RegistroEmpleados.Empleados.ToList(), nuevoEmpleado) == null))
                 {
-                    RegistroEmpleados.ActualizarEmpleado(EmpleadoSeleccionado, nuevoEmpleado.Dni, nuevoEmpleado.Nombre,
-                        nuevoEmpleado.Email);
-                    //EmpleadoSeleccionado = nuevoEmpleado;
-                    //FilteredItems = new ObservableCollection<Empleado>(RegistroEmpleados.Empleados.ToList());
+                    RegistroEmpleados.RemoveEmpleado(EmpleadoSeleccionado);
+                    ForceUpdateUI();
+                    RegistroEmpleados.Add(nuevoEmpleado);
                     ForceUpdateUI();
                     Console.Out.WriteLine("Modificado exitoso.");
                 }
@@ -185,8 +182,6 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
         //ventanaTickets.Show();
         
     }
-    
-    //private ObservableCollection<Empleado> _FilteredItems;
     public override ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>(["DNI","Nombre","Email"]);
     public override ObservableCollection<Empleado> FilteredItems
     {

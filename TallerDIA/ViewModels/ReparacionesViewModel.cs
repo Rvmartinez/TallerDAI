@@ -24,15 +24,15 @@ namespace TallerDIA.ViewModels
     public partial class ReparacionesViewModel : FilterViewModel<Reparacion>
     {
         
-        private bool _mostrarTerminados =false;
-        private bool _mostrarNoTerminados =false;
+       
 
- 
+        private static string toret = "11/11/1111 11:11:11";
+        private static readonly DateTime _BASE_FINFECHA = DateTime.Parse(toret);
         private Reparaciones _reparaciones = SharedDB.Instance.Reparaciones;
         public Reparaciones ReparacionesColection;
 
         private DateTimeOffset _minDate  = new DateTimeOffset(new DateTime(2020, 1, 1));
-        private DateTimeOffset _maxDate = new DateTimeOffset(new DateTime(230, 1, 1));
+        private DateTimeOffset _maxDate = new DateTimeOffset(new DateTime(2030, 1, 1));
         public DateTimeOffset MinDate
         {
             get => _minDate;
@@ -53,14 +53,9 @@ namespace TallerDIA.ViewModels
             }
         }
 
-        public Reparaciones Reparaciones
+        public ObservableCollection<Reparacion> Reparaciones
         {
-            get => _reparaciones;
-            set
-            {
-                SetProperty(ref _reparaciones, value);
-
-            }
+            get => _reparaciones.Reps;
         }
 
         private Reparacion _selectedRepair;
@@ -75,7 +70,7 @@ namespace TallerDIA.ViewModels
 
         public ReparacionesViewModel()
         {
-            _reparaciones = SharedDB.Instance.Reparaciones;
+            ReparacionesColection = SharedDB.Instance.Reparaciones;
         }
 
 
@@ -121,9 +116,9 @@ namespace TallerDIA.ViewModels
                 {
                     case ButtonResult.Yes:
                         
-                        _reparaciones.Remove(SelectedRepair);
+                        Reparaciones.Remove(SelectedRepair);
                        
-                        
+                        ForceUpdateUI();
                         
                         SelectedRepair = null!;
                         break;
@@ -243,9 +238,11 @@ namespace TallerDIA.ViewModels
                         else
                         {
                             Reparacion rep = new Reparacion(ReparacionDlg.AsuntoTb.Text, ReparacionDlg.NotaTb.Text, cliente, empleado);
-                            Console.WriteLine("Reparacion creada: " + rep.ToString());
-                            SharedDB.Instance.Reparaciones.Add(rep);
-                            _reparaciones = SharedDB.Instance.Reparaciones;
+                            Console.WriteLine("Reparacion creada: " + rep.ToString()); 
+                            
+                            
+                            ReparacionesColection.Reps.Add(rep);
+                            ForceUpdateUI();
                         } 
                     }
                     
@@ -270,7 +267,7 @@ namespace TallerDIA.ViewModels
 
 
 
-            if (SelectedRepair == null || SelectedRepair.FechaFin != new DateTime())
+            if (SelectedRepair == null || SelectedRepair.FechaFin != _BASE_FINFECHA)
             {
                 return; 
             }
@@ -376,15 +373,6 @@ namespace TallerDIA.ViewModels
         }
 
 
-       
-       
-
-
-       
-
-
-
-
 
         [RelayCommand]
         public async Task ButtonNevegarCommand()
@@ -409,7 +397,7 @@ namespace TallerDIA.ViewModels
             }
         }
         
-        public async Task ButtonAbrirGrafica()
+       /* public async Task ButtonAbrirGrafica()
         {
             if (SharedDB.Instance.Reparaciones.Count > 0)
             {
@@ -432,7 +420,7 @@ namespace TallerDIA.ViewModels
 
         }
         
-        
+        */
 
 
         public override ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>(["Asunto","Nota", "Nombre cliente", "DNI cliente", "Nombre empleado","DNI empleado"]);
@@ -441,8 +429,9 @@ namespace TallerDIA.ViewModels
         {
             get
             {
-                var aux = Reparaciones.Reps.Where(r => r.FechaInicio >= MinDate && r.FechaFin <= MaxDate);
-
+                Console.WriteLine("Tamaño de Reparaciones antes de busqueda por fecha= " + Reparaciones.Count.ToString());
+                var aux = Reparaciones.Where(r => r.FechaInicio >= MinDate && r.FechaFin <= MaxDate);
+                Console.WriteLine("Tamaño de Reparaciones despues de busqueda por fecha= " + aux.Count().ToString());
                 if (FilterText != "")
                 {
                     var Text = FilterText.ToLower();
@@ -478,13 +467,14 @@ namespace TallerDIA.ViewModels
         {
 
             List<Reparacion> list = SharedDB.Instance.Reparaciones.Reps.ToList();
-            ReparacionesColection.Reps.Clear();
+            Reparaciones.Clear();
 
             foreach (Reparacion rep in list)
             {
-                ReparacionesColection.Add(rep);
+                Reparaciones.Add(rep);
             }
             OnPropertyChanged(nameof(ReparacionesColection));
+            OnPropertyChanged(nameof(FilteredItems));
 
 
         }

@@ -19,23 +19,4 @@ public partial class ClientesView : UserControl
         viewModel = (ClientesViewModel)DataContext;
     }
 
-
-    protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
-    {
-        base.OnAttachedToVisualTree(e);
-
-        viewModel?.ForceUpdateUI();
-
-    }
-
-   /* protected override void OnGotFocus(GotFocusEventArgs e)
-    {
-        base.OnGotFocus(e);
-        ObservableCollection<Cliente> c = (ObservableCollection<Cliente>)this.dgClientes.ItemsSource;
-        int x = c.Count;
-
-
-        viewModel = (ClientesViewModel)DataContext;
-        viewModel?.ForceUpdateUI();
-    }*/
 }

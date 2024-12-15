@@ -10,9 +10,9 @@ namespace TallerDIA.Models
 {
     public class CarteraClientes
     {
-        private ObservableCollection<Cliente> _Clientes;
+        private List<Cliente> _Clientes;
 
-        public ObservableCollection<Cliente> Clientes
+        public List<Cliente> Clientes
         {
             get => _Clientes;
             private set => _Clientes = value;
@@ -25,7 +25,7 @@ namespace TallerDIA.Models
         /// <param name="Clientes"></param>
         public CarteraClientes(IEnumerable<Cliente> c)
         {
-            Clientes = new ObservableCollection<Cliente>(c);
+            Clientes = new List<Cliente>(c);
         }
 
         /// <summary>
