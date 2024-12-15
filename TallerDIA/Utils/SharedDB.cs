@@ -195,10 +195,12 @@ namespace TallerDIA.Utils
             Cliente toupdate = CarteraClientes.Clientes.Where(c => c.IdCliente == cliente.IdCliente).FirstOrDefault();
 
             if (toupdate == null) return false;
-
+            EditarClienteDeCoches(toupdate, updated);
             toupdate.DNI = updated.DNI;
             toupdate.Nombre = updated.Nombre;
             toupdate.Email = updated.Email;
+            
+            
 
             return true;
         }
@@ -316,6 +318,20 @@ namespace TallerDIA.Utils
         public Coche getCocheMatricula(Coche c)
         {
             return Garaje.GetMatricula(c.Matricula);
+        }
+
+        public void EditarClienteDeCoches(Cliente antiguo, Cliente nuevo)
+        {
+            if (antiguo is not null && nuevo is not null)
+            {
+                foreach (var car in Garaje.Coches)
+                {
+                    if (car.Owner.DNI == antiguo.DNI)
+                    {
+                        car.Owner = nuevo;
+                    }
+                }
+            }
         }
         
         public bool AddReparacion(Reparacion r)
