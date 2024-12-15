@@ -402,7 +402,7 @@ namespace TallerDIA.ViewModels
             }
         }
         
-        public async Task ButtonAbrirGrafica()
+       /* public async Task ButtonAbrirGrafica()
         {
             if (SharedDB.Instance.Reparaciones.Count > 0)
             {
@@ -425,7 +425,7 @@ namespace TallerDIA.ViewModels
 
         }
         
-        
+        */
 
 
         public override ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>(["Asunto","Nota", "Nombre cliente", "DNI cliente", "Nombre empleado","DNI empleado"]);
