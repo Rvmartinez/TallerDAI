@@ -55,8 +55,24 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
         RegistroEmpleados = new RegistroEmpleados(SharedDB.Instance.RegistroEmpleados.Empleados);
         EmpleadoSeleccionado = nuevoEmpleadoSeleccionado;
     }
-    
-    
+    public EmpleadosViewModel(string empleadoId)
+    {
+        //Todo hacer algo con el empleado
+        RegistroEmpleados = SharedDB.Instance.RegistroEmpleados;
+        //RegistroEmpleados = new RegistroEmpleados(SharedDB.Instance.RegistroEmpleados.Empleados);
+        //Empleados=new ObservableCollection<Empleado>(SharedDB.Instance.RegistroEmpleados.Empleados.ToList());
+    }
+
+
+    public void Initialize(params object[] parameters)
+    {
+        if (parameters.Length > 0 && parameters[0] is string clienteId)
+        {
+            //FilteredItems.Where(c => c.Owner.IdCliente == 1);
+        }
+    }
+
+
     private Empleado _EmpleadoSeleccionado;
     public Empleado EmpleadoSeleccionado
     {
@@ -180,6 +196,8 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
     {
         //ReparacionesViewModel ventanaTickets = new ReparacionesViewModel(EmpleadoSeleccionado);
         //ventanaTickets.Show();
+
+        NavigationService.Instance.NavigateTo<ReparacionesViewModel>();
         
     }
     public override ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>(["DNI","Nombre","Email"]);

@@ -59,12 +59,38 @@ namespace TallerDIA.Utils
             }
         }
 
+
         private void InitializeViewModel(object viewModel, object[] parameters)
         {
-            if (viewModel is ClientesViewModel initializableViewModel)
+            switch(viewModel)
             {
-                initializableViewModel.Initialize(parameters);
+                case ClientesViewModel:
+                    ClientesViewModel vm = (ClientesViewModel)viewModel;
+                    vm.Initialize(parameters);
+                    break;
+                case ReparacionesViewModel:
+                    //TODO: Implementar Initialize en ReparacionesViewModel y utilizar NavigateTo en la vista DESDE la que se quiere navegar y crear un constructor del viewmodel DESTINO que acepte los parameters mandados por el navigationService ( en clientes el constructor creado para esto es el que recibe un string clientId)
+
+                    ReparacionesViewModel rep = (ReparacionesViewModel)viewModel;
+                    rep.Initialize(parameters);
+                    break;
+                case CochesViewModel:
+
+                    CochesViewModel coches = (CochesViewModel)viewModel;
+                    coches.Initialize(parameters);
+                    break;
+                case EmpleadosViewModel:
+
+                    EmpleadosViewModel empleados = (EmpleadosViewModel)viewModel;
+                    empleados.Initialize(parameters);
+                    break;
+                default:
+                    MainWindowViewModel mwvm = (MainWindowViewModel)viewModel;
+                    mwvm.Initialize(parameters);
+                    break;
             }
+            
+
         }
     }
 }
