@@ -46,9 +46,15 @@ namespace TallerDIA.Models
             this._fechaFin = _BASE_FINFECHA;
         }
 
-        public Reparacion()
+        public Reparacion(){}
+        public Reparacion(Empleado empleado, Cliente cliente, string asunto, DateTime fechaInicio, DateTime fechaFin, string nota)
         {
-            throw new NotImplementedException();
+            this.FechaInicio = fechaInicio;
+            this.Asunto = asunto;
+            this.Nota = nota;
+            this.Cliente = cliente;
+            this.Empleado = empleado;
+            this._fechaFin = fechaFin;
         }
 
 
@@ -120,7 +126,7 @@ namespace TallerDIA.Models
         {
             if(fin)
             {
-                if(FechaFin.Equals(_BASE_FINFECHA))
+                if(FechaFin.Equals(new DateTime()))
                 {
                     return null;
                 }
@@ -139,7 +145,7 @@ namespace TallerDIA.Models
         {
             if(fin)
             {
-                if(FechaFin.Equals(_BASE_FINFECHA))
+                if(FechaFin.Equals(new DateTime()))
                 {
                     return null;
                 }

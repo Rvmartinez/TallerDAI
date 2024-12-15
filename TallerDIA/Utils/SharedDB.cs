@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using System.Xml.Serialization;
 using CommunityToolkit.Mvvm.Input;
 using TallerDIA.Models;
@@ -56,32 +58,104 @@ namespace TallerDIA.Utils
                 
             };
            
+            Console.WriteLine("Importando Reparaciones...");
+            Console.WriteLine(filePath);
+            ObservableCollection<Reparacion> trabajos = new ObservableCollection<Reparacion>();
+            if (File.Exists(filePath))
+            {
+                try
+                {
+                    XmlDocument xmlDoc = new XmlDocument();
+                    xmlDoc.Load(filePath);
+                    Console.WriteLine("Archivo XML cargado exitosamente.");
+
+                    // Mostrar contenido del archivo XML (opcional)
+                    Console.WriteLine(xmlDoc.OuterXml);
+                    XmlNodeList reparaciones = xmlDoc.GetElementsByTagName("Reparacion");
+
+                    foreach (XmlElement reparacion in reparaciones)
+                    {
+                        trabajos.Add(ReparacionXML.CargarDeXml(reparacion));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error al cargar el archivo XML: {ex.Message}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("El archivo no existe. Verifique la ruta.");
+            }
+
+            return trabajos;
         }
 
         public ObservableCollection<Cliente> LoadClientesFromXml(string filePath = "")
         {
-            return new ObservableCollection<Cliente>
+            List<Cliente> toret = new List<Cliente>();
+            if (File.Exists(filePath))
             {
-                new Cliente { DNI = "12345678", Nombre = "Juan Perez", Email = "juan.perez@example.com", IdCliente = 1 },
-                new Cliente { DNI = "87654321", Nombre = "Ana Lopez", Email = "ana.lopez@example.com", IdCliente = 2 },
-                new Cliente { DNI = "11223344", Nombre = "Carlos Garcia", Email = "carlos.garcia@example.com", IdCliente = 3 }
-            };
+                try
+                {
+                    XmlDocument xmlDoc = new XmlDocument();
+                    xmlDoc.Load(filePath);
+                    Console.WriteLine("Archivo XML cargado exitosamente.");
+
+                    // Mostrar contenido del archivo XML (opcional)
+                    Console.WriteLine(xmlDoc.OuterXml);
+                    XmlNodeList clientes = xmlDoc.GetElementsByTagName("Cliente");
+
+                    foreach (XmlElement cliente in clientes)
+                    {
+                        toret.Add(ClienteXML.CargarDeXml(cliente));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error al cargar el archivo XML: {ex.Message}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("El archivo no existe. Verifique la ruta.");
+            }
+
+            return new ObservableCollection<Cliente>(toret);
         }
         
         public ObservableCollection<Coche> LoadGarajeCochesXml(string filePath)
         {
-            var c1 = new Cliente
-                { DNI = "12345678", Nombre = "Juan Perez", Email = "juan.perez@example.com", IdCliente = 1 };
-            var c2 = new Cliente
-                { DNI = "87654321", Nombre = "Ana Lopez", Email = "ana.lopez@example.com", IdCliente = 2 };
-            var c3 = new Cliente
-                { DNI = "11223344", Nombre = "Carlos Garcia", Email = "carlos.garcia@example.com", IdCliente = 3 };
-            return new ObservableCollection<Coche>
+            Console.WriteLine(filePath);
+            List<Coche> toret = new List<Coche>();
+            if (File.Exists(filePath))
             {
-                new Coche("4089fks", Coche.Marcas.Citroen, "c3",c1),
-                new Coche("1234trt", Coche.Marcas.Ferrari, "rojo",c2),
-                new Coche("9876akd", Coche.Marcas.Lamborghini, "huracan",c3),
-            };
+                try
+                {
+                    XmlDocument xmlDoc = new XmlDocument();
+                    xmlDoc.Load(filePath);
+                    Console.WriteLine("Archivo XML cargado exitosamente.");
+
+                    // Mostrar contenido del archivo XML (opcional)
+                    Console.WriteLine(xmlDoc.OuterXml);
+                    XmlNodeList coches = xmlDoc.GetElementsByTagName("Coche");
+
+                    foreach (XmlElement coche in coches)
+                    {
+                        toret.Add(CocheXML.CargarDeXml(coche));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error al cargar el archivo XML: {ex.Message}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("El archivo no existe. Verifique la ruta.");
+            }
+
+            return new ObservableCollection<Coche>(toret);
         }
 
 
@@ -138,10 +212,12 @@ namespace TallerDIA.Utils
             Cliente toupdate = CarteraClientes.Clientes.Where(c => c.IdCliente == cliente.IdCliente).FirstOrDefault();
 
             if (toupdate == null) return false;
-
+            EditarClienteDeCoches(toupdate, updated);
             toupdate.DNI = updated.DNI;
             toupdate.Nombre = updated.Nombre;
             toupdate.Email = updated.Email;
+            
+            
 
             return true;
         }
@@ -166,12 +242,35 @@ namespace TallerDIA.Utils
         
         public ObservableCollection<Empleado> LoadEmpleadosFromXml(string filePath = "")
         {
-            return new ObservableCollection<Empleado>
+            List<Empleado> toret = new();
+            if (File.Exists(filePath))
             {
-                new Empleado { Dni = "12345678A", Nombre = "Gonzalo Gonzalez", Email = "goonzaloz@gmail.com"},
-                new Empleado { Dni = "87654321B", Nombre = "Bort Sing-Song", Email = "boruto@hotmail.com"},
-                new Empleado { Dni = "99999999Z", Nombre = "Missing No", Email = "error@example.org"}
-            };
+                try
+                {
+                    XmlDocument xmlDoc = new XmlDocument();
+                    xmlDoc.Load(filePath);
+                    Console.WriteLine("Archivo XML cargado exitosamente.");
+
+                    // Mostrar contenido del archivo XML (opcional)
+                    Console.WriteLine(xmlDoc.OuterXml);
+                    XmlNodeList empleados = xmlDoc.GetElementsByTagName("Empleado");
+
+                    foreach (XmlElement empleado in empleados)
+                    {
+                        toret.Add(EmpleadoXML.CargarDeXml(empleado));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error al cargar el archivo XML: {ex.Message}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("El archivo no existe. Verifique la ruta.");
+            }
+
+            return new ObservableCollection<Empleado>(toret);
         }
         
         public static bool FiltrarEntradasEmpleado(Empleado empleado)
@@ -237,6 +336,20 @@ namespace TallerDIA.Utils
         {
             return Garaje.GetMatricula(c.Matricula);
         }
+
+        public void EditarClienteDeCoches(Cliente antiguo, Cliente nuevo)
+        {
+            if (antiguo is not null && nuevo is not null)
+            {
+                foreach (var car in Garaje.Coches)
+                {
+                    if (car.Owner.DNI == antiguo.DNI)
+                    {
+                        car.Owner = nuevo;
+                    }
+                }
+            }
+        }
         
         public bool AddReparacion(Reparacion r)
         {
@@ -244,6 +357,14 @@ namespace TallerDIA.Utils
             Reparaciones.Add(r);
 
             return true;
+        }
+
+        public void SaveAllXml()
+        {
+            ReparacionXML.GuardarEnXML(Reparaciones.Reps);
+            CocheXML.GuardarGaraje(this.Garaje);
+            ClienteXML.GuardarCartera(this.CarteraClientes);
+            EmpleadoXML.GuardarEmpleados(this.RegistroEmpleados.Empleados);
         }
 
     }

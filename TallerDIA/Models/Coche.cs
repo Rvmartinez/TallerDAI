@@ -70,7 +70,6 @@ public class Coche
         owner = cli;
     }
 
-
     /// <summary>
     /// Devuelve la informacion del coche en un string
     /// </summary>
