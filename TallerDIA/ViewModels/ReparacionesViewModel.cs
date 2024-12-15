@@ -53,14 +53,9 @@ namespace TallerDIA.ViewModels
             }
         }
 
-        public Reparaciones Reparaciones
+        public ObservableCollection<Reparacion> Reparaciones
         {
-            get => _reparaciones;
-            set
-            {
-                SetProperty(ref _reparaciones, value);
-
-            }
+            get => _reparaciones.Reps;
         }
 
         private Reparacion _selectedRepair;
@@ -121,9 +116,9 @@ namespace TallerDIA.ViewModels
                 {
                     case ButtonResult.Yes:
                         
-                        _reparaciones.Remove(SelectedRepair);
+                        Reparaciones.Remove(SelectedRepair);
                        
-                        
+                        ForceUpdateUI();
                         
                         SelectedRepair = null!;
                         break;
@@ -434,8 +429,8 @@ namespace TallerDIA.ViewModels
         {
             get
             {
-                Console.WriteLine("Tamaño de Reparaciones antes de busqueda por fecha= " + Reparaciones.Reps.Count.ToString());
-                var aux = Reparaciones.Reps.Where(r => r.FechaInicio >= MinDate && r.FechaFin <= MaxDate);
+                Console.WriteLine("Tamaño de Reparaciones antes de busqueda por fecha= " + Reparaciones.Count.ToString());
+                var aux = Reparaciones.Where(r => r.FechaInicio >= MinDate && r.FechaFin <= MaxDate);
                 Console.WriteLine("Tamaño de Reparaciones despues de busqueda por fecha= " + aux.Count().ToString());
                 if (FilterText != "")
                 {
@@ -472,13 +467,14 @@ namespace TallerDIA.ViewModels
         {
 
             List<Reparacion> list = SharedDB.Instance.Reparaciones.Reps.ToList();
-            ReparacionesColection.Reps.Clear();
+            Reparaciones.Clear();
 
             foreach (Reparacion rep in list)
             {
-                ReparacionesColection.Reps.Add(rep);
+                Reparaciones.Add(rep);
             }
             OnPropertyChanged(nameof(ReparacionesColection));
+            OnPropertyChanged(nameof(FilteredItems));
 
 
         }
