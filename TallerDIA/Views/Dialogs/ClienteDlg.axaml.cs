@@ -26,6 +26,28 @@ public partial class ClienteDlg : Window
         BtCancel.Click += (_, _) => this.OnExit();
 
     }
+    
+    public ClienteDlg(Cliente c,bool toret)
+    {
+        InitializeComponent();
+        EmailTB.Text = c.Email;
+        NombreTB.Text = c.Nombre;
+        DniTB.Text = c.DNI;
+        this.IsCancelled = true;
+        DniErrorTB.IsVisible = false;
+        EmailErrorTB.IsVisible = false;
+        BtOk.IsEnabled = false;
+        if (toret)
+        {
+           EmailTB.IsReadOnly = true;
+           NombreTB.IsReadOnly = true;
+           DniTB.IsReadOnly = true;
+            BtOk.IsEnabled = false;
+        }
+       
+        BtCancel.Click += (_, _) => this.OnExit();
+
+    }
 
     public ClienteDlg()
     {
