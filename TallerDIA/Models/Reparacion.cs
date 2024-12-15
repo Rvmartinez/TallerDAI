@@ -110,7 +110,7 @@ namespace TallerDIA.Models
         {
             if(fin)
             {
-                if(FechaFin.Equals(new DateTime()))
+                if(FechaFin.Equals(_BASE_FINFECHA))
                 {
                     return null;
                 }
@@ -129,7 +129,7 @@ namespace TallerDIA.Models
         {
             if(fin)
             {
-                if(FechaFin.Equals(new DateTime()))
+                if(FechaFin.Equals(_BASE_FINFECHA))
                 {
                     return null;
                 }

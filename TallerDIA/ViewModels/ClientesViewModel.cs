@@ -139,7 +139,7 @@ namespace TallerDIA.ViewModels
         [RelayCommand]
         public void GoToClientesView()
         {
-            NavigationService.Instance.NavigateTo<ClientesViewModel>("12345"); // Pasa el ID del cliente
+            NavigationService.Instance.NavigateTo<ReparacionesViewModel>(""); // Pasa el ID del cliente
         }
         [RelayCommand]
         public async Task EditClientCommand()

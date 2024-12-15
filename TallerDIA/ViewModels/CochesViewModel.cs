@@ -52,11 +52,6 @@ public partial class CochesViewModel : FilterViewModel<Coche>
         _garaje.AddRange(coches);
     }
 
-    [RelayCommand]
-    public void GoToClientesView()
-    {
-        NavigationService.Instance.NavigateTo<ClientesViewModel>("12345"); // Pasa el ID del cliente
-    }
 
     [RelayCommand]
     public async void BorrarCocheCommand()
@@ -126,8 +121,10 @@ public partial class CochesViewModel : FilterViewModel<Coche>
     public void MostrarClienteCommand()
     {
         if (SelectedCar == null) { return; }
-        
-        CochesClientes(SelectedCar.Owner);
+
+        NavigationService.Instance.NavigateTo<ClientesViewModel>(SelectedCar.Owner);
+
+        //CochesClientes(SelectedCar.Owner);
     }
 
     public async void CochesClientes(Cliente cli)
