@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using TallerDIA.Utils;
 using System.IO;
 using Avalonia.Controls;
+using Avalonia.Animation;
 
 namespace TallerDIA.ViewModels;
 
@@ -51,8 +52,32 @@ public partial class ClientesViewModel : FilterViewModel<Cliente>
     public ClientesViewModel()
     {
         CarteraClientes = SharedDB.Instance.CarteraClientes;
+        FilteredItems = new ObservableCollection<Cliente>(CarteraClientes.Clientes);
     }
 
+    public ClientesViewModel(string id)
+    {
+        int i = int.Parse(id);
+        CarteraClientes = SharedDB.Instance.CarteraClientes;
+    }
+
+    public void Initialize(params object[] parameters)
+    {
+        if (parameters.Length > 0 && parameters[0] is string clienteId)
+        {
+
+            FilteredText = clienteId;
+            //Filtrar();
+            SelectedClient = FilteredItems[1];
+        }
+    }
+
+
+    [RelayCommand]
+    public void GoToClientesView()
+    {
+        NavigationService.Instance.NavigateTo<ClientesViewModel>("12345"); // Pasa el ID del cliente
+    }
     [RelayCommand]
     public async Task EditClientCommand()
     {
@@ -65,9 +90,14 @@ public partial class ClientesViewModel : FilterViewModel<Cliente>
         if (!ClienteDlg.IsCancelled)
         {
             SharedDB.Instance.EditClient(SelectedClient, new Cliente { DNI = ClienteDlg.DniTB.Text, Email = ClienteDlg.EmailTB.Text, Nombre = ClienteDlg.NombreTB.Text, IdCliente = 0 });
+
+            SelectedClient.DNI = ClienteDlg.DniTB.Text;
+            SelectedClient.Nombre = ClienteDlg.NombreTB.Text;
+            SelectedClient.Email = ClienteDlg.EmailTB.Text;
             SelectedClient = null;
-            ForceUpdateUI();
         }
+        //
+        //Filtrar();
     }
 
     [RelayCommand]
@@ -88,6 +118,8 @@ public partial class ClientesViewModel : FilterViewModel<Cliente>
             SelectedClient = null;
             return;
         }
+        Filtrar();
+
     }
 
     [RelayCommand]
@@ -109,18 +141,18 @@ public partial class ClientesViewModel : FilterViewModel<Cliente>
             {
                 var box = MessageBoxManager
                             .GetMessageBoxStandard("Atención", "Ya existe un cliente con ese DNI o Email", ButtonEnum.Ok);
+                
             }
-
-            ForceUpdateUI();
+            Filtrar();
         }
 
     }
 
     public async Task ButtonAbrirGrafica()
     { 
-        if (SelectedClient != null)
+       /* if (SelectedClient != null)
         {
-            /*var mainWindow =
+            var mainWindow =
                 Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
                     ? desktop.MainWindow
                     : null;
@@ -128,7 +160,7 @@ public partial class ClientesViewModel : FilterViewModel<Cliente>
             var reps = new Reparaciones();
             reps.AnadirReparaciones(colRep);
             var reparacionNavegarDlg = new ChartWindow(reps, new ConfigChart() { FechaFin = false });
-            await reparacionNavegarDlg.ShowDialog(mainWindow);*/
+            await reparacionNavegarDlg.ShowDialog(mainWindow);
         }
         else
         {
@@ -137,56 +169,53 @@ public partial class ClientesViewModel : FilterViewModel<Cliente>
                 WindowStartupLocation.CenterOwner);
 
             var respuesta = await message.ShowAsync();
-        }
-    }
-
-
-
-
-
-    [RelayCommand]
-    public void ForceUpdateUI()
-    {
-
-        List<Cliente> list = SharedDB.Instance.CarteraClientes.Clientes.ToList();
-        CarteraClientes.Clear();
-
-        foreach (Cliente cliente in list)
-        {
-            CarteraClientes.Add(cliente);
-        }
-        OnPropertyChanged(nameof(CarteraClientes));
-
-
+        }*/
     }
 
     public override ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>(["Nombre", "DNI", "Email", "ID Cliente"]);
 
     public override ObservableCollection<Cliente> FilteredItems
     {
-        get
+        get;
+    }
+
+    private void Filtrar()
+    {
+        List<Cliente> aux = new List<Cliente>();
+        if(FilteredText != null && FilteredText.Length > 0)
+            switch (FilterModes[SelectedFilterMode])
+            {
+                case "Nombre":
+                    aux = CarteraClientes.Clientes.Where(c => c.Nombre.Contains(FilteredText)).ToList();
+                    break;
+                case "DNI":
+                    aux = CarteraClientes.Clientes.Where(c => c.DNI.Contains(FilteredText)).ToList();
+                    break;
+                case "Email":
+                    aux = CarteraClientes.Clientes.Where(c => c.Email.Contains(FilteredText)).ToList();
+                    break;
+                case "ID Cliente":
+                    aux = CarteraClientes.Clientes.Where(c => c.IdCliente.ToString().Contains(FilteredText)).ToList();
+                    break;
+                default:
+                    // maybe this should be an exception or unreachable
+                    aux = CarteraClientes.Clientes.ToList();
+                    break;
+            }
+        else
+            aux = CarteraClientes.Clientes.ToList();
+
+        FilteredItems.Clear();
+        foreach (Cliente cliente in aux)
         {
-            if (FilterText != "")
-            {
-                switch (FilterModes[SelectedFilterMode])
-                {
-                    case "Nombre":
-                        return new ObservableCollection<Cliente>(CarteraClientes.Clientes.Where(c => c.Nombre.Contains(FilterText)));
-                    case "DNI":
-                        return new ObservableCollection<Cliente>(CarteraClientes.Clientes.Where(c => c.DNI.Contains(FilterText)));
-                    case "Email":
-                        return new ObservableCollection<Cliente>(CarteraClientes.Clientes.Where(c => c.Email.Contains(FilterText)));
-                    case "ID Cliente":
-                        return new ObservableCollection<Cliente>(CarteraClientes.Clientes.Where(c => c.IdCliente.ToString().Contains(FilterText)));
-                    default:
-                        // maybe this should be an exception or unreachable
-                        return CarteraClientes.Clientes;
-                }
-            }
-            else
-            {
-                return CarteraClientes.Clientes;
-            }
+            FilteredItems.Add(cliente);
         }
+    }
+
+    private String _FilteredText;
+    public String FilteredText
+    {
+        get => _FilteredText;
+        set { SetProperty(ref _FilteredText, value); OnPropertyChanged("FilteredItems"); Filtrar(); }
     }
 }

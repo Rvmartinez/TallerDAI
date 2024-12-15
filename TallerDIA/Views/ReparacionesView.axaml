@@ -64,7 +64,6 @@
                 <Button
                     Margin="0,0,15,0"
                     icon:Attached.Icon="mdi-file-chart"
-                    Command="{Binding ButtonAbrirGrafica}"
                     
                     FontSize="24" />
                 

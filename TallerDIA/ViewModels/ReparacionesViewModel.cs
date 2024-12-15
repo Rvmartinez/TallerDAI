@@ -270,7 +270,7 @@ namespace TallerDIA.ViewModels
             }
         }
         
-        public async Task ButtonAbrirGrafica()
+       /* public async Task ButtonAbrirGrafica()
         {
             if (_Reparaciones.Count > 0)
             {
@@ -295,7 +295,7 @@ namespace TallerDIA.ViewModels
 
         }
         
-        
+        */
 
        
     }
