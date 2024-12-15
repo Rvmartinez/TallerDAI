@@ -1,16 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Xml;
 using System.Xml.Linq;
 using TallerDIA.Models;
+using TallerDIA.Utils;
 
 
 public class EmpleadoXML
 {
     public static void GuardarEmpleados(ObservableCollection<Empleado> plantilla)
     {
-        string rutaArchivo = "../../../XmlFiles/plantilla.xml";
+
+        String rutaArchivo = Settings.Instance.GetFilepath("plantilla");
+        string directorio = Path.GetDirectoryName(rutaArchivo);
+        if (!Directory.Exists(directorio))
+        {
+            Directory.CreateDirectory(directorio);
+        }
+
         XmlDocument doc = new XmlDocument();
         XmlElement root = doc.CreateElement("PlantillaEmpleados");
         doc.AppendChild(root);

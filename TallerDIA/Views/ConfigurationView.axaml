@@ -2,7 +2,37 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="TallerDIA.ConfigurationView">
-  Welcome to Avalonia!
+             mc:Ignorable="d"
+				xmlns:vm="using:TallerDIA.ViewModels"
+				d:DesignHeight="450"
+				d:DesignWidth="800"
+				x:DataType="vm:ConfigurationViewModel"
+             x:Class="TallerDIA.Views.ConfigurationView">
+
+	<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+		
+		<StackPanel Orientation="Horizontal" Margin="0,5">
+			<TextBlock Text="Ruta de Garaje" VerticalAlignment="Center"/>
+			<TextBlock Text="{Binding garajePath}" VerticalAlignment="Center"/>
+			<Button Content="Seleccionar path" Command="{Binding RequestGarajeFolderCommand}"/>
+		</StackPanel>
+
+		<StackPanel Orientation="Horizontal" Margin="0,5">
+			<TextBlock Text="Ruta de clientes" VerticalAlignment="Center"/>
+			<TextBlock Text="{Binding clientesPath}" VerticalAlignment="Center"/>
+			<Button Content="Seleccionar path" Command="{Binding RequestClientesFolderCommand}"/>
+		</StackPanel>
+
+		<StackPanel Orientation="Horizontal">
+			<TextBlock Text="Ruta de empleados" VerticalAlignment="Center"/>
+			<TextBlock Text="{Binding plantillaPath}" VerticalAlignment="Center"/>
+			<Button Content="Seleccionar path" Command="{Binding RequestPlantillaFolderCommand}"/>
+		</StackPanel>
+		<StackPanel Orientation="Horizontal" Margin="0,5">
+			<TextBlock Text="Ruta de Reparaciones" VerticalAlignment="Center"/>
+			<TextBlock Text="{Binding TrabajosPath}" VerticalAlignment="Center"/>
+			<Button Content="Seleccionar path" Command="{Binding RequestTrabajosFolder}"/>
+		</StackPanel>
+
+	</StackPanel>
 </UserControl>

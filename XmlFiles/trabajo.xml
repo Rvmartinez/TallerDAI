@@ -1,0 +1,19 @@
+<Trabajos>
+  <Reparacion>
+    <Empleado>
+      <DNI>77444883d</DNI>
+      <Nombre>rrrr</Nombre>
+      <Email>ruib@g.c</Email>
+    </Empleado>
+    <Cliente>
+      <DNI>77482984d</DNI>
+      <Nombre>r</Nombre>
+      <Email>r@r.c</Email>
+      <IdCliente>1</IdCliente>
+    </Cliente>
+    <Asunto>QWERWER</Asunto>
+    <FechaInicio>2024-12-16</FechaInicio>
+    <FechaFin>1111-11-11</FechaFin>
+    <Nota>RRR</Nota>
+  </Reparacion>
+</Trabajos>

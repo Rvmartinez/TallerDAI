@@ -1,0 +1,13 @@
+<GarajeCoches>
+  <Coche>
+    <Matricula>1010MTB</Matricula>
+    <Marca>Hyundai</Marca>
+    <Modelo>RRR</Modelo>
+    <Cliente>
+      <DNI>77482984d</DNI>
+      <Nombre>r</Nombre>
+      <Email>r@r.c</Email>
+      <IdCliente>1</IdCliente>
+    </Cliente>
+  </Coche>
+</GarajeCoches>

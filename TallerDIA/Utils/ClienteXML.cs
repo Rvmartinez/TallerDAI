@@ -1,6 +1,7 @@
 using System;
 namespace TallerDIA.Utils;
 using Models;
+using System.IO;
 using System.Xml;
 
 
@@ -8,7 +9,15 @@ public class ClienteXML
 {
     public static void GuardarCartera(CarteraClientes cartera)
     {
-        string rutaArchivo = "../../../XmlFiles/cartera.xml";
+
+        String rutaArchivo = Settings.Instance.GetFilepath("clientes");
+        string directorio = Path.GetDirectoryName(rutaArchivo);
+        if (!Directory.Exists(directorio))
+        {
+            Directory.CreateDirectory(directorio);
+        }
+
+
         XmlDocument doc = new XmlDocument();
         XmlElement root = doc.CreateElement("CarteraClientes");
         doc.AppendChild(root);

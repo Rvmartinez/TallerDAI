@@ -1,6 +1,7 @@
 using System;
 namespace TallerDIA.Utils;
 using Models;
+using System.IO;
 using System.Xml;
 
 
@@ -8,7 +9,14 @@ public class CocheXML
 {
     public static void GuardarGaraje(GarajeCoches garaje)
     {
-        string rutaArchivo = "../../../XmlFiles/garaje.xml";
+
+        String rutaArchivo = Settings.Instance.GetFilepath("garaje");
+        string directorio = Path.GetDirectoryName(rutaArchivo);
+        if (!Directory.Exists(directorio))
+        {
+            Directory.CreateDirectory(directorio);
+        }
+
         XmlDocument doc = new XmlDocument();
         XmlElement root = doc.CreateElement("GarajeCoches");
         doc.AppendChild(root);

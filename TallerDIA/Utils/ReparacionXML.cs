@@ -1,5 +1,6 @@
 using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Xml;
 using TallerDIA.Models;
 using TallerDIA.Utils;
@@ -10,10 +11,18 @@ public class ReparacionXML
 
     public static void GuardarEnXML(ObservableCollection<Reparacion> trabajos)
     {
-        string rutaArchivo = "../../../XmlFiles/trabajos.xml";
         XmlDocument doc = new XmlDocument();
+
         XmlElement root = doc.CreateElement("Trabajos");
         doc.AppendChild(root);
+
+        String rutaArchivo = Settings.Instance.GetFilepath("trabajo");
+        string directorio = Path.GetDirectoryName(rutaArchivo);
+        if (!Directory.Exists(directorio))
+        {
+            Directory.CreateDirectory(directorio);
+        }
+
 
         foreach (var reparacion in trabajos)
         {

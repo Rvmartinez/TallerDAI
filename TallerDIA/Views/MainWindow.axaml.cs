@@ -2,6 +2,7 @@ using Avalonia.Controls;
 using MsBox.Avalonia.Enums;
 using MsBox.Avalonia;
 using TallerDIA.ViewModels;
+using TallerDIA.Utils;
 
 namespace TallerDIA.Views
 {
@@ -12,7 +13,7 @@ namespace TallerDIA.Views
         {
             InitializeComponent();
             DataContext = _vm = new MainWindowViewModel();
-
+            this.Closing += OnMainWindowClosing;
         }
         private async void OnMainWindowClosing(object? sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -30,8 +31,10 @@ namespace TallerDIA.Views
 
             if (result == ButtonResult.Yes)
             {
-
-                e.Cancel = false;
+                this.Closing -= OnMainWindowClosing;
+                SharedDB.Instance.SaveAllXml();
+                Settings.Instance.saveSettigs();
+                this.Close();
             }
         }
     }

@@ -48,14 +48,6 @@ namespace TallerDIA.ViewModels
 
         public MainWindowViewModel()
         {
-
-            /**
-             * 
-             * AQUI INICIALIZAR TODAS LAS LISTAS NECESARIAS PARA PODER ACCEDER A ELLAS
-             * por ejemplo. al cargar de xml de clientes:
-             * 
-             *  SharedDB.Instance.LoadClientesFromXml(clientesFilePath);
-             */
             SharedDB.Instance.LoadClientesFromXml();
             PaneItems = new ObservableCollection<PaneListItemTemplate>
             {
@@ -64,7 +56,8 @@ namespace TallerDIA.ViewModels
                 new PaneListItemTemplate(typeof(ClientesViewModel), "mdi-account-multiple", () => new ClientesViewModel()),
                 new PaneListItemTemplate(typeof(EmpleadosViewModel), "mdi-account-hard-hat"),
                 new PaneListItemTemplate(typeof(CochesViewModel), "mdi-car-back"),
-                new PaneListItemTemplate(typeof(ReparacionesViewModel), "mdi-car-cog")
+                new PaneListItemTemplate(typeof(ReparacionesViewModel), "mdi-car-cog"),
+                new PaneListItemTemplate(typeof(ConfigurationViewModel), "mdi-car-cog")
             };
 
             NavigationService.Instance.Initialize(this);
