@@ -121,7 +121,7 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
         var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
             ? desktop.MainWindow
             : null;
-        var EmpleadoDlg = new EmpleadoDlg();
+        var EmpleadoDlg = new EmpleadoDlg(EmpleadoSeleccionado);
         await EmpleadoDlg.ShowDialog(mainWindow);
         if (!EmpleadoDlg.IsCancelled)
         {
