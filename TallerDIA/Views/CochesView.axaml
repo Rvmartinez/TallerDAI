@@ -58,12 +58,6 @@
                     Command="{Binding EditarCocheCommand}"
                     FontSize="24"
                     />
-				<Button
-                    Margin="0,0,15,0"
-                    icon:Attached.Icon="mdi-car-multiple"
-                    Command="{Binding GoToClientesView}"
-                    FontSize="24"
-                    />
                 <Button
                     Margin="0,0,15,0"
                     icon:Attached.Icon="mdi-car-off"
