@@ -45,7 +45,6 @@ public partial class ClientesViewModel : FilterViewModel<Cliente>
         set
         {
             SetProperty(ref _carteraClientes, value);
-
         }
     }
 
@@ -68,7 +67,7 @@ public partial class ClientesViewModel : FilterViewModel<Cliente>
 
             FilteredText = clienteId;
             //Filtrar();
-            SelectedClient = FilteredItems[1];
+            //SelectedClient = FilteredItems[0];
         }
     }
 
@@ -89,15 +88,17 @@ public partial class ClientesViewModel : FilterViewModel<Cliente>
 
         if (!ClienteDlg.IsCancelled)
         {
-            SharedDB.Instance.EditClient(SelectedClient, new Cliente { DNI = ClienteDlg.DniTB.Text, Email = ClienteDlg.EmailTB.Text, Nombre = ClienteDlg.NombreTB.Text, IdCliente = 0 });
 
-            SelectedClient.DNI = ClienteDlg.DniTB.Text;
-            SelectedClient.Nombre = ClienteDlg.NombreTB.Text;
-            SelectedClient.Email = ClienteDlg.EmailTB.Text;
-            SelectedClient = null;
+            SharedDB.Instance.EditClient(SelectedClient, new Cliente { DNI = ClienteDlg.DniTB.Text, Email = ClienteDlg.EmailTB.Text, Nombre = ClienteDlg.NombreTB.Text, IdCliente = SelectedClient.IdCliente});
+            int index = FilteredItems.IndexOf(SelectedClient);
+            if (index >= 0)
+            {
+                CarteraClientes = SharedDB.Instance.CarteraClientes; // Refresca CarteraClientes
+                Filtrar(); // Refresca la vista filtrada
+            }
         }
-        //
-        //Filtrar();
+        
+        Filtrar();
     }
 
     [RelayCommand]
@@ -210,12 +211,14 @@ public partial class ClientesViewModel : FilterViewModel<Cliente>
         {
             FilteredItems.Add(cliente);
         }
+        OnPropertyChanged("FilteredItems");
     }
 
     private String _FilteredText;
     public String FilteredText
     {
         get => _FilteredText;
-        set { SetProperty(ref _FilteredText, value); OnPropertyChanged("FilteredItems"); Filtrar(); }
+
+        set { SetProperty(ref _FilteredText, value); Filtrar(); OnPropertyChanged("FilteredItems"); }
     }
 }

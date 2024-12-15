@@ -25,7 +25,7 @@
             </Grid.ColumnDefinitions>
             <TextBox
                 Grid.Column="0"
-                Text="{Binding FilteredText}"
+                Text="{Binding FilteredText, Mode=TwoWay}"
                 Watermark="Búsqueda" />
             <ComboBox
                 Grid.Column="1"
