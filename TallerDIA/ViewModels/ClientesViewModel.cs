@@ -218,14 +218,44 @@ namespace TallerDIA.ViewModels
 
         public async Task ButtonAbrirGrafica()
         {
-            var mainWindow =
-                Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
-                    ? desktop.MainWindow
-                    : null;
-            var reps = SharedDB.Instance.Reparaciones;
-            ;
-            var reparacionNavegarDlg = new DesgloseWindow(reps, new ConfigChart() { Modo = ConfigChart.ModoVision.Anual, FechaFin = false });
-            await reparacionNavegarDlg.ShowDialog(mainWindow);
+            if (SharedDB.Instance.Reparaciones.Count != 0 && SharedDB.Instance.CarteraClientes.Count != 0)
+            {
+                if (SelectedClient != null)
+                {
+                    var mainWindow =
+                        Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
+                            ? desktop.MainWindow
+                            : null;
+                    var reps = SharedDB.Instance.Reparaciones;
+                    ;
+                    var reparacionNavegarDlg = new DesgloseWindow(reps,
+                        new ConfigChart()
+                        {
+                            Modo = ConfigChart.ModoVision.Mensual, Cliente = SelectedClient.Nombre, FechaFin = false
+                        });
+                    await reparacionNavegarDlg.ShowDialog(mainWindow);
+                }
+                else
+                {
+                    var mainWindow =
+                        Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
+                            ? desktop.MainWindow
+                            : null;
+                    var reps = SharedDB.Instance.Reparaciones;
+                    ;
+                    var reparacionNavegarDlg = new DesgloseWindow(reps,
+                        new ConfigChart() { Modo = ConfigChart.ModoVision.Anual, FechaFin = false });
+                    await reparacionNavegarDlg.ShowDialog(mainWindow);
+                }
+            }
+            else
+            {
+                var message = MessageBoxManager.GetMessageBoxStandard("No hay reparaciones y/o clientes",
+                    "No hay reparaciones y/o clientes que mostrar", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Warning,
+                    WindowStartupLocation.CenterOwner);
+
+                var respuesta = await message.ShowAsync();
+            }
         }
     }
 }

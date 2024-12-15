@@ -41,6 +41,23 @@ namespace TallerDIA.Utils
 
         private ObservableCollection<Reparacion> LoadReparacionesFromXml(string filePath = "")
         {
+            Cliente c1 = new Cliente { DNI = "12345678", Nombre = "Juan Perez", Email = "juan.perez@example.com", IdCliente = 1 };
+            Cliente c2 = new Cliente { DNI = "11223344", Nombre = "Carlos Garcia", Email = "carlos.garcia@example.com", IdCliente = 3 };
+            
+            Empleado emp = new Empleado { Dni = "12345678A", Nombre = "Gonzalo Gonzalez", Email = "goonzaloz@gmail.com"};
+            Empleado emp2 = new Empleado { Dni = "87654321B", Nombre = "Bort Sing-Song", Email = "boruto@hotmail.com"};
+           return new ObservableCollection<Reparacion>
+            {
+                new Reparacion("asunto1", "nota1", c1, emp),
+                new Reparacion("asunto2", "nota2", c2, emp),
+                new Reparacion("asunto3", "nota3", c1, emp2),
+                new Reparacion("asunto3", "nota3",c1, emp2, new DateTime(2020, 01, 10)),
+                new Reparacion("asunto3", "nota3", c1, emp2, new DateTime(2020, 02, 14)),
+                new Reparacion("asunto3", "nota3", c2, emp2, new DateTime(2018, 02, 14)),
+                new Reparacion("asunto3", "nota3", c2, emp2, new DateTime(2020, 12, 14)),
+                
+            };
+           
             Console.WriteLine("Importando Reparaciones...");
             Console.WriteLine(filePath);
             ObservableCollection<Reparacion> trabajos = new ObservableCollection<Reparacion>();
