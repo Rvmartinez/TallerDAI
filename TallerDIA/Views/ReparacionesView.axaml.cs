@@ -7,14 +7,12 @@ namespace TallerDIA.Views;
 
 public partial class ReparacionesView : UserControl
 {
+    public static ReparacionesViewModel dataContext;
     public ReparacionesView()
     {
         InitializeComponent();
-        DataContext = new ReparacionesViewModel();
+        dataContext = new ReparacionesViewModel();
     }
 
-    public void Toogle(bool isChecked)
-    {
-        
-    }
+   
 }

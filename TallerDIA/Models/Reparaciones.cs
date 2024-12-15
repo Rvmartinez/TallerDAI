@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
@@ -8,6 +9,7 @@ using System.Xml.Linq;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using System.Reactive.Linq;
 
 
 namespace TallerDIA.Models;
@@ -16,6 +18,12 @@ public class Reparaciones
 {
 
      private ObservableCollection<Reparacion> reparaciones;
+     
+     public ObservableCollection<Reparacion> Reps
+     {
+         get => reparaciones;
+         set => reparaciones = value;
+     }
 
      public int Count => reparaciones.Count;
 
@@ -85,8 +93,8 @@ public class Reparaciones
     
     public Reparaciones GetReparacionesCliente(String cliente)
     {
-        
-        return new Reparaciones(reparaciones.Where(reparacion => reparacion.Cliente.Nombre == cliente).ToList());
+        Reparaciones toret = new Reparaciones(this.reparaciones.Where(reparacion => reparacion.Cliente.Nombre == cliente).ToList());
+        return toret;
     }
     
     public string[] GetClientesReparaciones()
@@ -120,4 +128,5 @@ public class Reparaciones
 
     }
 
+   
 }
