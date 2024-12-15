@@ -137,6 +137,10 @@ public partial class CochesViewModel : FilterViewModel<Coche>
        
        if (!ClienteDlg.IsCancelled)
        {
+           Cliente antiguo = new Cliente
+           {
+               DNI = cli.DNI, Email = cli.DNI, Nombre = cli.Nombre, IdCliente = 0
+           };
            Cliente nuevo = new Cliente
            {
                DNI = ClienteDlg.DniTB.Text, Email = ClienteDlg.EmailTB.Text, Nombre = ClienteDlg.NombreTB.Text, IdCliente = 0
@@ -144,7 +148,9 @@ public partial class CochesViewModel : FilterViewModel<Coche>
            SharedDB.Instance.EditClient(SelectedCar.Owner, nuevo);
            foreach (var car in _garaje.Coches)
            {
-               if (car.Owner.DNI == cli.DNI)
+               Console.WriteLine("***");
+               Console.WriteLine(car.Owner.DNI +" == "+ antiguo.DNI);
+               if (car.Owner.DNI == antiguo.DNI)
                {
                    car.Owner = nuevo;
                }
