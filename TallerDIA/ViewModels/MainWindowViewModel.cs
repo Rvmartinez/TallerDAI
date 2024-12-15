@@ -69,5 +69,14 @@ namespace TallerDIA.ViewModels
 
             NavigationService.Instance.Initialize(this);
         }
+
+
+        public void Initialize(params object[] parameters)
+        {
+            if (parameters.Length > 0 && parameters[0] is string clienteId)
+            {
+            }
+        }
     }
 }
+
