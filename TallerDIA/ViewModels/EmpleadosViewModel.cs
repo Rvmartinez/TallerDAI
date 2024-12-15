@@ -184,6 +184,7 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
     [RelayCommand]
     public  async Task btTicketsSelecc_OnClick()
     {
+        if (EmpleadoSeleccionado == null) return;
         NavigationService.Instance.NavigateTo<ReparacionesViewModel>(EmpleadoSeleccionado.Dni);
     }
     public override ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>(["DNI","Nombre","Email"]);

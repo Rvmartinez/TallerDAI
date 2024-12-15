@@ -85,7 +85,12 @@ namespace TallerDIA.ViewModels
                 new ObservableCollection<Reparacion>(ReparacionesColection.Reps.Where(r => r.Cliente == cliente));
         }
 
-        
+        public ReparacionesViewModel(string dni)
+        {
+            ReparacionesColection = SharedDB.Instance.Reparaciones;
+        }
+
+
 
 
         public void Initialize(object[] parameters)
@@ -101,11 +106,6 @@ namespace TallerDIA.ViewModels
         
         }
 
-        #region Popup;
-
-
-
-        #endregion
 
         [RelayCommand]
         public async Task OnButtonEliminarReparacion()
