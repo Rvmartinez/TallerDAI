@@ -34,6 +34,14 @@ public partial class CochesViewModel : FilterViewModel<Coche>
         }
     }
 
+    public void Initialize(params object[] parameters)
+    {
+        if (parameters.Length > 0 && parameters[0] is string clienteId)
+        {
+            FilteredItems.Where(c => c.Owner.IdCliente == 1);
+        }
+    }
+
     public CochesViewModel()
     {
         
@@ -43,7 +51,12 @@ public partial class CochesViewModel : FilterViewModel<Coche>
     {
         _garaje.AddRange(coches);
     }
-    
+
+    [RelayCommand]
+    public void GoToClientesView()
+    {
+        NavigationService.Instance.NavigateTo<ClientesViewModel>("12345"); // Pasa el ID del cliente
+    }
 
     [RelayCommand]
     public async void BorrarCocheCommand()

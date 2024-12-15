@@ -18,6 +18,7 @@ using System.Threading.Tasks;
 using TallerDIA.Utils;
 using System.IO;
 using Avalonia.Controls;
+using Avalonia.Animation;
 using DesgloseWindow = TallerDIA.Views.DesgloseWindow;
 using ConfigChart = TallerDIA.Views.ConfigChart;
 
@@ -46,15 +47,38 @@ public partial class ClientesViewModel : FilterViewModel<Cliente>
         set
         {
             SetProperty(ref _carteraClientes, value);
-
         }
     }
 
     public ClientesViewModel()
     {
         CarteraClientes = SharedDB.Instance.CarteraClientes;
+        FilteredItems = new ObservableCollection<Cliente>(CarteraClientes.Clientes);
     }
 
+    public ClientesViewModel(string id)
+    {
+        int i = int.Parse(id);
+        CarteraClientes = SharedDB.Instance.CarteraClientes;
+    }
+
+    public void Initialize(params object[] parameters)
+    {
+        if (parameters.Length > 0 && parameters[0] is string clienteId)
+        {
+
+            FilteredText = clienteId;
+            //Filtrar();
+            //SelectedClient = FilteredItems[0];
+        }
+    }
+
+
+    [RelayCommand]
+    public void GoToClientesView()
+    {
+        NavigationService.Instance.NavigateTo<ClientesViewModel>("12345"); // Pasa el ID del cliente
+    }
     [RelayCommand]
     public async Task EditClientCommand()
     {
@@ -66,10 +90,17 @@ public partial class ClientesViewModel : FilterViewModel<Cliente>
 
         if (!ClienteDlg.IsCancelled)
         {
-            SharedDB.Instance.EditClient(SelectedClient, new Cliente { DNI = ClienteDlg.DniTB.Text, Email = ClienteDlg.EmailTB.Text, Nombre = ClienteDlg.NombreTB.Text, IdCliente = 0 });
-            SelectedClient = null;
-            ForceUpdateUI();
+
+            SharedDB.Instance.EditClient(SelectedClient, new Cliente { DNI = ClienteDlg.DniTB.Text, Email = ClienteDlg.EmailTB.Text, Nombre = ClienteDlg.NombreTB.Text, IdCliente = SelectedClient.IdCliente});
+            int index = FilteredItems.IndexOf(SelectedClient);
+            if (index >= 0)
+            {
+                CarteraClientes = SharedDB.Instance.CarteraClientes; // Refresca CarteraClientes
+                Filtrar(); // Refresca la vista filtrada
+            }
         }
+        
+        Filtrar();
     }
 
     [RelayCommand]
@@ -90,6 +121,8 @@ public partial class ClientesViewModel : FilterViewModel<Cliente>
             SelectedClient = null;
             return;
         }
+        Filtrar();
+
     }
 
     [RelayCommand]
@@ -111,28 +144,15 @@ public partial class ClientesViewModel : FilterViewModel<Cliente>
             {
                 var box = MessageBoxManager
                             .GetMessageBoxStandard("Atención", "Ya existe un cliente con ese DNI o Email", ButtonEnum.Ok);
+                
             }
-
-            ForceUpdateUI();
+            Filtrar();
         }
 
     }
 
     public async Task ButtonAbrirGrafica()
     { 
-        if (SelectedClient != null)
-        {
-            var mainWindow =
-                Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
-                    ? desktop.MainWindow
-                    : null;
-            var reps = SharedDB.Instance.Reparaciones;
-   ;
-            var reparacionNavegarDlg = new DesgloseWindow(reps, new ConfigChart() {Modo = ConfigChart.ModoVision.Mensual, Cliente = SelectedClient.Nombre, FechaFin = false });
-            await reparacionNavegarDlg.ShowDialog(mainWindow);
-        }
-        else
-        {
             var mainWindow =
                 Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
                     ? desktop.MainWindow
@@ -144,54 +164,52 @@ public partial class ClientesViewModel : FilterViewModel<Cliente>
         }
     }
 
-
-
-
-
-    [RelayCommand]
-    public void ForceUpdateUI()
-    {
-
-        List<Cliente> list = SharedDB.Instance.CarteraClientes.Clientes.ToList();
-        CarteraClientes.Clear();
-
-        foreach (Cliente cliente in list)
-        {
-            CarteraClientes.Add(cliente);
-        }
-        OnPropertyChanged(nameof(CarteraClientes));
-
-
-    }
-
     public override ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>(["Nombre", "DNI", "Email", "ID Cliente"]);
 
     public override ObservableCollection<Cliente> FilteredItems
     {
-        get
+        get;
+    }
+
+    private void Filtrar()
+    {
+        List<Cliente> aux = new List<Cliente>();
+        if(FilteredText != null && FilteredText.Length > 0)
+            switch (FilterModes[SelectedFilterMode])
+            {
+                case "Nombre":
+                    aux = CarteraClientes.Clientes.Where(c => c.Nombre.Contains(FilteredText)).ToList();
+                    break;
+                case "DNI":
+                    aux = CarteraClientes.Clientes.Where(c => c.DNI.Contains(FilteredText)).ToList();
+                    break;
+                case "Email":
+                    aux = CarteraClientes.Clientes.Where(c => c.Email.Contains(FilteredText)).ToList();
+                    break;
+                case "ID Cliente":
+                    aux = CarteraClientes.Clientes.Where(c => c.IdCliente.ToString().Contains(FilteredText)).ToList();
+                    break;
+                default:
+                    // maybe this should be an exception or unreachable
+                    aux = CarteraClientes.Clientes.ToList();
+                    break;
+            }
+        else
+            aux = CarteraClientes.Clientes.ToList();
+
+        FilteredItems.Clear();
+        foreach (Cliente cliente in aux)
         {
-            var text = FilterText.ToLower();
-            if (FilterText != "")
-            {
-                switch (FilterModes[SelectedFilterMode])
-                {
-                    case "Nombre":
-                        return new ObservableCollection<Cliente>(CarteraClientes.Clientes.Where(c => c.Nombre.ToLower().Contains(text)));
-                    case "DNI":
-                        return new ObservableCollection<Cliente>(CarteraClientes.Clientes.Where(c => c.DNI.ToLower().Contains(text)));
-                    case "Email":
-                        return new ObservableCollection<Cliente>(CarteraClientes.Clientes.Where(c => c.Email.ToLower().Contains(text)));
-                    case "ID Cliente":
-                        return new ObservableCollection<Cliente>(CarteraClientes.Clientes.Where(c => c.IdCliente.ToString().ToLower().Contains(text)));
-                    default:
-                        // maybe this should be an exception or unreachable
-                        return CarteraClientes.Clientes;
-                }
-            }
-            else
-            {
-                return CarteraClientes.Clientes;
-            }
+            FilteredItems.Add(cliente);
         }
+        OnPropertyChanged("FilteredItems");
+    }
+
+    private String _FilteredText;
+    public String FilteredText
+    {
+        get => _FilteredText;
+
+        set { SetProperty(ref _FilteredText, value); Filtrar(); OnPropertyChanged("FilteredItems"); }
     }
 }
