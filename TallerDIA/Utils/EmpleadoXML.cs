@@ -1,36 +1,82 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Xml;
 using System.Xml.Linq;
 using TallerDIA.Models;
 
 
 public class EmpleadoXML
 {
-    private Empleado Empleado { get; set; }
-    public XElement ToXml()
+    public static void GuardarEmpleados(ObservableCollection<Empleado> plantilla)
     {
-        XElement toret = new XElement("Empleado",
-            new XAttribute("Nombre", this.Empleado.Nombre),
-            new XAttribute("Dni", this.Empleado.Dni),
-            new XAttribute("Email", this.Empleado.Email)); 
-        /*
-        List<DateTime> ticks=new List<DateTime>(Empleado.Tickets);
-        foreach (var tick in ticks)
+        string rutaArchivo = "../../../XmlFiles/plantilla.xml";
+        XmlDocument doc = new XmlDocument();
+        XmlElement root = doc.CreateElement("PlantillaEmpleados");
+        doc.AppendChild(root);
+
+        foreach (var empleado in plantilla)
         {
-            XElement tickXML = new XElement("Ticket",tick.ToString());
-            toret.Add(tickXML);
+            XmlElement empleadoElement = doc.CreateElement("Empleado");
+
+            XmlElement dniElement = doc.CreateElement("DNI");
+            dniElement.InnerText = empleado.Dni;
+            empleadoElement.AppendChild(dniElement);
+
+            XmlElement nombreElement = doc.CreateElement("Nombre");
+            nombreElement.InnerText = empleado.Nombre;
+            empleadoElement.AppendChild(nombreElement);
+
+            XmlElement mailElement = doc.CreateElement("Email");
+            mailElement.InnerText = empleado.Email;
+            empleadoElement.AppendChild(mailElement);
+
+            root.AppendChild(empleadoElement);
         }
-        */
-        return toret;
+        try
+        {
+            doc.Save(rutaArchivo);
+            Console.WriteLine("Archivo XML guardado correctamente.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("No se ha podido guardar el archivo");
+        }
     }
 
-    public Empleado FromXml(XElement xet)
+    public static void InsertarEnXml(XmlElement parent, XmlDocument doc, string dni, string nombre, string email)
     {
-        Empleado emp = new Empleado();
-        XElement xet2 = xet.Element("Empleado");
-        emp.Nombre = xet2.Attribute("Nombre").ToString();
-        emp.Dni = xet2.Attribute("Dni").ToString();
-        emp.Email = xet2.Attribute("Email").ToString();
-        return emp;
+        XmlElement empleadoElement = doc.CreateElement("Cliente");
+
+        XmlElement dniElement = doc.CreateElement("DNI");
+        dniElement.InnerText = dni;
+        empleadoElement.AppendChild(dniElement);
+
+        XmlElement nombreElement = doc.CreateElement("Nombre");
+        nombreElement.InnerText = nombre;
+        empleadoElement.AppendChild(nombreElement);
+
+        XmlElement emailElement = doc.CreateElement("Email");
+        emailElement.InnerText = email;
+        empleadoElement.AppendChild(emailElement);
+
+        parent.AppendChild(empleadoElement);
+    }
+
+    public static Empleado CargarDeXml(XmlElement empleadoElement)
+    {
+        try
+        {
+            string dni = empleadoElement["DNI"].InnerText;
+            string nombre = empleadoElement["Nombre"].InnerText;
+            string email = empleadoElement["Email"].InnerText;
+
+            return new Empleado(dni, nombre, email);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+        throw new XmlException("Error al cargar XML");
     }
 }
