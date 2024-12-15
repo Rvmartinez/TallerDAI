@@ -90,19 +90,18 @@ namespace TallerDIA.ViewModels
 
         public void Initialize(object[] parameters)
         {
-            if (parameters.Length > 0 && parameters[0] is string clienteId)
+            if (parameters.Length > 0 && parameters[0] is string dni)
             {
 
-                FilterText = clienteId;
-                //Filtrar();
+                FilterText = dni;
+                ForceUpdateUI();
                 //SelectedClient = FilteredItems[0];
 
-
-                #region Popup;
             }
         
         }
 
+        #region Popup;
 
 
 
@@ -458,12 +457,8 @@ namespace TallerDIA.ViewModels
 
         }
 
+        public override ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>([ "DNI empleado","Asunto", "Nota", "Nombre cliente", "DNI cliente", "Nombre empleado"]);
 
-
-
-        public override ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>([
-            "Asunto", "Nota", "Nombre cliente", "DNI cliente", "Nombre empleado", "DNI empleado"
-        ]);
 
         public override ObservableCollection<Reparacion> FilteredItems
         {

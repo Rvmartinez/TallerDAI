@@ -24,7 +24,6 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
         get => _EmpleadoActual;
         set
         {
-            //_EmpleadoActual = value;
             SetProperty(ref _EmpleadoActual, value);
         }
     }
@@ -46,29 +45,20 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
     public EmpleadosViewModel()
     {
         RegistroEmpleados = SharedDB.Instance.RegistroEmpleados;
-        //RegistroEmpleados = new RegistroEmpleados(SharedDB.Instance.RegistroEmpleados.Empleados);
-        //Empleados=new ObservableCollection<Empleado>(SharedDB.Instance.RegistroEmpleados.Empleados.ToList());
     } 
-    
-    public EmpleadosViewModel(Empleado nuevoEmpleadoSeleccionado)
-    {
-        RegistroEmpleados = new RegistroEmpleados(SharedDB.Instance.RegistroEmpleados.Empleados);
-        EmpleadoSeleccionado = nuevoEmpleadoSeleccionado;
-    }
     public EmpleadosViewModel(string empleadoId)
     {
         //Todo hacer algo con el empleado
         RegistroEmpleados = SharedDB.Instance.RegistroEmpleados;
-        //RegistroEmpleados = new RegistroEmpleados(SharedDB.Instance.RegistroEmpleados.Empleados);
-        //Empleados=new ObservableCollection<Empleado>(SharedDB.Instance.RegistroEmpleados.Empleados.ToList());
+        btModificarEmpleado_OnClickCommand.Execute(null);
     }
 
 
     public void Initialize(params object[] parameters)
     {
-        if (parameters.Length > 0 && parameters[0] is string clienteId)
+        if (parameters.Length > 0 && parameters[0] is string empleadoId)
         {
-            //FilteredItems.Where(c => c.Owner.IdCliente == 1);
+            FilteredItems.Where(c => c.Dni == empleadoId);
         }
     }
 
@@ -137,7 +127,7 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
         var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
             ? desktop.MainWindow
             : null;
-        var EmpleadoDlg = new EmpleadoDlg();
+        var EmpleadoDlg = new EmpleadoDlg(EmpleadoSeleccionado);
         await EmpleadoDlg.ShowDialog(mainWindow);
         if (!EmpleadoDlg.IsCancelled)
         {
@@ -194,11 +184,7 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
     [RelayCommand]
     public  async Task btTicketsSelecc_OnClick()
     {
-        //ReparacionesViewModel ventanaTickets = new ReparacionesViewModel(EmpleadoSeleccionado);
-        //ventanaTickets.Show();
-
-        NavigationService.Instance.NavigateTo<ReparacionesViewModel>();
-        
+        NavigationService.Instance.NavigateTo<ReparacionesViewModel>(EmpleadoSeleccionado.Dni);
     }
     public override ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>(["DNI","Nombre","Email"]);
     public override ObservableCollection<Empleado> FilteredItems

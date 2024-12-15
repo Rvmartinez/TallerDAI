@@ -49,7 +49,7 @@ namespace TallerDIA.ViewModels
                 SetProperty(ref _carteraClientes, value);
             }
         }
-        public ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>(["Nombre", "DNI", "Email", "ID Cliente"]);
+        public ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>(["DNI", "ID Cliente","Nombre", "Email"]);
         public ObservableCollection<String> FilterModes
         {
             get => _FilterModes;
@@ -77,10 +77,13 @@ namespace TallerDIA.ViewModels
             FilteredItems = new ObservableCollection<Cliente>(CarteraClientes.Clientes);
         }
 
-        public ClientesViewModel(string id)
+        public ClientesViewModel(string dni)
         {
-            int i = int.Parse(id);
             CarteraClientes = SharedDB.Instance.CarteraClientes;
+
+            FilteredText = dni;
+            Filtrar();
+            
         }
 
         public void Initialize(params object[] parameters)
@@ -139,7 +142,7 @@ namespace TallerDIA.ViewModels
         [RelayCommand]
         public void GoToClientesView()
         {
-            NavigationService.Instance.NavigateTo<ReparacionesViewModel>(""); // Pasa el ID del cliente
+            NavigationService.Instance.NavigateTo<ReparacionesViewModel>(SelectedClient.DNI); // Pasa el ID del cliente
         }
         [RelayCommand]
         public async Task EditClientCommand()
