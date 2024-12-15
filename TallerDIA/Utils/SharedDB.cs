@@ -41,8 +41,37 @@ namespace TallerDIA.Utils
 
         private ObservableCollection<Reparacion> LoadReparacionesFromXml(string filePath = "")
         {
-            ReparacionXML.CargarDeXml(filePath);
-           
+            Console.WriteLine("Importando Reparaciones...");
+            Console.WriteLine(filePath);
+            ObservableCollection<Reparacion> trabajos = new ObservableCollection<Reparacion>();
+            if (File.Exists(filePath))
+            {
+                try
+                {
+                    XmlDocument xmlDoc = new XmlDocument();
+                    xmlDoc.Load(filePath);
+                    Console.WriteLine("Archivo XML cargado exitosamente.");
+
+                    // Mostrar contenido del archivo XML (opcional)
+                    Console.WriteLine(xmlDoc.OuterXml);
+                    XmlNodeList reparaciones = xmlDoc.GetElementsByTagName("Reparacion");
+
+                    foreach (XmlElement reparacion in reparaciones)
+                    {
+                        trabajos.Add(ReparacionXML.CargarDeXml(reparacion));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error al cargar el archivo XML: {ex.Message}");
+                }
+            }
+            else
+            {
+                Console.WriteLine("El archivo no existe. Verifique la ruta.");
+            }
+
+            return trabajos;
         }
 
         public ObservableCollection<Cliente> LoadClientesFromXml(string filePath = "")
