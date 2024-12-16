@@ -56,10 +56,10 @@
 				<ColumnDefinition Width="*" />
 				<ColumnDefinition Width="auto" />
 			</Grid.ColumnDefinitions>
-			<TextBlock Grid.Column="0" Margin="10">Fecha entre</TextBlock>
-			<DatePicker Grid.Column="1" Margin="5" SelectedDate="{Binding MinDate}"></DatePicker>
-			<TextBlock Grid.Column="2" Margin="10"> Y </TextBlock>
-			<DatePicker Grid.Column="3" Margin="5" SelectedDate="{Binding MaxDate}"></DatePicker>
+			<TextBlock Grid.Column="0" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center">Fecha entre</TextBlock>
+			<DatePicker Grid.Column="1" SelectedDate="{Binding MinDate}" ></DatePicker>
+			<TextBlock Grid.Column="2" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center"> Y </TextBlock>
+			<DatePicker Grid.Column="3"  SelectedDate="{Binding MaxDate}"></DatePicker>
 
 
 			<TextBox Grid.Column="4"  Margin="10" Watermark="Búsqueda" Text="{Binding FilterText}"></TextBox>
@@ -87,29 +87,34 @@
                     Margin="0,0,15,0"
 					x:Name="AddRepairBtn"
                     icon:Attached.Icon="mdi-plus-circle"
+					Background="#512BD4"
                     Command="{Binding AddRepaisCommand}"
                     FontSize="24" />
 				<Button
                     Margin="0,0,15,0"
 					x:Name="EditRepairBtn"
                     icon:Attached.Icon="mdi-pencil"
+					Background="#512BD4"
                     Command="{Binding ModifyRepaisCommand}"
                     FontSize="24" />
 				<Button
                     Margin="0,0,15,0"
 					x:Name="DeleteRepairBtn"
+					Background="#512BD4"
                     icon:Attached.Icon="mdi-minus-circle"
                     Command="{Binding ButtonEliminarReparacionCommand}"
                     FontSize="24" />
 				<Button
                     Margin="0,0,15,0"
 					x:Name="EndRepairBtn"
+					Background="#512BD4"
                     icon:Attached.Icon="mdi-calendar-check"
                     Command="{Binding ButtonFinalizarReparacionCommand}"
                     FontSize="24" />
 				<Button
                     Margin="0,0,15,0"
 					x:Name="NavigateBtn"
+					Background="#512BD4"
                     icon:Attached.Icon="mdi-information"
                     Command="{Binding ButtonNevegarCommand}"
                     FontSize="24" />
@@ -117,6 +122,7 @@
 				<Button
                     Margin="0,0,15,0"
 					x:Name="GraphicBtn"
+					Background="#512BD4"
                     icon:Attached.Icon="mdi-file-chart"
                     Command="{Binding ButtonAbrirGrafica}"
                     FontSize="24" />
@@ -131,7 +137,6 @@
 		<DataGrid
             x:Name="DgReparaciones"
             Grid.Row="2"
-            BorderBrush="Purple"
             BorderThickness="1"
             CanUserReorderColumns="true"
             IsReadOnly="True"
@@ -140,10 +145,22 @@
 			<DataGrid.Styles>
 				<Style Selector="DataGridColumnHeader">
 					<Setter Property="FontSize" Value="15" />
-					<Setter Property="HorizontalAlignment" Value="Center" />
 					<Setter Property="FontWeight" Value="Bold" />
+					<Setter Property="Foreground" Value="#FFFFFF" />
+					<Setter Property="Background" Value="#252525" />
+					<Setter Property="HorizontalContentAlignment" Value="Center" />
+				</Style>
+				<Style Selector="DataGridRow:nth-child(odd)">
+					<Setter Property="Background" Value="#252525" />
+					<Setter Property="Foreground" Value="#DDDDDD" />
+				</Style>
+
+				<Style Selector="DataGridRow:nth-child(even)">
+					<Setter Property="Background" Value="#1E1E1E" />
+					<Setter Property="Foreground" Value="#DDDDDD" />
 				</Style>
 			</DataGrid.Styles>
+			
 			<DataGrid.Columns>
 
 				<DataGridTextColumn Header="Asunto" IsReadOnly="False" Binding="{Binding Asunto}" />

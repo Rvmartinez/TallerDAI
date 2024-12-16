@@ -50,43 +50,30 @@ namespace TallerDIA.ViewModels
             get => _clientesPath;
             set => SetProperty(ref _clientesPath, value);
         }
+        private string? _reparacionesPath;
+        public string? reparacionesPath
+        {
+            get => _reparacionesPath;
+            set => SetProperty(ref _reparacionesPath, value);
+        }
 
 
         [RelayCommand]
-        public async Task RequestGarajeFolder()
+        public async Task RequestFolder()
         {
             string folder = await IOUtil.RequestFolderPath()?? "";
             if (folder == "") return;
             garajePath = Path.Combine(folder, "garaje.xml");
-            Settings.Instance.AddFilePath("garaje", garajePath);
-        }
-
-
-        [RelayCommand]
-        public async Task RequestPlantillaFolder()
-        {
-            string folder = await IOUtil.RequestFolderPath() ?? "";
-            if (folder == "") return;
             plantillaPath = Path.Combine(folder, "plantilla.xml");
-            Settings.Instance.AddFilePath("plantilla", plantillaPath);
-        }
-
-        [RelayCommand]
-        public async Task RequestClientesFolder()
-        {
-            string folder = await IOUtil.RequestFolderPath() ?? "";
-            if (folder == "") return;
             clientesPath = Path.Combine(folder, "clientes.xml");
+            reparacionesPath = Path.Combine(folder, "trabajo.xml");
+
+
+            Settings.Instance.AddFilePath("plantilla", plantillaPath);
+            Settings.Instance.AddFilePath("trabajo", reparacionesPath);
             Settings.Instance.AddFilePath("clientes", clientesPath);
+            Settings.Instance.AddFilePath("plantilla", clientesPath);
         }
 
-        [RelayCommand]
-        public async Task RequestTrabajosFolder()
-        {
-            string folder = await IOUtil.RequestFolderPath() ?? "";
-            if (folder == "") return;
-            TrabajosPath = Path.Combine(folder, "trabajo.xml");
-            Settings.Instance.AddFilePath("trabajo", TrabajosPath);
-        }
     }
 }

@@ -57,7 +57,7 @@ namespace TallerDIA.ViewModels
                 new PaneListItemTemplate(typeof(EmpleadosViewModel), "mdi-account-hard-hat"),
                 new PaneListItemTemplate(typeof(CochesViewModel), "mdi-car-back"),
                 new PaneListItemTemplate(typeof(ReparacionesViewModel), "mdi-car-cog"),
-                new PaneListItemTemplate(typeof(ConfigurationViewModel), "mdi-car-cog")
+                new PaneListItemTemplate(typeof(ConfigurationViewModel), "mdi-cog")
             };
 
             NavigationService.Instance.Initialize(this);

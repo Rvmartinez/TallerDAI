@@ -42,7 +42,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid Margin="5">
+        <Grid Margin="5" Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
@@ -76,14 +76,16 @@
                 Orientation="Horizontal">
                 <Button
 					x:Name="AddClientBtn"
-                    Margin="0,0,15,0"
-                    icon:Attached.Icon="mdi-account-plus"
                     Command="{Binding AddClientCommand}"
+                    Margin="0,0,15,0"
+					Background="#512BD4"
+                    icon:Attached.Icon="mdi-account-plus"
                     FontSize="24" />
                 <Button
 					x:Name="EditClientBtn"
                     Margin="0,0,15,0"
                     icon:Attached.Icon="mdi-account-edit"
+					Background="#512BD4"
                     Command="{Binding EditClientCommand}"
                     FontSize="24" />
                 <Button
@@ -91,18 +93,21 @@
                     Margin="0,0,15,0"
                     icon:Attached.Icon="mdi-account-minus"
                     Command="{Binding OnDeleteCommand}"
+					Background="#512BD4"
                     FontSize="24" />
 
                 <Button
 					x:Name="GoReparationsBtn"
                     Margin="0,0,15,0"
                     icon:Attached.Icon="mdi-account-hard-hat"
+					Background="#512BD4"
                     Command="{Binding GoToClientesView}"
                     FontSize="24" />
                 <Button
 					x:Name="SeeGraphicBtn"
                     Margin="0,0,15,0"
                     icon:Attached.Icon="mdi-file-chart"
+					Background="#512BD4"
                     Command="{Binding ButtonAbrirGrafica}"
                     
                     FontSize="24" />
@@ -114,17 +119,28 @@
         <DataGrid
             x:Name="dgClientes"
             Grid.Row="2"
-            BorderBrush="Purple"
             BorderThickness="1"
             CanUserReorderColumns="true"
             IsReadOnly="True"
             ItemsSource="{Binding FilteredItems}"
             SelectedItem="{Binding SelectedClient}">
             <DataGrid.Styles>
-                <Style Selector="DataGridColumnHeader">
-                    <Setter Property="FontSize" Value="15" />
-                    <Setter Property="FontWeight" Value="Bold" />
-                </Style>
+				<Style Selector="DataGridColumnHeader">
+					<Setter Property="FontSize" Value="15" />
+					<Setter Property="FontWeight" Value="Bold" />
+					<Setter Property="Foreground" Value="#FFFFFF" />
+					<Setter Property="Background" Value="#252525" />
+					<Setter Property="HorizontalContentAlignment" Value="Center" />
+				</Style>
+				<Style Selector="DataGridRow:nth-child(odd)">
+					<Setter Property="Background" Value="#252525" />
+					<Setter Property="Foreground" Value="#DDDDDD" />
+				</Style>
+
+				<Style Selector="DataGridRow:nth-child(even)">
+					<Setter Property="Background" Value="#1E1E1E" />
+					<Setter Property="Foreground" Value="#DDDDDD" />
+				</Style>
             </DataGrid.Styles>
             <DataGrid.Columns>
                 <DataGridTextColumn

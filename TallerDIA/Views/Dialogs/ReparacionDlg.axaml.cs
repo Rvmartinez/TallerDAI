@@ -20,7 +20,7 @@ public partial class ReparacionDlg : Window
     
     {
         InitializeComponent();
-
+        Title = "Editar reparación";
         List<String> _clientes = new List<String>();
         for (int i = 0; i < SharedDB.Instance.CarteraClientes.Count; i++)
         {
@@ -54,6 +54,7 @@ public partial class ReparacionDlg : Window
 
     public ReparacionDlg()
     {
+        Title = "Añadir reparación";
         List<String> _clientes = new List<String>();
         for (int i = 0; i < SharedDB.Instance.CarteraClientes.Count; i++)
         {

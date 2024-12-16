@@ -108,8 +108,9 @@ namespace TallerDIA.Utils
             toupdate.DNI = updated.DNI;
             toupdate.Nombre = updated.Nombre;
             toupdate.Email = updated.Email;
-            
-            
+
+            this.BajaCliente(cliente);
+            this.AddClient(updated);
 
             return true;
         }

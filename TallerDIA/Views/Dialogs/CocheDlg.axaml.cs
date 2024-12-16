@@ -28,6 +28,7 @@ public partial class CocheDlg : Window
     public CocheDlg()
     {
         InitializeComponent();
+        Title = "Añadir coche";
         var opciones = Enum.GetValues(typeof(Coche.Marcas)).Cast<Coche.Marcas>().ToList();
         this.MarcasCb.ItemsSource = opciones;
         IEnumerable clientes = SharedDB.Instance.CarteraClientes.Clientes.Select(x => x.DNI);
@@ -79,6 +80,7 @@ public partial class CocheDlg : Window
     public CocheDlg(Coche car)
     {
         InitializeComponent();
+        Title = "Modificar coche";
         var opciones = Enum.GetValues(typeof(Coche.Marcas)).Cast<Coche.Marcas>().ToList();
         this.MarcasCb.ItemsSource = opciones;
         this.IsCanceled = false;

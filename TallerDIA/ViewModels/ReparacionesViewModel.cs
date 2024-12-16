@@ -348,7 +348,7 @@ namespace TallerDIA.ViewModels
                 }
 
                 Reparacion rep = new Reparacion(ReparacionDlg.AsuntoTb.Text, ReparacionDlg.NotaTb.Text,
-                    SelectedRepair.Cliente, empleado);
+                    SelectedRepair.Cliente, empleado,SelectedRepair.FechaInicio);
 
                 Console.WriteLine(rep.ToString());
 

@@ -64,25 +64,30 @@
                 <Button
                     Name="BtAdd"
                     Margin="0,0,15,0"
+					Background="#512BD4"
                     icon:Attached.Icon="mdi-plus-box-multiple"
                     Command="{Binding SubirCocheCommand}"
                     FontSize="24" />
                 <Button
                     Name="BtEdit"
+                    Command="{Binding EditarCocheCommand}"
                     Margin="0,0,15,0"
                     icon:Attached.Icon="mdi-car-cog"
-                    Command="{Binding EditarCocheCommand}"
+					Background="#512BD4"
                     FontSize="24"
+					
                     />
                 <Button
                     Name="BtDelete"
                     Margin="0,0,15,0"
                     icon:Attached.Icon="mdi-car-off"
+					Background="#512BD4"
                     Command="{Binding BorrarCocheCommand}"
                     FontSize="24" />
                 <Button
                     Name="BtClient"
                     Margin="0,0,15,0"
+					Background="#512BD4"
                     icon:Attached.Icon="mdi-seat-passenger"
                     Command="{Binding MostrarClienteCommand}"
                     FontSize="24" 
@@ -93,23 +98,34 @@
             Name="DatagridCoches"
             Grid.Row="2"
             AutoGenerateColumns="False"
-            BorderBrush="Purple"
             BorderThickness="1"
             CanUserReorderColumns="true"
             IsReadOnly="True"
             ItemsSource="{Binding FilteredItems}"
             SelectedItem="{Binding SelectedCar}">
-            <DataGrid.Styles>
-                <Style Selector="DataGridColumnHeader">
-                    <Setter Property="FontSize" Value="15" />
-                    <Setter Property="HorizontalAlignment" Value="Center" />
-                    <Setter Property="FontWeight" Value="Bold" />
-                </Style>
-            </DataGrid.Styles>
+
+			<DataGrid.Styles>
+				<Style Selector="DataGridColumnHeader">
+					<Setter Property="FontSize" Value="15" />
+					<Setter Property="FontWeight" Value="Bold" />
+					<Setter Property="Foreground" Value="#FFFFFF" />
+					<Setter Property="Background" Value="#252525" />
+					<Setter Property="HorizontalContentAlignment" Value="Center" />
+				</Style>
+				<Style Selector="DataGridRow:nth-child(odd)">
+					<Setter Property="Background" Value="#252525" />
+					<Setter Property="Foreground" Value="#DDDDDD" />
+				</Style>
+
+				<Style Selector="DataGridRow:nth-child(even)">
+					<Setter Property="Background" Value="#1E1E1E" />
+					<Setter Property="Foreground" Value="#DDDDDD" />
+				</Style>
+			</DataGrid.Styles>
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Matricula}" Header="Matricula" />
-                <DataGridTextColumn Binding="{Binding Marca}" Header="Marca" />
-                <DataGridTextColumn Binding="{Binding Modelo}" Header="Modelo" />
+                <DataGridTextColumn Binding="{Binding Matricula}" Width="auto" Header="Matricula" />
+                <DataGridTextColumn Binding="{Binding Marca}" Width="auto"  Header="Marca" />
+                <DataGridTextColumn Binding="{Binding Modelo}" Width="auto"  Header="Modelo" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

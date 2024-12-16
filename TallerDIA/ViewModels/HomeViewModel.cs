@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace TallerDIA.ViewModels
 {
+    /// <summary>
+    /// Página principal solo imagen
+    /// </summary>
     public class HomeViewModel : ViewModelBase
     {
-
-
     }
 }

@@ -90,6 +90,7 @@ namespace TallerDIA.ViewModels
         {
             CarteraClientes = SharedDB.Instance.CarteraClientes;
 
+            FilteredItems = new ObservableCollection<Cliente>(CarteraClientes.Clientes);
             FilteredText = dni;
             Filtrar();
             
@@ -101,8 +102,7 @@ namespace TallerDIA.ViewModels
             {
 
                 FilteredText = clienteId;
-                //Filtrar();
-                //SelectedClient = FilteredItems[0];
+                Filtrar();
             }
         }
         private void Filtrar()
@@ -124,7 +124,6 @@ namespace TallerDIA.ViewModels
                         aux = CarteraClientes.Clientes.Where(c => c.IdCliente.ToString().Contains(FilteredText)).ToList();
                         break;
                     default:
-                        // maybe this should be an exception or unreachable
                         aux = CarteraClientes.Clientes.ToList();
                         break;
                 }
@@ -160,7 +159,7 @@ namespace TallerDIA.ViewModels
 
             if (!ClienteDlg.IsCancelled)
             {
-
+                if (ClienteDlg.DniTB.Text == null || ClienteDlg.EmailTB.Text == null || ClienteDlg.NombreTB.Text == null) return;
                 SharedDB.Instance.EditClient(SelectedClient, new Cliente { DNI = ClienteDlg.DniTB.Text, Email = ClienteDlg.EmailTB.Text, Nombre = ClienteDlg.NombreTB.Text, IdCliente = SelectedClient.IdCliente});
                 int index = FilteredItems.IndexOf(SelectedClient);
                 if (index >= 0)

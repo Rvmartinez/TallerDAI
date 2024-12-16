@@ -12,27 +12,21 @@
 	<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
 		
 		<StackPanel Orientation="Horizontal" Margin="0,5">
+			<Button Content="Seleccionar ruta para los ficheros" Command="{Binding RequestFolder}"/>
+		</StackPanel>
+
+		<StackPanel Orientation="Vertical" Margin="0,5">
 			<TextBlock Text="Ruta de Garaje" VerticalAlignment="Center"/>
 			<TextBlock Text="{Binding garajePath}" VerticalAlignment="Center"/>
-			<Button Content="Seleccionar path" Command="{Binding RequestGarajeFolderCommand}"/>
 		</StackPanel>
-
-		<StackPanel Orientation="Horizontal" Margin="0,5">
+		<StackPanel Orientation="Vertical" Margin="0,5">
 			<TextBlock Text="Ruta de clientes" VerticalAlignment="Center"/>
 			<TextBlock Text="{Binding clientesPath}" VerticalAlignment="Center"/>
-			<Button Content="Seleccionar path" Command="{Binding RequestClientesFolderCommand}"/>
 		</StackPanel>
 
-		<StackPanel Orientation="Horizontal">
+		<StackPanel Orientation="Vertical">
 			<TextBlock Text="Ruta de empleados" VerticalAlignment="Center"/>
 			<TextBlock Text="{Binding plantillaPath}" VerticalAlignment="Center"/>
-			<Button Content="Seleccionar path" Command="{Binding RequestPlantillaFolderCommand}"/>
 		</StackPanel>
-		<StackPanel Orientation="Horizontal" Margin="0,5">
-			<TextBlock Text="Ruta de Reparaciones" VerticalAlignment="Center"/>
-			<TextBlock Text="{Binding TrabajosPath}" VerticalAlignment="Center"/>
-			<Button Content="Seleccionar path" Command="{Binding RequestTrabajosFolder}"/>
-		</StackPanel>
-
 	</StackPanel>
 </UserControl>

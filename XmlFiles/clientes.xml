@@ -5,4 +5,10 @@
     <Email>r@r.c</Email>
     <IdCliente>1</IdCliente>
   </Cliente>
+  <Cliente>
+    <DNI>77482984M</DNI>
+    <Nombre>r</Nombre>
+    <Email>r@r.cC</Email>
+    <IdCliente>2</IdCliente>
+  </Cliente>
 </CarteraClientes>

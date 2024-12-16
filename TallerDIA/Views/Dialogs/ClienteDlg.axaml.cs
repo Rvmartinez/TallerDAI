@@ -17,6 +17,7 @@ public partial class ClienteDlg : Window
     public ClienteDlg(Cliente c)
     {
         InitializeComponent();
+        Title = "Editar Cliente";
         EmailTB.Text = c.Email;
         NombreTB.Text = c.Nombre;
         DniTB.Text = c.DNI;
@@ -33,6 +34,7 @@ public partial class ClienteDlg : Window
     {
         InitializeComponent();
 
+        Title = "Información del Cliente";
         EmailTB.Text = c.Email;
         NombreTB.Text = c.Nombre;
         DniTB.Text = c.DNI;
@@ -45,7 +47,7 @@ public partial class ClienteDlg : Window
            EmailTB.IsReadOnly = true;
            NombreTB.IsReadOnly = true;
            DniTB.IsReadOnly = true;
-            BtOk.IsEnabled = false;
+           BtOk.IsEnabled = false;
         }
        
         BtCancel.Click += (_, _) => this.OnExit();
@@ -55,6 +57,7 @@ public partial class ClienteDlg : Window
     public ClienteDlg()
     {
         InitializeComponent();
+        Title = "Añadir cliente";
         this.IsCancelled = true;
         EmailErrorTB.IsVisible = false;
         BtOk.IsEnabled = false;
