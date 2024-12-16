@@ -143,7 +143,7 @@ namespace TallerDIA.Utils
         {
             if (!CanAddCliente(c))
             {
-                
+                return false;
             }
 
             if (c.IdCliente <= 0)
