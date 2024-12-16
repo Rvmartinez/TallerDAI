@@ -14,26 +14,26 @@
     mc:Ignorable="d">
     <UserControl.Styles>
         <Style Selector="Button">
-            <Setter Property="FontSize" Value="24"/>
-            <Setter Property="HorizontalAlignment" Value="Right"></Setter>
-            <Setter Property="VerticalAlignment" Value="Top"></Setter>
+            <Setter Property="FontSize" Value="24" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="VerticalAlignment" Value="Top" />
         </Style>
         <Style Selector="Button#btAnadirEmpleado">
-            <Setter Property="ToolTip.Tip" Value="Añadir empleado."></Setter>    
+            <Setter Property="ToolTip.Tip" Value="Añadir empleado." />
         </Style>
         <Style Selector="Button#btEliminarEmpleado">
-            <Setter Property="ToolTip.Tip" Value="Eliminar empleado seleccionado."></Setter>        
+            <Setter Property="ToolTip.Tip" Value="Eliminar empleado seleccionado." />
         </Style>
         <Style Selector="Button#btModificarEmpleado">
-            <Setter Property="ToolTip.Tip" Value="Modificar empleado seleccionado."></Setter>        
+            <Setter Property="ToolTip.Tip" Value="Modificar empleado seleccionado." />
         </Style>
         <Style Selector="Button#btNuevoEmpleado">
-            <Setter Property="ToolTip.Tip" Value="Refrescar selección."></Setter>        
+            <Setter Property="ToolTip.Tip" Value="Refrescar selección." />
         </Style>
         <Style Selector="Button#btTicketsSelecc">
-            <Setter Property="ToolTip.Tip" Value="Ver reparaciones del empleado seleccionado."></Setter>        
+            <Setter Property="ToolTip.Tip" Value="Ver reparaciones del empleado seleccionado." />
         </Style>
-        
+
     </UserControl.Styles>
     <Design.DataContext>
         <!--
@@ -42,91 +42,123 @@
         -->
         <vm:EmpleadosViewModel />
     </Design.DataContext>
-    <DockPanel Name="PanelMain" >
+    <DockPanel Name="PanelMain">
         <DockPanel Name="PanelEntrada" Dock="Top">
 
-			<Grid>
-				<Grid.RowDefinitions>
-					<RowDefinition Height="auto"/>
-					<RowDefinition Height="auto"/>
-					<RowDefinition Height="auto"/>
-				</Grid.RowDefinitions>
-				<Grid Margin="5" Grid.Row="0">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="*" />
-						<ColumnDefinition Width="Auto" />
-					</Grid.ColumnDefinitions>
-					<TextBox
-						Grid.Column="0"
-						Text="{Binding FilterText, Mode=TwoWay}"
-						Watermark="Búsqueda" />
-					<ComboBox
-						Grid.Column="1"
-						ItemsSource="{Binding FilterModes}"
-						SelectedIndex="{Binding SelectedFilterMode}" />
-				</Grid>
-				<Grid Grid.Row="1">
-					<Grid.ColumnDefinitions>
-						<ColumnDefinition Width="auto" />
-						<ColumnDefinition Width="*" />
-					</Grid.ColumnDefinitions>
-					<TextBlock
-						Grid.Column="0"
-						Margin="10"
-						FontSize="18"
-						Text="Listado de Empleados" />
-					<StackPanel
-						Grid.Column="1"
-						HorizontalAlignment="Right"
-						Orientation="Horizontal">
-						<Button
-							Background="#512BD4" icon:Attached.Icon="mdi-account-plus" Name="btAnadirEmpleado" Command="{Binding btAnadirEmpleado_OnClick}" Margin="0,0,15,0" FontSize="24" />
-						<Button
-							Background="#512BD4" icon:Attached.Icon="mdi-account-minus" Name="btEliminarEmpleado" Command="{Binding btEliminarEmpleado_OnClick}" Margin="0,0,15,0" FontSize="24"  />
-						<Button
-							Background="#512BD4" icon:Attached.Icon="mdi-account-edit" Name="btModificarEmpleado" Command="{Binding btModificarEmpleado_OnClick}" Margin="0,0,15,0" FontSize="24"  />
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                    <RowDefinition Height="auto" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Margin="5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox
+                        Grid.Column="0"
+                        Text="{Binding FilterText, Mode=TwoWay}"
+                        Watermark="Búsqueda" />
+                    <ComboBox
+                        Grid.Column="1"
+                        ItemsSource="{Binding FilterModes}"
+                        SelectedIndex="{Binding SelectedFilterMode}" />
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        Grid.Column="0"
+                        Margin="10"
+                        FontSize="18"
+                        Text="Listado de Empleados" />
+                    <StackPanel
+                        Grid.Column="1"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal">
+                        <Button
+                            Name="btAnadirEmpleado"
+                            Margin="0,0,15,0"
+                            icon:Attached.Icon="mdi-account-plus"
+                            Background="#512BD4"
+                            Command="{Binding btAnadirEmpleado_OnClick}"
+                            FontSize="24" />
+                        <Button
+                            Name="btEliminarEmpleado"
+                            Margin="0,0,15,0"
+                            icon:Attached.Icon="mdi-account-minus"
+                            Background="#512BD4"
+                            Command="{Binding btEliminarEmpleado_OnClick}"
+                            FontSize="24" />
+                        <Button
+                            Name="btModificarEmpleado"
+                            Margin="0,0,15,0"
+                            icon:Attached.Icon="mdi-account-edit"
+                            Background="#512BD4"
+                            Command="{Binding btModificarEmpleado_OnClick}"
+                            FontSize="24" />
 
-						<Button
-							Background="#512BD4" icon:Attached.Icon="mdi-plus" Name="btNuevoEmpleado" Command="{Binding btNuevoEmpleado_OnClick}" Margin="0,0,15,0" FontSize="24" />
-						<Button
-							Background="#512BD4" icon:Attached.Icon="mdi-account-hard-hat" Name="btTicketsSelecc" Command="{Binding btTicketsSelecc_OnClick}" Margin="0,0,15,0" FontSize="24" />
+                        <Button
+                            Name="btNuevoEmpleado"
+                            Margin="0,0,15,0"
+                            icon:Attached.Icon="mdi-plus"
+                            Background="#512BD4"
+                            Command="{Binding btNuevoEmpleado_OnClick}"
+                            FontSize="24" />
+                        <Button
+                            Name="btTicketsSelecc"
+                            Margin="0,0,15,0"
+                            icon:Attached.Icon="mdi-account-hard-hat"
+                            Background="#512BD4"
+                            Command="{Binding btTicketsSelecc_OnClick}"
+                            FontSize="24" />
 
 
 
-					</StackPanel>
-				</Grid>
-			</Grid>
+                    </StackPanel>
+                </Grid>
+            </Grid>
 
-			
-            
+
+
         </DockPanel>
-        <DockPanel Name="PanelSalida"  Dock="Bottom">
-            <DockPanel Name="PanelData" Dock="Top" VerticalAlignment="Stretch">
-                <DataGrid x:Name="DgEmpleados"
-                          ItemsSource="{Binding FilteredItems}"
-                          HorizontalAlignment="Right" VerticalAlignment="Stretch"
-                          MinHeight="375"
-                          BorderThickness="1"
-						  CanUserReorderColumns="true"  IsReadOnly="True" SelectedItem="{Binding EmpleadoSeleccionado}">
-					<DataGrid.Styles>
-						<Style Selector="DataGridColumnHeader">
-							<Setter Property="FontSize" Value="15" />
-							<Setter Property="FontWeight" Value="Bold" />
-							<Setter Property="Foreground" Value="#FFFFFF" />
-							<Setter Property="Background" Value="#252525" />
-							<Setter Property="HorizontalContentAlignment" Value="Center" />
-						</Style>
-						<Style Selector="DataGridRow:nth-child(odd)">
-							<Setter Property="Background" Value="#252525" />
-							<Setter Property="Foreground" Value="#DDDDDD" />
-						</Style>
+        <DockPanel Name="PanelSalida" Dock="Bottom">
+            <DockPanel
+                Name="PanelData"
+                VerticalAlignment="Stretch"
+                Dock="Top">
+                <DataGrid
+                    x:Name="DgEmpleados"
+                    MinHeight="375"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Stretch"
+                    BorderThickness="1"
+                    CanUserReorderColumns="true"
+                    IsReadOnly="True"
+                    ItemsSource="{Binding FilteredItems}"
+                    SelectedItem="{Binding EmpleadoSeleccionado}">
+                    <DataGrid.Styles>
+                        <Style Selector="DataGridColumnHeader">
+                            <Setter Property="FontSize" Value="15" />
+                            <Setter Property="FontWeight" Value="Bold" />
+                            <Setter Property="Foreground" Value="#FFFFFF" />
+                            <Setter Property="Background" Value="#252525" />
+                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                        </Style>
+                        <Style Selector="DataGridRow:nth-child(odd)">
+                            <Setter Property="Background" Value="#252525" />
+                            <Setter Property="Foreground" Value="#DDDDDD" />
+                        </Style>
 
-						<Style Selector="DataGridRow:nth-child(even)">
-							<Setter Property="Background" Value="#1E1E1E" />
-							<Setter Property="Foreground" Value="#DDDDDD" />
-						</Style>
-					</DataGrid.Styles>
-					<DataGrid.Columns>
+                        <Style Selector="DataGridRow:nth-child(even)">
+                            <Setter Property="Background" Value="#1E1E1E" />
+                            <Setter Property="Foreground" Value="#DDDDDD" />
+                        </Style>
+                    </DataGrid.Styles>
+                    <DataGrid.Columns>
                         <DataGridTextColumn
                             Width="auto"
                             Binding="{Binding Dni, Mode=TwoWay}"

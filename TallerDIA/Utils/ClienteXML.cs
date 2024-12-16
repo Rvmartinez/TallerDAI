@@ -35,12 +35,12 @@ public class ClienteXML
             XmlElement nombreElement = doc.CreateElement("Nombre");
             nombreElement.InnerText = cliente.Nombre;
             clienteElement.AppendChild(nombreElement);
-            
+
             XmlElement mailElement = doc.CreateElement("Email");
             mailElement.InnerText = cliente.Email;
             clienteElement.AppendChild(mailElement);
-            
-            
+
+
             XmlElement idElement = doc.CreateElement("IdCliente");
             idElement.InnerText = cliente.IdCliente.ToString();
             clienteElement.AppendChild(idElement);
@@ -58,7 +58,7 @@ public class ClienteXML
             Console.WriteLine(ex.Message);
         }
     }
-    
+
     public static void InsertarEnXml(XmlElement parent, XmlDocument doc, string dni, string nombre, string email, int idCliente)
     {
         XmlElement clienteElement = doc.CreateElement("Cliente");
@@ -74,7 +74,7 @@ public class ClienteXML
         XmlElement emailElement = doc.CreateElement("Email");
         emailElement.InnerText = email;
         clienteElement.AppendChild(emailElement);
-        
+
         XmlElement idElement = doc.CreateElement("IdCliente");
         idElement.InnerText = idCliente.ToString();
         clienteElement.AppendChild(idElement);

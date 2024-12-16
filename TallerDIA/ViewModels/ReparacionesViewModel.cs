@@ -72,7 +72,7 @@ namespace TallerDIA.ViewModels
             ReparacionesColection = SharedDB.Instance.Reparaciones;
         }
 
-        public ReparacionesViewModel(string dni,string type)
+        public ReparacionesViewModel(string dni, string type)
         {
             ReparacionesColection = SharedDB.Instance.Reparaciones;
         }
@@ -82,14 +82,14 @@ namespace TallerDIA.ViewModels
             {
                 if (parameters[1] is string type)
                 {
-                    if(type == nameof(ClientesViewModel))
+                    if (type == nameof(ClientesViewModel))
                     {
                         SelectedFilterMode = 4;
                     }
                 }
                 FilterText = dni;
             }
-        
+
         }
 
 
@@ -354,7 +354,7 @@ namespace TallerDIA.ViewModels
                 }
 
                 Reparacion rep = new Reparacion(ReparacionDlg.AsuntoTb.Text, ReparacionDlg.NotaTb.Text,
-                    SelectedRepair.Cliente, empleado,SelectedRepair.FechaInicio);
+                    SelectedRepair.Cliente, empleado, SelectedRepair.FechaInicio);
 
                 Console.WriteLine(rep.ToString());
 
@@ -364,13 +364,6 @@ namespace TallerDIA.ViewModels
                 ReparacionDlg = null;
                 SelectedRepair = null;
                 ForceUpdateUI();
-
-
-
-
-
-
-
             }
 
 
@@ -398,9 +391,9 @@ namespace TallerDIA.ViewModels
 
                 await message.ShowAsync();
             }
-           
 
-           
+
+
 
 
 
@@ -431,7 +424,7 @@ namespace TallerDIA.ViewModels
 
         }
 
-        public override ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>([ "DNI empleado","Asunto", "Nota", "Nombre cliente", "DNI cliente", "Nombre empleado"]);
+        public override ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>(["DNI empleado", "Asunto", "Nota", "Nombre cliente", "DNI cliente", "Nombre empleado"]);
 
 
         public override ObservableCollection<Reparacion> FilteredItems

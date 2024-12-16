@@ -1,32 +1,33 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-				xmlns:vm="using:TallerDIA.ViewModels"
-				d:DesignHeight="450"
-				d:DesignWidth="800"
-				x:DataType="vm:ConfigurationViewModel"
-             x:Class="TallerDIA.Views.ConfigurationView">
+<UserControl
+    x:Class="TallerDIA.Views.ConfigurationView"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:vm="using:TallerDIA.ViewModels"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    x:DataType="vm:ConfigurationViewModel"
+    mc:Ignorable="d">
 
-	<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-		
-		<StackPanel Orientation="Horizontal" Margin="0,5">
-			<Button Content="Seleccionar ruta para los ficheros" Command="{Binding RequestFolder}"/>
-		</StackPanel>
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
 
-		<StackPanel Orientation="Vertical" Margin="0,5">
-			<TextBlock Text="Ruta de Garaje" VerticalAlignment="Center"/>
-			<TextBlock Text="{Binding garajePath}" VerticalAlignment="Center"/>
-		</StackPanel>
-		<StackPanel Orientation="Vertical" Margin="0,5">
-			<TextBlock Text="Ruta de clientes" VerticalAlignment="Center"/>
-			<TextBlock Text="{Binding clientesPath}" VerticalAlignment="Center"/>
-		</StackPanel>
+        <StackPanel Margin="0,5" Orientation="Horizontal">
+            <Button Command="{Binding RequestFolder}" Content="Seleccionar ruta para los ficheros" />
+        </StackPanel>
 
-		<StackPanel Orientation="Vertical">
-			<TextBlock Text="Ruta de empleados" VerticalAlignment="Center"/>
-			<TextBlock Text="{Binding plantillaPath}" VerticalAlignment="Center"/>
-		</StackPanel>
-	</StackPanel>
+        <StackPanel Margin="0,5" Orientation="Vertical">
+            <TextBlock VerticalAlignment="Center" Text="Ruta de Garaje" />
+            <TextBlock VerticalAlignment="Center" Text="{Binding garajePath}" />
+        </StackPanel>
+        <StackPanel Margin="0,5" Orientation="Vertical">
+            <TextBlock VerticalAlignment="Center" Text="Ruta de clientes" />
+            <TextBlock VerticalAlignment="Center" Text="{Binding clientesPath}" />
+        </StackPanel>
+
+        <StackPanel Orientation="Vertical">
+            <TextBlock VerticalAlignment="Center" Text="Ruta de empleados" />
+            <TextBlock VerticalAlignment="Center" Text="{Binding plantillaPath}" />
+        </StackPanel>
+    </StackPanel>
 </UserControl>

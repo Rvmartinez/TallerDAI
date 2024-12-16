@@ -27,7 +27,7 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
             SetProperty(ref _EmpleadoActual, value);
         }
     }
-    
+
     private RegistroEmpleados _registroEmpleados;
     public RegistroEmpleados RegistroEmpleados
     {
@@ -41,11 +41,11 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
 
         }
     }
-    
+
     public EmpleadosViewModel()
     {
         RegistroEmpleados = SharedDB.Instance.RegistroEmpleados;
-    } 
+    }
     public EmpleadosViewModel(string empleadoId)
     {
         //Todo hacer algo con el empleado
@@ -70,11 +70,11 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
         set
         {
             SetProperty(ref _EmpleadoSeleccionado, value);
-            EmpleadoActual=_EmpleadoSeleccionado;
+            EmpleadoActual = _EmpleadoSeleccionado;
         }
     }
 
-    private string  _Aviso;
+    private string _Aviso;
     public string Aviso
     {
         get => _Aviso;
@@ -84,7 +84,7 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
             SetProperty(ref _Aviso, value);
         }
     }
-    
+
     public void ForceUpdateUI()
     {
         List<Empleado> list = SharedDB.Instance.RegistroEmpleados.Empleados.ToList();
@@ -95,7 +95,7 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
         }
         OnPropertyChanged(nameof(FilteredItems));
     }
-    
+
     [RelayCommand]
     public async Task btAnadirEmpleado_OnClick()
     {
@@ -106,7 +106,7 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
         if (!EmpleadoDlg.IsCancelled)
         {
             Console.WriteLine("Intentando insertar...");
-            Empleado nuevoEmpleado  = new Empleado() { Dni = EmpleadoDlg.DniTB.Text, Email = EmpleadoDlg.EmailTB.Text, Nombre = EmpleadoDlg.NombreTB.Text};
+            Empleado nuevoEmpleado = new Empleado() { Dni = EmpleadoDlg.DniTB.Text, Email = EmpleadoDlg.EmailTB.Text, Nombre = EmpleadoDlg.NombreTB.Text };
             if (SharedDB.FiltrarEntradasEmpleado(nuevoEmpleado) &&
                 SharedDB.BuscarEmpleado(RegistroEmpleados.Empleados.ToList(), nuevoEmpleado) == null)
             {
@@ -116,7 +116,7 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
             else
             {
                 Console.WriteLine("Fallo al insertar. ");
-                var message=MessageBoxManager.GetMessageBoxStandard("Fallo al insertar. ","No existe el empleado seleccionado o el DNI del empleado introducido ya está en uso. ",ButtonEnum.Ok,Icon.Error,WindowStartupLocation.CenterScreen);
+                var message = MessageBoxManager.GetMessageBoxStandard("Fallo al insertar. ", "No existe el empleado seleccionado o el DNI del empleado introducido ya está en uso. ", ButtonEnum.Ok, Icon.Error, WindowStartupLocation.CenterScreen);
                 await message.ShowAsync();
             }
         }
@@ -138,7 +138,7 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
         {
             Console.Out.WriteLine("Intentando modificar...");
             Empleado nuevoEmpleado = new Empleado()
-                { Dni = EmpleadoDlg.DniTB.Text, Email = EmpleadoDlg.EmailTB.Text, Nombre = EmpleadoDlg.NombreTB.Text };
+            { Dni = EmpleadoDlg.DniTB.Text, Email = EmpleadoDlg.EmailTB.Text, Nombre = EmpleadoDlg.NombreTB.Text };
             if (SharedDB.FiltrarEntradasEmpleado(EmpleadoSeleccionado) &&
                 SharedDB.FiltrarEntradasEmpleado(nuevoEmpleado))
             {
@@ -155,7 +155,7 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
                 else
                 {
                     Console.Out.WriteLine("Fallo al modificar.");
-                    var message=MessageBoxManager.GetMessageBoxStandard("Fallo al modificar. ","No existe el empleado seleccionado o el DNI del empleado introducido ya está en uso. ",ButtonEnum.Ok,Icon.Error,WindowStartupLocation.CenterScreen);
+                    var message = MessageBoxManager.GetMessageBoxStandard("Fallo al modificar. ", "No existe el empleado seleccionado o el DNI del empleado introducido ya está en uso. ", ButtonEnum.Ok, Icon.Error, WindowStartupLocation.CenterScreen);
                     await message.ShowAsync();
                 }
             }
@@ -165,7 +165,7 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
     [RelayCommand]
     public async Task btEliminarEmpleado_OnClick()
     {
-        if (EmpleadoSeleccionado == null) 
+        if (EmpleadoSeleccionado == null)
             return;
         var box = MessageBoxManager.GetMessageBoxStandard("Atención", "Los datos se borrarán irreversiblemente.¿Desea continuar?", ButtonEnum.OkCancel);
         var result = await box.ShowAsync();
@@ -200,21 +200,21 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
         }
     }
     [RelayCommand]
-    public  void btNuevoEmpleado_OnClick()
+    public void btNuevoEmpleado_OnClick()
     {
-        EmpleadoSeleccionado=new Empleado();
-        EmpleadoActual=new Empleado();
+        EmpleadoSeleccionado = new Empleado();
+        EmpleadoActual = new Empleado();
         Aviso = "Entradas y empleado seleccionado reseteados.";
     }
-    
+
 
     [RelayCommand]
-    public  void btTicketsSelecc_OnClick()
+    public void btTicketsSelecc_OnClick()
     {
         if (EmpleadoSeleccionado == null) return;
-        NavigationService.Instance.NavigateTo<ReparacionesViewModel>(EmpleadoSeleccionado.Dni,nameof(ReparacionesViewModel));
+        NavigationService.Instance.NavigateTo<ReparacionesViewModel>(EmpleadoSeleccionado.Dni, nameof(ReparacionesViewModel));
     }
-    public override ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>(["DNI","Nombre","Email"]);
+    public override ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>(["DNI", "Nombre", "Email"]);
     public override ObservableCollection<Empleado> FilteredItems
     {
         get
@@ -232,7 +232,7 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
                             return new ObservableCollection<Empleado>(RegistroEmpleados.Empleados.Where(e => e.Nombre.ToLower().Contains(text)));
                         case "Email":
                             return new ObservableCollection<Empleado>(RegistroEmpleados.Empleados.Where(e => e.Email.ToLower().Contains(text)));
-                       default:
+                        default:
                             return RegistroEmpleados.Empleados;
                     }
                 }

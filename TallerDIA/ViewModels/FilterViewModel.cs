@@ -18,15 +18,16 @@ public abstract class FilterViewModel<T> : ViewModelBase
     {
         get => _SelectedFilterMode;
         set
-        { SetProperty(ref _SelectedFilterMode, value);OnPropertyChanged("FilteredItems");
+        {
+            SetProperty(ref _SelectedFilterMode, value); OnPropertyChanged("FilteredItems");
         }
     }
 
     public String FilterText
     {
         get => _FilterText;
-        set { SetProperty(ref _FilterText, value);OnPropertyChanged("FilteredItems"); }
+        set { SetProperty(ref _FilterText, value); OnPropertyChanged("FilteredItems"); }
     }
     public abstract ObservableCollection<T> FilteredItems { get; }
-    
+
 }

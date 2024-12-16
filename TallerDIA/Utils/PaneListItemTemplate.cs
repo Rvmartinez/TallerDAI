@@ -12,7 +12,7 @@ namespace TallerDIA.Utils
         public string Label { get; }
         public string Icon { get; }
         public Func<object> ViewModelFactory { get; }
-        public PaneListItemTemplate(Type type,string icon, Func<object> viewModelFactory = null)
+        public PaneListItemTemplate(Type type, string icon, Func<object> viewModelFactory = null)
         {
             ModelType = type;
             Label = type.Name.Replace("ViewModel", "");

@@ -18,7 +18,7 @@ public partial class CochesViewModel : FilterViewModel<Coche>
 {
     private GarajeCoches _garaje = SharedDB.Instance.Garaje;
     public ObservableCollection<Coche> Coches => _garaje.Coches;
-    
+
 
     private Coche _SelectedCar;
     public Coche SelectedCar
@@ -40,7 +40,7 @@ public partial class CochesViewModel : FilterViewModel<Coche>
 
     public CochesViewModel()
     {
-        
+
     }
 
     public CochesViewModel(IEnumerable<Coche> coches)
@@ -52,8 +52,8 @@ public partial class CochesViewModel : FilterViewModel<Coche>
     [RelayCommand]
     public async Task BorrarCocheCommand()
     {
-        if(SelectedCar == null) { return; }
-        
+        if (SelectedCar == null) { return; }
+
         var box = MessageBoxManager
             .GetMessageBoxStandard("Atención", "Los datos se borrarán irreversiblemente.¿Desea continuar?", ButtonEnum.OkCancel);
 
@@ -95,12 +95,12 @@ public partial class CochesViewModel : FilterViewModel<Coche>
     [RelayCommand]
     public async Task EditarCocheCommand()
     {
-        if(SelectedCar == null) { return; }
-        
+        if (SelectedCar == null) { return; }
+
         var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
             ? desktop.MainWindow
             : null;
-                if (mainWindow == null) return;
+        if (mainWindow == null) return;
         var cocheDlg = new CocheDlg(SelectedCar);
         cocheDlg.MarcasCb.IsEnabled = false;
         cocheDlg.ModeloTb.IsEnabled = false;
@@ -111,7 +111,7 @@ public partial class CochesViewModel : FilterViewModel<Coche>
         if (!cocheDlg.IsCanceled)
         {
             Coche nuevo = new Coche(cocheDlg.MatriculaTb.Text, antiguo.Marca, antiguo.Modelo, antiguo.Owner);
-            this.EditCoche(antiguo,nuevo);
+            this.EditCoche(antiguo, nuevo);
         }
     }
 
@@ -125,15 +125,15 @@ public partial class CochesViewModel : FilterViewModel<Coche>
 
     public async void CochesClientes(Cliente cli)
     {
-       var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
-            ? desktop.MainWindow
-            : null;
-                if (mainWindow == null) return;
-       var ClienteDlg = new ClienteDlg(SelectedCar.Owner);
+        var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
+             ? desktop.MainWindow
+             : null;
+        if (mainWindow == null) return;
+        var ClienteDlg = new ClienteDlg(SelectedCar.Owner);
         await ClienteDlg.ShowDialog(mainWindow);
-       
-       if (!ClienteDlg.IsCancelled)
-       {
+
+        if (!ClienteDlg.IsCancelled)
+        {
             Cliente antiguo = new Cliente
             {
                 DNI = cli.DNI,
@@ -148,18 +148,18 @@ public partial class CochesViewModel : FilterViewModel<Coche>
                 Nombre = ClienteDlg.NombreTB.Text,
                 IdCliente = 0
             };
-           SharedDB.Instance.EditClient(SelectedCar.Owner, nuevo);
-           foreach (var car in _garaje.Coches)
-           {
-               Console.WriteLine("***");
-               Console.WriteLine(car.Owner.DNI +" == "+ antiguo.DNI);
-               if (car.Owner.DNI == antiguo.DNI)
-               {
-                   car.Owner = nuevo;
-               }
-           }
-           SelectedCar.Owner = nuevo;
-       }
+            SharedDB.Instance.EditClient(SelectedCar.Owner, nuevo);
+            foreach (var car in _garaje.Coches)
+            {
+                Console.WriteLine("***");
+                Console.WriteLine(car.Owner.DNI + " == " + antiguo.DNI);
+                if (car.Owner.DNI == antiguo.DNI)
+                {
+                    car.Owner = nuevo;
+                }
+            }
+            SelectedCar.Owner = nuevo;
+        }
 
     }
 
@@ -177,10 +177,10 @@ public partial class CochesViewModel : FilterViewModel<Coche>
     {
         _garaje.RemoveMatricula(antiguo.Matricula);
         _garaje.Add(nuevo);
-        
+
     }
 
-    public override ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>(["Matricula","Marca","Modelo"]);
+    public override ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>(["Matricula", "Marca", "Modelo"]);
 
     public override ObservableCollection<Coche> FilteredItems
     {

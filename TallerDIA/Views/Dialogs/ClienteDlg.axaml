@@ -14,7 +14,6 @@
             <TextBlock Text="DNI" />
             <TextBox
                 x:Name="DniTB"
-                Text="77482984d"
                 TextChanged="DNI_TextChanged" />
             <TextBlock
                 x:Name="DniErrorTB"
@@ -22,11 +21,10 @@
                 IsVisible="True"
                 Text="El formato de DNI no es correcto." />
             <TextBlock Text="Nombre" />
-            <TextBox x:Name="NombreTB" Text="r" />
+            <TextBox x:Name="NombreTB" />
             <TextBlock Text="Email" />
             <TextBox
                 x:Name="EmailTB"
-                Text="r@r.c"
                 TextChanged="Email_TextChanged" />
             <TextBlock
                 x:Name="EmailErrorTB"

@@ -37,18 +37,18 @@ namespace TallerDIA.Utils
             {
                 Console.WriteLine(Reparaciones.Get(i).ToString());
             }
-            
+
         }
 
-        
+
 
 
         private bool CanAddCliente(Cliente cliente)
         {
-            
+
             Cliente aux = CarteraClientes.Clientes.Where(c => c.DNI.ToLower() == cliente.DNI.ToLower() || c.Email.ToLower() == cliente.Email.ToLower()).FirstOrDefault();
 
-            return  aux == null;
+            return aux == null;
         }
 
         public void BajaCliente(Cliente cliente)
@@ -72,11 +72,11 @@ namespace TallerDIA.Utils
             Cliente c = CarteraClientes.Clientes.OrderByDescending(c => c.IdCliente).FirstOrDefault();
             if (c != null)
                 return c.IdCliente;
-            else 
+            else
                 return 0;
         }
-        
-        public bool EditReparacion(Reparacion reparacion,Reparacion updated)
+
+        public bool EditReparacion(Reparacion reparacion, Reparacion updated)
         {
             Reparacion toupdate = Reparaciones.Get(reparacion);
 
@@ -86,18 +86,18 @@ namespace TallerDIA.Utils
             }
             Reparaciones.Remove(toupdate);
             Reparaciones.Add(updated);
-            
-               
-                return true;
+
+
+            return true;
         }
 
         public void EditEmpleadoInReparaciones(Empleado empl, Empleado updated)
         {
-            List<Reparacion> reps = Reparaciones.Reps.Where( e => e.Empleado.Dni == empl.Dni ).ToList();
+            List<Reparacion> reps = Reparaciones.Reps.Where(e => e.Empleado.Dni == empl.Dni).ToList();
 
             if (reps.Count == 0)
                 return;
-            foreach(Reparacion r in reps)
+            foreach (Reparacion r in reps)
             {
                 r.Empleado.Dni = updated.Dni;
                 r.Empleado.Email = updated.Email;
@@ -106,10 +106,10 @@ namespace TallerDIA.Utils
         }
 
 
-        public bool EditClient(Cliente cliente,Cliente updated)
+        public bool EditClient(Cliente cliente, Cliente updated)
         {
             Cliente toupdate = CarteraClientes.Clientes.Where(c => c.IdCliente == cliente.IdCliente).FirstOrDefault();
-            
+
 
 
             if (toupdate == null) return false;
@@ -141,17 +141,17 @@ namespace TallerDIA.Utils
 
         public bool AddClient(Cliente c)
         {
-            if(!CanAddCliente(c)) 
+            if (!CanAddCliente(c))
                 return false;
-           
-            if(c.IdCliente <= 0)
-            c.IdCliente = GetLastClientId()+1;
+
+            if (c.IdCliente <= 0)
+                c.IdCliente = GetLastClientId() + 1;
             CarteraClientes.Add(c);
 
             return true;
         }
-        
-        
+
+
         public static bool FiltrarEntradasEmpleado(Empleado empleado)
         {
             if (empleado != null)
@@ -161,7 +161,7 @@ namespace TallerDIA.Utils
                     Console.Out.WriteLine("Empleado con algun campo nulo.");
                     return false;
                 }
-                else if (empleado.Email.Trim()=="" || empleado.Nombre.Trim() == "" || empleado.Email.Trim()=="")
+                else if (empleado.Email.Trim() == "" || empleado.Nombre.Trim() == "" || empleado.Email.Trim() == "")
                 {
                     Console.Out.WriteLine("Empleado con algun campo no introducido.");
                     return false;
@@ -177,9 +177,9 @@ namespace TallerDIA.Utils
                 return false;
             }
         }
-        public static Empleado BuscarEmpleado(List<Empleado> listaEmpleados,Empleado empleado)
+        public static Empleado BuscarEmpleado(List<Empleado> listaEmpleados, Empleado empleado)
         {
-            if (listaEmpleados!=null && listaEmpleados.IndexOf(listaEmpleados.Find(x => x.Dni == empleado.Dni)) != -1)
+            if (listaEmpleados != null && listaEmpleados.IndexOf(listaEmpleados.Find(x => x.Dni == empleado.Dni)) != -1)
             {
                 return empleado;
             }
@@ -188,7 +188,7 @@ namespace TallerDIA.Utils
                 return null;
             }
         }
-        
+
 
         public bool RemoveCar(string matricula)
         {
@@ -229,10 +229,10 @@ namespace TallerDIA.Utils
                 }
             }
         }
-        
+
         public bool AddReparacion(Reparacion r)
         {
-           
+
             Reparaciones.Add(r);
 
             return true;
@@ -386,7 +386,7 @@ namespace TallerDIA.Utils
             ClienteXML.GuardarCartera(this.CarteraClientes);
             EmpleadoXML.GuardarEmpleados(this.RegistroEmpleados.Empleados);
         }
-        
+
 
     }
 }

@@ -2,6 +2,8 @@ using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
+using MsBox.Avalonia.Enums;
+using MsBox.Avalonia;
 using TallerDIA.Models;
 
 
@@ -23,6 +25,18 @@ public partial class ReparacionNavegarDlg : Window
 
     async Task OnBtEmpleadoClicked(Reparacion r)
     {
+        if(r.Empleado.Dni == "00000000O")
+        {
+
+
+            var message = MessageBoxManager.GetMessageBoxStandard("Warning",
+                "El empleado ha sido eliminado", ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Warning,
+                WindowStartupLocation.CenterOwner);
+
+            await message.ShowAsync();
+
+            return;
+        }
         var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop ? desktop.MainWindow : null;
                 if (mainWindow == null) return;
         var empleadoDlg = new EmpleadoDlg(r.Empleado, true);

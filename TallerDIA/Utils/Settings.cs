@@ -11,13 +11,13 @@ namespace TallerDIA.Utils
 {
     class Settings
     {
-        
+
         private static Settings _instance;
         public static Settings Instance => _instance ??= new Settings();
         private static readonly string Path = "./settings.json";
         public Dictionary<string, string> filePaths { get; } = new Dictionary<string, string>();
 
-        private  Settings()
+        private Settings()
         {
             LoadSettings();
         }

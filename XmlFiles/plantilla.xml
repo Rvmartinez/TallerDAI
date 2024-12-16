@@ -1,17 +1,12 @@
 <PlantillaEmpleados>
   <Empleado>
-    <DNI>12345677s</DNI>
+    <DNI>74747474d</DNI>
     <Nombre>Paco</Nombre>
     <Email>paco@email.com</Email>
   </Empleado>
   <Empleado>
-    <DNI>83838383d</DNI>
+    <DNI>73737373d</DNI>
     <Nombre>Manolo</Nombre>
     <Email>manolo@email.com</Email>
-  </Empleado>
-  <Empleado>
-    <DNI>77482948M</DNI>
-    <Nombre>Eugenio</Nombre>
-    <Email>eugenio@email.com</Email>
   </Empleado>
 </PlantillaEmpleados>

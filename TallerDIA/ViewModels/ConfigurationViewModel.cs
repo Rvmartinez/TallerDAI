@@ -61,7 +61,7 @@ namespace TallerDIA.ViewModels
         [RelayCommand]
         public async Task RequestFolder()
         {
-            string folder = await IOUtil.RequestFolderPath()?? "";
+            string folder = await IOUtil.RequestFolderPath() ?? "";
             if (folder == "") return;
             garajePath = Path.Combine(folder, "garaje.xml");
             plantillaPath = Path.Combine(folder, "plantilla.xml");

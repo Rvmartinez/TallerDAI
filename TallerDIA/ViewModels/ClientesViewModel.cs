@@ -58,7 +58,7 @@ namespace TallerDIA.ViewModels
                 SetProperty(ref _carteraClientes, value);
             }
         }
-        public ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>(["DNI", "ID Cliente","Nombre", "Email"]);
+        public ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>(["DNI", "ID Cliente", "Nombre", "Email"]);
         public ObservableCollection<String>? FilterModes
         {
             get => _FilterModes;
@@ -93,7 +93,7 @@ namespace TallerDIA.ViewModels
             FilteredItems = new ObservableCollection<Cliente>(CarteraClientes.Clientes);
             FilteredText = dni;
             Filtrar();
-            
+
         }
 
         public void Initialize(params object[] parameters)
@@ -138,14 +138,14 @@ namespace TallerDIA.ViewModels
             OnPropertyChanged("FilteredItems");
         }
 
-        
+
 
         [RelayCommand]
         public void GoToClientesView()
         {
             if (SelectedClient == null)
                 return;
-            NavigationService.Instance.NavigateTo<ReparacionesViewModel>(SelectedClient.DNI,nameof(ClientesViewModel)); // Pasa el ID del cliente
+            NavigationService.Instance.NavigateTo<ReparacionesViewModel>(SelectedClient.DNI, nameof(ClientesViewModel)); // Pasa el ID del cliente
         }
         [RelayCommand]
         public async Task EditClientCommand()
@@ -153,14 +153,14 @@ namespace TallerDIA.ViewModels
             if (SelectedClient == null) return;
             var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop ? desktop.MainWindow : null;
 
-                if (mainWindow == null) return;
+            if (mainWindow == null) return;
             var ClienteDlg = new ClienteDlg(SelectedClient);
             await ClienteDlg.ShowDialog(mainWindow);
 
             if (!ClienteDlg.IsCancelled)
             {
                 if (ClienteDlg.DniTB.Text == null || ClienteDlg.EmailTB.Text == null || ClienteDlg.NombreTB.Text == null) return;
-                SharedDB.Instance.EditClient(SelectedClient, new Cliente { DNI = ClienteDlg.DniTB.Text, Email = ClienteDlg.EmailTB.Text, Nombre = ClienteDlg.NombreTB.Text, IdCliente = SelectedClient.IdCliente});
+                SharedDB.Instance.EditClient(SelectedClient, new Cliente { DNI = ClienteDlg.DniTB.Text, Email = ClienteDlg.EmailTB.Text, Nombre = ClienteDlg.NombreTB.Text, IdCliente = SelectedClient.IdCliente });
                 int index = FilteredItems.IndexOf(SelectedClient);
                 if (index >= 0)
                 {
@@ -199,7 +199,7 @@ namespace TallerDIA.ViewModels
         {
             Window mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop ? desktop.MainWindow : null;
             ClienteDlg ClienteDlg = new ClienteDlg();
-                if (mainWindow == null) return;
+            if (mainWindow == null) return;
             await ClienteDlg.ShowDialog(mainWindow);
 
             if (!ClienteDlg.IsCancelled)
@@ -231,13 +231,15 @@ namespace TallerDIA.ViewModels
                         Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
                             ? desktop.MainWindow
                             : null;
-                if (mainWindow == null) return;
+                    if (mainWindow == null) return;
                     var reps = SharedDB.Instance.Reparaciones;
                     ;
                     var reparacionNavegarDlg = new DesgloseWindow(reps,
                         new ConfigChart()
                         {
-                            Modo = ConfigChart.ModoVision.Mensual, Cliente = SelectedClient.Nombre, FechaFin = false
+                            Modo = ConfigChart.ModoVision.Mensual,
+                            Cliente = SelectedClient.Nombre,
+                            FechaFin = false
                         });
                     await reparacionNavegarDlg.ShowDialog(mainWindow);
                 }
@@ -247,7 +249,7 @@ namespace TallerDIA.ViewModels
                         Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
                             ? desktop.MainWindow
                             : null;
-                if (mainWindow == null) return;
+                    if (mainWindow == null) return;
                     var reps = SharedDB.Instance.Reparaciones;
                     ;
                     var reparacionNavegarDlg = new DesgloseWindow(reps,

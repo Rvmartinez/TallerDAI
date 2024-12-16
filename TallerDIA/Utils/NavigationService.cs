@@ -40,29 +40,29 @@ namespace TallerDIA.Utils
 
             if (paneItem != null)
             {
-                    var viewModelFactory = paneItem.ViewModelFactory;
+                var viewModelFactory = paneItem.ViewModelFactory;
 
-                    if (viewModelFactory != null)
-                    {
-                        // Crear instancia utilizando la fábrica de ViewModel
-                        var instance = viewModelFactory.Invoke();
-                        InitializeViewModel(instance, parameters);
-                        _mainWindowViewModel.SelectedPaneItem = paneItem;
-                    }
-                    else
-                    {
-                        // Crear instancia directamente
-                        var instance = (TViewModel)Activator.CreateInstance(typeof(TViewModel), parameters);
-                        InitializeViewModel(instance, parameters);
-                        _mainWindowViewModel.CurrentPage = instance;
-                    }
+                if (viewModelFactory != null)
+                {
+                    // Crear instancia utilizando la fábrica de ViewModel
+                    var instance = viewModelFactory.Invoke();
+                    InitializeViewModel(instance, parameters);
+                    _mainWindowViewModel.SelectedPaneItem = paneItem;
+                }
+                else
+                {
+                    // Crear instancia directamente
+                    var instance = (TViewModel)Activator.CreateInstance(typeof(TViewModel), parameters);
+                    InitializeViewModel(instance, parameters);
+                    _mainWindowViewModel.CurrentPage = instance;
+                }
             }
         }
 
 
         private void InitializeViewModel(object viewModel, object[] parameters)
         {
-            switch(viewModel)
+            switch (viewModel)
             {
                 case ClientesViewModel:
                     ClientesViewModel vm = (ClientesViewModel)viewModel;
@@ -87,7 +87,7 @@ namespace TallerDIA.Utils
                     mwvm.Initialize(parameters);
                     break;
             }
-            
+
 
         }
     }

@@ -23,7 +23,7 @@ namespace TallerDIA.Views
             // Muestra un mensaje de confirmaci�n
             var box = MessageBoxManager
                 .GetMessageBoxStandard("Cerrar App",
-                                       "�Estas seguro que quieres salir?",
+                                       "¿Estas seguro que quieres salir?",
                                        ButtonEnum.YesNo,
                                        MsBox.Avalonia.Enums.Icon.Question);
 

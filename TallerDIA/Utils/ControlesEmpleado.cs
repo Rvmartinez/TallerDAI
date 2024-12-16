@@ -15,7 +15,7 @@ public static class ControlesEmpleado
                 Console.Out.WriteLine("Empleado con algun campo nulo.");
                 return false;
             }
-            else if (empleado.Email.Trim()=="" || empleado.Nombre.Trim() == "" || empleado.Email.Trim()=="")
+            else if (empleado.Email.Trim() == "" || empleado.Nombre.Trim() == "" || empleado.Email.Trim() == "")
             {
                 Console.Out.WriteLine("Empleado con algun campo no introducido.");
                 return false;
@@ -31,9 +31,9 @@ public static class ControlesEmpleado
             return false;
         }
     }
-    public static Empleado BuscarEmpleado(List<Empleado> listaEmpleados,Empleado empleado)
+    public static Empleado BuscarEmpleado(List<Empleado> listaEmpleados, Empleado empleado)
     {
-        if (listaEmpleados!=null && listaEmpleados.IndexOf(listaEmpleados.Find(x => x.Dni == empleado.Dni)) != -1)
+        if (listaEmpleados != null && listaEmpleados.IndexOf(listaEmpleados.Find(x => x.Dni == empleado.Dni)) != -1)
         {
             return empleado;
         }

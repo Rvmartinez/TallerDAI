@@ -13,36 +13,36 @@
     x:DataType="vm:ClientesViewModel"
     mc:Ignorable="d">
 
-	    <UserControl.Styles>
-		    <Style Selector="Button">
-			    <Setter Property="FontSize" Value="24"/>
-			    <Setter Property="HorizontalAlignment" Value="Right"></Setter>
-			    <Setter Property="VerticalAlignment" Value="Top"></Setter>
-		    </Style>
-		    <Style Selector="Button#AddClientBtn">
-			    <Setter Property="ToolTip.Tip" Value="Añadir Cliente."></Setter>
-		    </Style>
-		    <Style Selector="Button#EditClientBtn">
-			    <Setter Property="ToolTip.Tip" Value="Editar cliente seleccionado."></Setter>
-		    </Style>
-		    <Style Selector="Button#DeleteClientBtn">
-			    <Setter Property="ToolTip.Tip" Value="Eliminar cliente seleccionado."></Setter>
-		    </Style>
-		    <Style Selector="Button#GoReparationsBtn">
-			    <Setter Property="ToolTip.Tip" Value="Ver reparaciones del cliente."></Setter>
-		    </Style>
-		    <Style Selector="Button#SeeGraphicBtn">
-			    <Setter Property="ToolTip.Tip" Value="Ver grafico del cliente."></Setter>
-		    </Style>
+    <UserControl.Styles>
+        <Style Selector="Button">
+            <Setter Property="FontSize" Value="24" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="VerticalAlignment" Value="Top" />
+        </Style>
+        <Style Selector="Button#AddClientBtn">
+            <Setter Property="ToolTip.Tip" Value="Añadir Cliente." />
+        </Style>
+        <Style Selector="Button#EditClientBtn">
+            <Setter Property="ToolTip.Tip" Value="Editar cliente seleccionado." />
+        </Style>
+        <Style Selector="Button#DeleteClientBtn">
+            <Setter Property="ToolTip.Tip" Value="Eliminar cliente seleccionado." />
+        </Style>
+        <Style Selector="Button#GoReparationsBtn">
+            <Setter Property="ToolTip.Tip" Value="Ver reparaciones del cliente." />
+        </Style>
+        <Style Selector="Button#SeeGraphicBtn">
+            <Setter Property="ToolTip.Tip" Value="Ver grafico del cliente." />
+        </Style>
 
-	    </UserControl.Styles>
+    </UserControl.Styles>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid Margin="5" Grid.Row="0">
+        <Grid Grid.Row="0" Margin="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
@@ -75,41 +75,40 @@
                 HorizontalAlignment="Right"
                 Orientation="Horizontal">
                 <Button
-					x:Name="AddClientBtn"
-                    Command="{Binding AddClientCommand}"
+                    x:Name="AddClientBtn"
                     Margin="0,0,15,0"
-					Background="#512BD4"
                     icon:Attached.Icon="mdi-account-plus"
+                    Background="#512BD4"
+                    Command="{Binding AddClientCommand}"
                     FontSize="24" />
                 <Button
-					x:Name="EditClientBtn"
+                    x:Name="EditClientBtn"
                     Margin="0,0,15,0"
                     icon:Attached.Icon="mdi-account-edit"
-					Background="#512BD4"
+                    Background="#512BD4"
                     Command="{Binding EditClientCommand}"
                     FontSize="24" />
                 <Button
-					x:Name="DeleteClientBtn"
+                    x:Name="DeleteClientBtn"
                     Margin="0,0,15,0"
                     icon:Attached.Icon="mdi-account-minus"
+                    Background="#512BD4"
                     Command="{Binding OnDeleteCommand}"
-					Background="#512BD4"
                     FontSize="24" />
 
                 <Button
-					x:Name="GoReparationsBtn"
+                    x:Name="GoReparationsBtn"
                     Margin="0,0,15,0"
                     icon:Attached.Icon="mdi-account-hard-hat"
-					Background="#512BD4"
+                    Background="#512BD4"
                     Command="{Binding GoToClientesView}"
                     FontSize="24" />
                 <Button
-					x:Name="SeeGraphicBtn"
+                    x:Name="SeeGraphicBtn"
                     Margin="0,0,15,0"
                     icon:Attached.Icon="mdi-file-chart"
-					Background="#512BD4"
+                    Background="#512BD4"
                     Command="{Binding ButtonAbrirGrafica}"
-                    
                     FontSize="24" />
 
 
@@ -125,22 +124,22 @@
             ItemsSource="{Binding FilteredItems}"
             SelectedItem="{Binding SelectedClient}">
             <DataGrid.Styles>
-				<Style Selector="DataGridColumnHeader">
-					<Setter Property="FontSize" Value="15" />
-					<Setter Property="FontWeight" Value="Bold" />
-					<Setter Property="Foreground" Value="#FFFFFF" />
-					<Setter Property="Background" Value="#252525" />
-					<Setter Property="HorizontalContentAlignment" Value="Center" />
-				</Style>
-				<Style Selector="DataGridRow:nth-child(odd)">
-					<Setter Property="Background" Value="#252525" />
-					<Setter Property="Foreground" Value="#DDDDDD" />
-				</Style>
+                <Style Selector="DataGridColumnHeader">
+                    <Setter Property="FontSize" Value="15" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="Foreground" Value="#FFFFFF" />
+                    <Setter Property="Background" Value="#252525" />
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                </Style>
+                <Style Selector="DataGridRow:nth-child(odd)">
+                    <Setter Property="Background" Value="#252525" />
+                    <Setter Property="Foreground" Value="#DDDDDD" />
+                </Style>
 
-				<Style Selector="DataGridRow:nth-child(even)">
-					<Setter Property="Background" Value="#1E1E1E" />
-					<Setter Property="Foreground" Value="#DDDDDD" />
-				</Style>
+                <Style Selector="DataGridRow:nth-child(even)">
+                    <Setter Property="Background" Value="#1E1E1E" />
+                    <Setter Property="Foreground" Value="#DDDDDD" />
+                </Style>
             </DataGrid.Styles>
             <DataGrid.Columns>
                 <DataGridTextColumn

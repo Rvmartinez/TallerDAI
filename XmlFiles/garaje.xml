@@ -2,23 +2,12 @@
   <Coche>
     <Matricula>1010AAA</Matricula>
     <Marca>Renault</Marca>
-    <Modelo>I30</Modelo>
-    <Cliente>
-      <DNI>77482984d</DNI>
-      <Nombre>Ruben</Nombre>
-      <Email>vilas@email.com</Email>
-      <IdCliente>5</IdCliente>
-    </Cliente>
-  </Coche>
-  <Coche>
-    <Matricula>1010BBB</Matricula>
-    <Marca>Renault</Marca>
     <Modelo>MEGANE</Modelo>
     <Cliente>
-      <DNI>77482985d</DNI>
-      <Nombre>Ruben</Nombre>
-      <Email>ruben@email.com</Email>
-      <IdCliente>2</IdCliente>
+      <DNI>87654321d</DNI>
+      <Nombre>Antonio</Nombre>
+      <Email>antonio@email.com</Email>
+      <IdCliente>1</IdCliente>
     </Cliente>
   </Coche>
   <Coche>
@@ -26,20 +15,20 @@
     <Marca>Hyundai</Marca>
     <Modelo>I30</Modelo>
     <Cliente>
-      <DNI>87654321t</DNI>
+      <DNI>87654353a</DNI>
       <Nombre>Felipe</Nombre>
       <Email>felipe@email.com</Email>
-      <IdCliente>4</IdCliente>
+      <IdCliente>2</IdCliente>
     </Cliente>
   </Coche>
   <Coche>
     <Matricula>3030CCC</Matricula>
-    <Marca>Bmw</Marca>
-    <Modelo>M3</Modelo>
+    <Marca>Citroen</Marca>
+    <Modelo>206</Modelo>
     <Cliente>
-      <DNI>12345678x</DNI>
-      <Nombre>Antonio</Nombre>
-      <Email>antonio@email.com</Email>
+      <DNI>19191919d</DNI>
+      <Nombre>Cristobal</Nombre>
+      <Email>cristobal@email.com</Email>
       <IdCliente>3</IdCliente>
     </Cliente>
   </Coche>

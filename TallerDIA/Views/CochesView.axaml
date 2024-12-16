@@ -15,16 +15,16 @@
     mc:Ignorable="d">
     <UserControl.Styles>
         <Style Selector="Button#BtAdd">
-            <Setter Property="ToolTip.Tip" Value="Añadir coche"></Setter>
+            <Setter Property="ToolTip.Tip" Value="Añadir coche" />
         </Style>
         <Style Selector="Button#BtDelete">
-            <Setter Property="ToolTip.Tip" Value="Eliminar coche"></Setter>
+            <Setter Property="ToolTip.Tip" Value="Eliminar coche" />
         </Style>
         <Style Selector="Button#BtEdit">
-            <Setter Property="ToolTip.Tip" Value="Editar coche"></Setter>
+            <Setter Property="ToolTip.Tip" Value="Editar coche" />
         </Style>
         <Style Selector="Button#BtClient">
-            <Setter Property="ToolTip.Tip" Value="Ver cliente"></Setter>
+            <Setter Property="ToolTip.Tip" Value="Ver cliente" />
         </Style>
     </UserControl.Styles>
     <Grid>
@@ -33,16 +33,22 @@
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        
+
         <Grid Margin="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <TextBox Grid.Column="0" Watermark="Búsqueda" Text="{Binding FilterText}"></TextBox>
-            <ComboBox Grid.Column="1" ItemsSource="{Binding FilterModes}" SelectedIndex="{Binding SelectedFilterMode}"></ComboBox>
+            <TextBox
+                Grid.Column="0"
+                Text="{Binding FilterText}"
+                Watermark="Búsqueda" />
+            <ComboBox
+                Grid.Column="1"
+                ItemsSource="{Binding FilterModes}"
+                SelectedIndex="{Binding SelectedFilterMode}" />
         </Grid>
-    
+
         <StackPanel
             Grid.Row="1"
             HorizontalAlignment="Stretch"
@@ -64,34 +70,31 @@
                 <Button
                     Name="BtAdd"
                     Margin="0,0,15,0"
-					Background="#512BD4"
                     icon:Attached.Icon="mdi-plus-box-multiple"
+                    Background="#512BD4"
                     Command="{Binding SubirCocheCommand}"
                     FontSize="24" />
                 <Button
                     Name="BtEdit"
-                    Command="{Binding EditarCocheCommand}"
                     Margin="0,0,15,0"
                     icon:Attached.Icon="mdi-car-cog"
-					Background="#512BD4"
-                    FontSize="24"
-					
-                    />
+                    Background="#512BD4"
+                    Command="{Binding EditarCocheCommand}"
+                    FontSize="24" />
                 <Button
                     Name="BtDelete"
                     Margin="0,0,15,0"
                     icon:Attached.Icon="mdi-car-off"
-					Background="#512BD4"
+                    Background="#512BD4"
                     Command="{Binding BorrarCocheCommand}"
                     FontSize="24" />
                 <Button
                     Name="BtClient"
                     Margin="0,0,15,0"
-					Background="#512BD4"
                     icon:Attached.Icon="mdi-seat-passenger"
+                    Background="#512BD4"
                     Command="{Binding MostrarClienteCommand}"
-                    FontSize="24" 
-                    />
+                    FontSize="24" />
             </StackPanel>
         </Grid>
         <DataGrid
@@ -104,29 +107,41 @@
             ItemsSource="{Binding FilteredItems}"
             SelectedItem="{Binding SelectedCar}">
 
-			<DataGrid.Styles>
-				<Style Selector="DataGridColumnHeader">
-					<Setter Property="FontSize" Value="15" />
-					<Setter Property="FontWeight" Value="Bold" />
-					<Setter Property="Foreground" Value="#FFFFFF" />
-					<Setter Property="Background" Value="#252525" />
-					<Setter Property="HorizontalContentAlignment" Value="Center" />
-				</Style>
-				<Style Selector="DataGridRow:nth-child(odd)">
-					<Setter Property="Background" Value="#252525" />
-					<Setter Property="Foreground" Value="#DDDDDD" />
-				</Style>
+            <DataGrid.Styles>
+                <Style Selector="DataGridColumnHeader">
+                    <Setter Property="FontSize" Value="15" />
+                    <Setter Property="FontWeight" Value="Bold" />
+                    <Setter Property="Foreground" Value="#FFFFFF" />
+                    <Setter Property="Background" Value="#252525" />
+                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                </Style>
+                <Style Selector="DataGridRow:nth-child(odd)">
+                    <Setter Property="Background" Value="#252525" />
+                    <Setter Property="Foreground" Value="#DDDDDD" />
+                </Style>
 
-				<Style Selector="DataGridRow:nth-child(even)">
-					<Setter Property="Background" Value="#1E1E1E" />
-					<Setter Property="Foreground" Value="#DDDDDD" />
-				</Style>
-			</DataGrid.Styles>
+                <Style Selector="DataGridRow:nth-child(even)">
+                    <Setter Property="Background" Value="#1E1E1E" />
+                    <Setter Property="Foreground" Value="#DDDDDD" />
+                </Style>
+            </DataGrid.Styles>
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Matricula}" Width="auto" Header="Matricula" />
-                <DataGridTextColumn Binding="{Binding Marca}" Width="auto"  Header="Marca" />
-				<DataGridTextColumn Binding="{Binding Modelo}" Width="auto"  Header="Modelo" />
-				<DataGridTextColumn Binding="{Binding Owner.DNI}" Width="auto"  Header="Dueño" />
+                <DataGridTextColumn
+                    Width="auto"
+                    Binding="{Binding Matricula}"
+                    Header="Matricula" />
+                <DataGridTextColumn
+                    Width="auto"
+                    Binding="{Binding Marca}"
+                    Header="Marca" />
+                <DataGridTextColumn
+                    Width="auto"
+                    Binding="{Binding Modelo}"
+                    Header="Modelo" />
+                <DataGridTextColumn
+                    Width="auto"
+                    Binding="{Binding Owner.DNI}"
+                    Header="Dueño" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

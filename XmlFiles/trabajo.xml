@@ -1,70 +1,70 @@
 <Trabajos>
   <Reparacion>
     <Empleado>
-      <DNI>77482948M</DNI>
-      <Nombre>Eugenio</Nombre>
-      <Email>eugenio@email.com</Email>
+      <DNI>73737373d</DNI>
+      <Nombre>Manolo</Nombre>
+      <Email>manolo@email.com</Email>
     </Empleado>
     <Cliente>
-      <DNI>12345678x</DNI>
-      <Nombre>Antonio</Nombre>
-      <Email>antonio@email.com</Email>
+      <DNI>19191919d</DNI>
+      <Nombre>Cristobal</Nombre>
+      <Email>cristobal@email.com</Email>
       <IdCliente>3</IdCliente>
     </Cliente>
-    <Asunto>Cambio de aceite</Asunto>
-    <FechaInicio>2024-12-16 04:53:19</FechaInicio>
+    <Asunto>Cambo aceite</Asunto>
+    <FechaInicio>2023-12-16 16:12:25</FechaInicio>
     <FechaFin>1111-11-11 11:11:11</FechaFin>
-    <Nota>Caro</Nota>
+    <Nota>Hacerlo caro</Nota>
   </Reparacion>
   <Reparacion>
     <Empleado>
-      <DNI>12345677s</DNI>
+      <DNI>74747474d</DNI>
       <Nombre>Paco</Nombre>
       <Email>paco@email.com</Email>
     </Empleado>
     <Cliente>
-      <DNI>77482985d</DNI>
-      <Nombre>Ruben</Nombre>
-      <Email>ruben@email.com</Email>
-      <IdCliente>2</IdCliente>
+      <DNI>19191919d</DNI>
+      <Nombre>Cristobal</Nombre>
+      <Email>cristobal@email.com</Email>
+      <IdCliente>3</IdCliente>
     </Cliente>
     <Asunto>Cambio ruedas</Asunto>
-    <FechaInicio>2024-12-16 04:53:32</FechaInicio>
+    <FechaInicio>2024-05-17 16:14:49</FechaInicio>
     <FechaFin>1111-11-11 11:11:11</FechaFin>
-    <Nota>Inflar precio</Nota>
+    <Nota>Viejas</Nota>
   </Reparacion>
   <Reparacion>
     <Empleado>
-      <DNI>12345677s</DNI>
+      <DNI>73737373d</DNI>
+      <Nombre>Manolo</Nombre>
+      <Email>manolo@email.com</Email>
+    </Empleado>
+    <Cliente>
+      <DNI>19191919d</DNI>
+      <Nombre>Cristobal</Nombre>
+      <Email>cristobal@email.com</Email>
+      <IdCliente>3</IdCliente>
+    </Cliente>
+    <Asunto>Cambio luces</Asunto>
+    <FechaInicio>2024-03-15 16:15:13</FechaInicio>
+    <FechaFin>1111-11-11 11:11:11</FechaFin>
+    <Nota>Poner led</Nota>
+  </Reparacion>
+  <Reparacion>
+    <Empleado>
+      <DNI>74747474d</DNI>
       <Nombre>Paco</Nombre>
       <Email>paco@email.com</Email>
     </Empleado>
     <Cliente>
-      <DNI>87654321t</DNI>
+      <DNI>87654353a</DNI>
       <Nombre>Felipe</Nombre>
       <Email>felipe@email.com</Email>
-      <IdCliente>4</IdCliente>
+      <IdCliente>2</IdCliente>
     </Cliente>
-    <Asunto>Pintar</Asunto>
-    <FechaInicio>2024-12-16 04:53:53</FechaInicio>
+    <Asunto>Pintar puerta piloto</Asunto>
+    <FechaInicio>2024-11-01 16:16:22</FechaInicio>
     <FechaFin>1111-11-11 11:11:11</FechaFin>
-    <Nota>Eso si, caro caro</Nota>
-  </Reparacion>
-  <Reparacion>
-    <Empleado>
-      <DNI>77482948M</DNI>
-      <Nombre>Eugenio</Nombre>
-      <Email>eugenio@email.com</Email>
-    </Empleado>
-    <Cliente>
-      <DNI>77482984d</DNI>
-      <Nombre>Ruben</Nombre>
-      <Email>vilas@email.com</Email>
-      <IdCliente>1</IdCliente>
-    </Cliente>
-    <Asunto>RRR</Asunto>
-    <FechaInicio>2024-12-16 04:10:56</FechaInicio>
-    <FechaFin>1111-11-11 11:11:11</FechaFin>
-    <Nota>R</Nota>
+    <Nota>Blanco roto</Nota>
   </Reparacion>
 </Trabajos>
