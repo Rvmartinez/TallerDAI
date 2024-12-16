@@ -1,5 +1,4 @@
 ﻿using System;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -9,13 +8,10 @@ using CommunityToolkit.Mvvm.Input;
 using TallerDIA.Models;
 using TallerDIA.Views.Dialogs;
 using Avalonia;
-using Avalonia.Controls;
-using Avalonia.LogicalTree;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Enums;
-using ColorTextBlock.Avalonia;
 using TallerDIA.Utils;
-using TallerDIA.Views;
+using System.Threading.Tasks;
 namespace TallerDIA.ViewModels;
 
 public partial class CochesViewModel : FilterViewModel<Coche>
@@ -54,7 +50,7 @@ public partial class CochesViewModel : FilterViewModel<Coche>
 
 
     [RelayCommand]
-    public async void BorrarCocheCommand()
+    public async Task BorrarCocheCommand()
     {
         if(SelectedCar == null) { return; }
         
@@ -78,14 +74,15 @@ public partial class CochesViewModel : FilterViewModel<Coche>
     }
 
     [RelayCommand]
-    public async void SubirCocheCommand()
+    public async Task SubirCocheCommand()
     {
         var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
             ? desktop.MainWindow
             : null;
         var cocheDlg = new CocheDlg();
+        if (mainWindow == null) return;
         await cocheDlg.ShowDialog(mainWindow);
-        
+
         if (!cocheDlg.IsCanceled)
         {
             Cliente c = SharedDB.Instance.ConsultaClienteByDni(cocheDlg.ClientesCb.SelectedItem.ToString());
@@ -96,13 +93,14 @@ public partial class CochesViewModel : FilterViewModel<Coche>
     }
 
     [RelayCommand]
-    public async void EditarCocheCommand()
+    public async Task EditarCocheCommand()
     {
         if(SelectedCar == null) { return; }
         
         var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
             ? desktop.MainWindow
             : null;
+                if (mainWindow == null) return;
         var cocheDlg = new CocheDlg(SelectedCar);
         cocheDlg.MarcasCb.IsEnabled = false;
         cocheDlg.ModeloTb.IsEnabled = false;
@@ -132,19 +130,26 @@ public partial class CochesViewModel : FilterViewModel<Coche>
        var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
             ? desktop.MainWindow
             : null;
+                if (mainWindow == null) return;
        var ClienteDlg = new ClienteDlg(SelectedCar.Owner);
-       await ClienteDlg.ShowDialog(mainWindow);
+        await ClienteDlg.ShowDialog(mainWindow);
        
        if (!ClienteDlg.IsCancelled)
        {
-           Cliente antiguo = new Cliente
-           {
-               DNI = cli.DNI, Email = cli.DNI, Nombre = cli.Nombre, IdCliente = 0
-           };
-           Cliente nuevo = new Cliente
-           {
-               DNI = ClienteDlg.DniTB.Text, Email = ClienteDlg.EmailTB.Text, Nombre = ClienteDlg.NombreTB.Text, IdCliente = 0
-           };
+            Cliente antiguo = new Cliente
+            {
+                DNI = cli.DNI,
+                Email = cli.DNI,
+                Nombre = cli.Nombre,
+                IdCliente = 0
+            };
+            Cliente nuevo = new Cliente
+            {
+                DNI = ClienteDlg.DniTB.Text,
+                Email = ClienteDlg.EmailTB.Text,
+                Nombre = ClienteDlg.NombreTB.Text,
+                IdCliente = 0
+            };
            SharedDB.Instance.EditClient(SelectedCar.Owner, nuevo);
            foreach (var car in _garaje.Coches)
            {
@@ -163,13 +168,11 @@ public partial class CochesViewModel : FilterViewModel<Coche>
     public void AddCoche(Coche coche)
     {
         _garaje.Add(coche);
-        ToString();
     }
 
     public void RemoveCoche(string matricula)
     {
         _garaje.RemoveMatricula(matricula);
-        ToString();
     }
 
     public void EditCoche(Coche antiguo, Coche nuevo)
@@ -177,12 +180,6 @@ public partial class CochesViewModel : FilterViewModel<Coche>
         _garaje.RemoveMatricula(antiguo.Matricula);
         _garaje.Add(nuevo);
         
-        ToString();
-    }
-
-    public void ToString()
-    {
-        Console.WriteLine(SharedDB.Instance.Garaje);
     }
 
     public override ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>(["Matricula","Marca","Modelo"]);

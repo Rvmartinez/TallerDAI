@@ -13,29 +13,29 @@
     x:DataType="vm:ClientesViewModel"
     mc:Ignorable="d">
 
-	<UserControl.Styles>
-		<Style Selector="Button">
-			<Setter Property="FontSize" Value="24"/>
-			<Setter Property="HorizontalAlignment" Value="Right"></Setter>
-			<Setter Property="VerticalAlignment" Value="Top"></Setter>
-		</Style>
-		<Style Selector="Button#AddClientBtn">
-			<Setter Property="ToolTip.Tip" Value="Añadir Cliente."></Setter>
-		</Style>
-		<Style Selector="Button#EditClientBtn">
-			<Setter Property="ToolTip.Tip" Value="Editar cliente seleccionado."></Setter>
-		</Style>
-		<Style Selector="Button#DeleteClientBtn">
-			<Setter Property="ToolTip.Tip" Value="Eliminar cliente seleccionado."></Setter>
-		</Style>
-		<Style Selector="Button#GoReparationsBtn">
-			<Setter Property="ToolTip.Tip" Value="Ver reparaciones del cliente."></Setter>
-		</Style>
-		<Style Selector="Button#SeeGraphicBtn">
-			<Setter Property="ToolTip.Tip" Value="Ver grafico del cliente."></Setter>
-		</Style>
+	    <UserControl.Styles>
+		    <Style Selector="Button">
+			    <Setter Property="FontSize" Value="24"/>
+			    <Setter Property="HorizontalAlignment" Value="Right"></Setter>
+			    <Setter Property="VerticalAlignment" Value="Top"></Setter>
+		    </Style>
+		    <Style Selector="Button#AddClientBtn">
+			    <Setter Property="ToolTip.Tip" Value="Añadir Cliente."></Setter>
+		    </Style>
+		    <Style Selector="Button#EditClientBtn">
+			    <Setter Property="ToolTip.Tip" Value="Editar cliente seleccionado."></Setter>
+		    </Style>
+		    <Style Selector="Button#DeleteClientBtn">
+			    <Setter Property="ToolTip.Tip" Value="Eliminar cliente seleccionado."></Setter>
+		    </Style>
+		    <Style Selector="Button#GoReparationsBtn">
+			    <Setter Property="ToolTip.Tip" Value="Ver reparaciones del cliente."></Setter>
+		    </Style>
+		    <Style Selector="Button#SeeGraphicBtn">
+			    <Setter Property="ToolTip.Tip" Value="Ver grafico del cliente."></Setter>
+		    </Style>
 
-	</UserControl.Styles>
+	    </UserControl.Styles>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -123,7 +123,6 @@
             <DataGrid.Styles>
                 <Style Selector="DataGridColumnHeader">
                     <Setter Property="FontSize" Value="15" />
-                    <Setter Property="HorizontalAlignment" Value="Center" />
                     <Setter Property="FontWeight" Value="Bold" />
                 </Style>
             </DataGrid.Styles>

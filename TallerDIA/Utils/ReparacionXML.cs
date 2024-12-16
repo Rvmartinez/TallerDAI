@@ -17,8 +17,10 @@ public class ReparacionXML
         doc.AppendChild(root);
 
         String rutaArchivo = Settings.Instance.GetFilepath("trabajo");
-        string directorio = Path.GetDirectoryName(rutaArchivo);
-        if (!Directory.Exists(directorio))
+        string directorio = Path.GetDirectoryName(rutaArchivo) ?? "";
+        if (directorio == "")
+            return;
+        else if (!Directory.Exists(directorio))
         {
             Directory.CreateDirectory(directorio);
         }
@@ -40,11 +42,11 @@ public class ReparacionXML
             reparacionElement.AppendChild(asuntoElement);
 
             XmlElement fechaInicialElement = doc.CreateElement("FechaInicio");
-            fechaInicialElement.InnerText = reparacion.FechaInicio.ToString("yyyy-MM-dd");
+            fechaInicialElement.InnerText = reparacion.FechaInicio.ToString("yyyy-MM-dd HH:mm:ss");
             reparacionElement.AppendChild(fechaInicialElement);
 
             XmlElement fechaFinalElement = doc.CreateElement("FechaFin");
-            fechaFinalElement.InnerText = reparacion.FechaFin.ToString("yyyy-MM-dd");
+            fechaFinalElement.InnerText = reparacion.FechaFin.ToString("yyyy-MM-dd HH:mm:ss");
             reparacionElement.AppendChild(fechaFinalElement);
 
             XmlElement notasElement = doc.CreateElement("Nota");
@@ -62,7 +64,7 @@ public class ReparacionXML
         }
         catch (Exception ex)
         {
-            Console.WriteLine("No se ha podido guardar el archivo");
+            Console.WriteLine(ex.Message);
         }
     }
 

@@ -11,95 +11,124 @@
     d:DesignWidth="800"
     x:DataType="gestiónDeReparaciones:ReparacionesViewModel"
     mc:Ignorable="d">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="0" Margin="5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="auto" />
-            </Grid.ColumnDefinitions>
-            <TextBlock Grid.Column="0" Margin="10">Fecha entre</TextBlock>
-            <DatePicker Grid.Column="1" Margin="5" SelectedDate="{Binding MinDate}"></DatePicker>
-            <TextBlock Grid.Column="2" Margin="10"> Y </TextBlock>
-            <DatePicker Grid.Column="3" Margin="5" SelectedDate="{Binding MaxDate}"></DatePicker>
-            
 
-            <TextBox Grid.Column="4"  Margin="10" Watermark="Búsqueda" Text="{Binding FilterText}"></TextBox>
-            <ComboBox Grid.Column="5" Margin="10" ItemsSource="{Binding FilterModes}" SelectedIndex="{Binding SelectedFilterMode}"></ComboBox>
-        </Grid>
-        <StackPanel
+
+	<UserControl.Styles>
+		<Style Selector="Button">
+			<Setter Property="FontSize" Value="24"/>
+			<Setter Property="HorizontalAlignment" Value="Right"></Setter>
+			<Setter Property="VerticalAlignment" Value="Top"></Setter>
+		</Style>
+		<Style Selector="Button#AddRepairBtn">
+			<Setter Property="ToolTip.Tip" Value="Añadir reparación."></Setter>
+		</Style>
+		<Style Selector="Button#EditRepairBtn">
+			<Setter Property="ToolTip.Tip" Value="Editar reparación seleccionada."></Setter>
+		</Style>
+		<Style Selector="Button#DeleteRepairBtn">
+			<Setter Property="ToolTip.Tip" Value="Eliminar reparación seleccionada."></Setter>
+		</Style>
+		<Style Selector="Button#NavigateBtn">
+			<Setter Property="ToolTip.Tip" Value="Ver información asociada."></Setter>
+		</Style>
+		<Style Selector="Button#EndRepairBtn">
+			<Setter Property="ToolTip.Tip" Value="Terminar reparación."></Setter>
+		</Style>
+
+		<Style Selector="Button#GraphicBtn">
+			<Setter Property="ToolTip.Tip" Value="Mostrar gráfico de reparaciones."></Setter>
+		</Style>
+
+	</UserControl.Styles>
+
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="auto" />
+			<RowDefinition Height="auto" />
+			<RowDefinition Height="*" />
+		</Grid.RowDefinitions>
+		<Grid Grid.Row="0" Margin="5">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="auto" />
+				<ColumnDefinition Width="auto" />
+				<ColumnDefinition Width="auto" />
+				<ColumnDefinition Width="auto" />
+				<ColumnDefinition Width="*" />
+				<ColumnDefinition Width="auto" />
+			</Grid.ColumnDefinitions>
+			<TextBlock Grid.Column="0" Margin="10">Fecha entre</TextBlock>
+			<DatePicker Grid.Column="1" Margin="5" SelectedDate="{Binding MinDate}"></DatePicker>
+			<TextBlock Grid.Column="2" Margin="10"> Y </TextBlock>
+			<DatePicker Grid.Column="3" Margin="5" SelectedDate="{Binding MaxDate}"></DatePicker>
+
+
+			<TextBox Grid.Column="4"  Margin="10" Watermark="Búsqueda" Text="{Binding FilterText}"></TextBox>
+			<ComboBox Grid.Column="5" Margin="10" ItemsSource="{Binding FilterModes}" SelectedIndex="{Binding SelectedFilterMode}"></ComboBox>
+		</Grid>
+		<StackPanel
             Grid.Row="1"
             HorizontalAlignment="Stretch"
             Orientation="Horizontal" />
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <TextBlock
+		<Grid Grid.Row="1">
+			<Grid.ColumnDefinitions>
+				<ColumnDefinition Width="auto" />
+				<ColumnDefinition Width="*" />
+			</Grid.ColumnDefinitions>
+			<TextBlock
                 Grid.Column="0"
                 Margin="10"
                 FontSize="18"
                 Text="Listado de Reparaciones" />
-            <StackPanel
+			<StackPanel
                 Grid.Column="1"
                 HorizontalAlignment="Right"
                 Orientation="Horizontal">
-                <Button
+				<Button
                     Margin="0,0,15,0"
+					x:Name="AddRepairBtn"
                     icon:Attached.Icon="mdi-plus-circle"
                     Command="{Binding AddRepaisCommand}"
                     FontSize="24" />
-                <Button
+				<Button
                     Margin="0,0,15,0"
+					x:Name="EditRepairBtn"
                     icon:Attached.Icon="mdi-pencil"
                     Command="{Binding ModifyRepaisCommand}"
                     FontSize="24" />
-                <Button
+				<Button
                     Margin="0,0,15,0"
+					x:Name="DeleteRepairBtn"
                     icon:Attached.Icon="mdi-minus-circle"
                     Command="{Binding ButtonEliminarReparacionCommand}"
                     FontSize="24" />
-                <Button
+				<Button
                     Margin="0,0,15,0"
+					x:Name="EndRepairBtn"
+                    icon:Attached.Icon="mdi-calendar-check"
+                    Command="{Binding ButtonFinalizarReparacionCommand}"
+                    FontSize="24" />
+				<Button
+                    Margin="0,0,15,0"
+					x:Name="NavigateBtn"
                     icon:Attached.Icon="mdi-information"
                     Command="{Binding ButtonNevegarCommand}"
                     FontSize="24" />
-                <Button
+
+				<Button
                     Margin="0,0,15,0"
-                    icon:Attached.Icon="mdi-calendar-check"
-                    Command="{Binding ButtonFinalizarReparacionCommand}"
-                    
-                    FontSize="24" />
-                
-                <Button
-                    Margin="0,0,15,0"
+					x:Name="GraphicBtn"
                     icon:Attached.Icon="mdi-file-chart"
                     Command="{Binding ButtonAbrirGrafica}"
                     FontSize="24" />
-                <Button
-                    Margin="0,0,15,0"
-                    icon:Attached.Icon="mdi-restore"
-                    Command="{Binding ForceUpdateUI}"
-                    
-                    FontSize="24" />
-               
-                
-               
 
 
-            </StackPanel>
-        </Grid>
 
-        <DataGrid
+
+
+			</StackPanel>
+		</Grid>
+
+		<DataGrid
             x:Name="DgReparaciones"
             Grid.Row="2"
             BorderBrush="Purple"
@@ -108,29 +137,29 @@
             IsReadOnly="True"
             ItemsSource="{Binding FilteredItems}"
             SelectedItem="{Binding SelectedRepair}">
-            <DataGrid.Styles>
-                <Style Selector="DataGridColumnHeader">
-                    <Setter Property="FontSize" Value="15" />
-                    <Setter Property="HorizontalAlignment" Value="Center" />
-                    <Setter Property="FontWeight" Value="Bold" />
-                </Style>
-            </DataGrid.Styles>
-            <DataGrid.Columns>
+			<DataGrid.Styles>
+				<Style Selector="DataGridColumnHeader">
+					<Setter Property="FontSize" Value="15" />
+					<Setter Property="HorizontalAlignment" Value="Center" />
+					<Setter Property="FontWeight" Value="Bold" />
+				</Style>
+			</DataGrid.Styles>
+			<DataGrid.Columns>
 
-                        <DataGridTextColumn Header="Asunto" IsReadOnly="False" Binding="{Binding Asunto}" />
+				<DataGridTextColumn Header="Asunto" IsReadOnly="False" Binding="{Binding Asunto}" />
 
-                        <DataGridTextColumn Header="Nota" IsReadOnly="False" Binding="{Binding Nota}" />
+				<DataGridTextColumn Header="Nota" IsReadOnly="False" Binding="{Binding Nota}" />
 
-                        <DataGridTextColumn Header="Fecha Inicio" IsReadOnly="True" Binding="{Binding FechaInicio}" />
+				<DataGridTextColumn Header="Fecha Inicio" IsReadOnly="True" Binding="{Binding FechaInicio}" />
 
-                        <DataGridTextColumn Header="Fecha Fin" IsReadOnly="True" Binding="{Binding FechaFin}" />
+				<DataGridTextColumn Header="Fecha Fin" IsReadOnly="True" Binding="{Binding FechaFin}" />
 
-                        <DataGridTextColumn Header="Cliente" IsReadOnly="True" Binding="{Binding Cliente.Nombre}" />
+				<DataGridTextColumn Header="Cliente" IsReadOnly="True" Binding="{Binding Cliente.Nombre}" />
 
-                        <DataGridTextColumn Header="Empleado" IsReadOnly="True" Binding="{Binding Empleado.Nombre}" />
+				<DataGridTextColumn Header="Empleado" IsReadOnly="True" Binding="{Binding Empleado.Nombre}" />
 
-                    </DataGrid.Columns>
-        </DataGrid>
-    </Grid>
-    
+			</DataGrid.Columns>
+		</DataGrid>
+	</Grid>
+
 </UserControl>

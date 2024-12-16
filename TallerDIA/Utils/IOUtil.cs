@@ -1,6 +1,7 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
+using Avalonia.Platform.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,22 +14,28 @@ namespace TallerDIA.Utils
     {
         public static async Task<string?> RequestFolderPath()
         {
+            Window? mainWindow = null;
 
-            Window mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop ? desktop.MainWindow : null;
-            if(mainWindow == null)
+            if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                mainWindow = desktop.MainWindow;
+            }
+            else
             {
                 mainWindow = new Window();
             }
-            var dialog = new OpenFolderDialog
+            if (mainWindow?.StorageProvider != null)
             {
-                Title = "Seleccionar Carpeta"
-            };
+                var openFolderOptions = new FolderPickerOpenOptions
+                {
+                    Title = "Seleccionar una Carpeta"
+                };
+                IReadOnlyList<IStorageFolder>? folder = await mainWindow.StorageProvider.OpenFolderPickerAsync(openFolderOptions);
 
-            string? result = await dialog.ShowAsync(mainWindow);
-
-            if (result != null)
-            {
-                return result;
+                if (folder != null)
+                {
+                    return folder.FirstOrDefault()?.Path.AbsolutePath;
+                }
             }
 
             return null;

@@ -6,11 +6,13 @@ using System.Collections.Generic;
 using System.Linq;
 using Avalonia.Controls;
 using TallerDIA.Models;
+using TallerDIA.Utils;
 
-namespace TallerDIA.Views {
+namespace TallerDIA.Views.Dialogs
+{
     public partial class ChartWindow : Window
     {
-
+        public ChartWindow() { }
         public ChartWindow(Reparaciones reparaciones, ConfigChart? config)
         {
             InitializeComponent();
@@ -58,7 +60,6 @@ namespace TallerDIA.Views {
                 {
                     Rango.IsVisible = false;
                     RangoText.IsVisible = false;
-                    rangoFilter = true;
                     mostrandoAnuales = (config.Modo == 0);
                 }
 
@@ -149,7 +150,6 @@ namespace TallerDIA.Views {
         private int annoSelected = 0;
         private bool annosFilter = false;
         private bool mostrandoAnuales = true;
-        private bool rangoFilter = false;
         private bool isFechaFin = true;
     }
 }

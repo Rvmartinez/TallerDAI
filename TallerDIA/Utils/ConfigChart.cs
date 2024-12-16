@@ -1,11 +1,11 @@
-﻿namespace TallerDIA.Views;
+﻿namespace TallerDIA.Utils;
 
 /// <summary>
 /// Permite configurar una ventana ChartWindow o DesgloseWindow. Los datos no especificados se especificarán por ComboBox.
 /// </summary>
 public class ConfigChart
 {
-   
+
     public enum ModoVision
     {
         Anual,

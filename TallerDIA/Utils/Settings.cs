@@ -21,7 +21,7 @@ namespace TallerDIA.Utils
         {
             LoadSettings();
         }
-        public async Task saveSettigs()
+        public async void saveSettigs()
         {
             var options = new JsonSerializerOptions { WriteIndented = true };
             var json = JsonSerializer.Serialize(filePaths, options);
@@ -64,7 +64,7 @@ namespace TallerDIA.Utils
             }
             catch (JsonException ex)
             {
-                //error todo
+                Console.WriteLine(ex.Message);
             }
         }
     }

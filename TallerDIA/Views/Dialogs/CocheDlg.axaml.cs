@@ -45,7 +45,28 @@ public partial class CocheDlg : Window
 
         this.Closed += (_, _) => this.OnWindowClosed();
     }
-    
+    public CocheDlg(bool isvisible = false)
+    {
+        InitializeComponent();
+        var opciones = Enum.GetValues(typeof(Coche.Marcas)).Cast<Coche.Marcas>().ToList();
+        this.MarcasCb.ItemsSource = opciones;
+        IEnumerable clientes = SharedDB.Instance.CarteraClientes.Clientes.Select(x => x.DNI);
+        //this.ClientesCb.ItemsSource = clientes;
+        
+        this.IsCanceled = false;
+        this.IsAcepted = false;
+        BtOk.IsEnabled = false;
+
+        ClientesCb.IsVisible = isvisible;
+        ErrorCliente.IsVisible = isvisible;
+        ClientesTb.IsVisible = isvisible;
+
+        BtOk.Click += (_, _) => this.Acept();
+        BtCancel.Click += (_, _) => this.Cancel();
+
+        this.Closed += (_, _) => this.OnWindowClosed();
+    }
+
 
     private void OnWindowClosed()
     {

@@ -11,8 +11,10 @@ public class ClienteXML
     {
 
         String rutaArchivo = Settings.Instance.GetFilepath("clientes");
-        string directorio = Path.GetDirectoryName(rutaArchivo);
-        if (!Directory.Exists(directorio))
+        string directorio = Path.GetDirectoryName(rutaArchivo) ?? "";
+        if (directorio == "")
+            return;
+        else if (!Directory.Exists(directorio))
         {
             Directory.CreateDirectory(directorio);
         }
@@ -53,7 +55,7 @@ public class ClienteXML
         }
         catch (Exception ex)
         {
-            Console.WriteLine("No se ha podido guardar el archivo");
+            Console.WriteLine(ex.Message);
         }
     }
     
@@ -83,10 +85,10 @@ public class ClienteXML
     {
         try
         {
-            string dni = clienteElement["DNI"].InnerText;
-            string nombre = clienteElement["Nombre"].InnerText;
-            string email = clienteElement["Email"].InnerText;
-            int idCliente = Convert.ToInt32(clienteElement["IdCliente"].InnerText);
+            string dni = clienteElement["DNI"]?.InnerText ?? "";
+            string nombre = clienteElement["Nombre"]?.InnerText ?? "";
+            string email = clienteElement["Email"]?.InnerText ?? "";
+            int idCliente = Convert.ToInt32(clienteElement["IdCliente"]?.InnerText ?? "");
 
             return new Cliente(dni, nombre, email, idCliente)
             {

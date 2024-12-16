@@ -14,11 +14,14 @@ public class EmpleadoXML
     {
 
         String rutaArchivo = Settings.Instance.GetFilepath("plantilla");
-        string directorio = Path.GetDirectoryName(rutaArchivo);
-        if (!Directory.Exists(directorio))
+        string directorio = Path.GetDirectoryName(rutaArchivo) ?? "";
+        if (directorio == "")
+            return;
+        else if (!Directory.Exists(directorio))
         {
             Directory.CreateDirectory(directorio);
         }
+
 
         XmlDocument doc = new XmlDocument();
         XmlElement root = doc.CreateElement("PlantillaEmpleados");
@@ -49,7 +52,7 @@ public class EmpleadoXML
         }
         catch (Exception ex)
         {
-            Console.WriteLine("No se ha podido guardar el archivo");
+            Console.WriteLine(ex.Message);
         }
     }
 

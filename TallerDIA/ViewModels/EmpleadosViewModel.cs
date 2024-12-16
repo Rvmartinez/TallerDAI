@@ -101,6 +101,7 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
     {
         var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop ? desktop.MainWindow : null;
         var EmpleadoDlg = new EmpleadoDlg();
+        if (mainWindow == null) return;
         await EmpleadoDlg.ShowDialog(mainWindow);
         if (!EmpleadoDlg.IsCancelled)
         {
@@ -124,10 +125,14 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
     [RelayCommand]
     public async Task btModificarEmpleado_OnClick()
     {
+        if (EmpleadoSeleccionado == null)
+            return;
+
         var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
             ? desktop.MainWindow
             : null;
         var EmpleadoDlg = new EmpleadoDlg(EmpleadoSeleccionado);
+        if (mainWindow == null) return;
         await EmpleadoDlg.ShowDialog(mainWindow);
         if (!EmpleadoDlg.IsCancelled)
         {
@@ -158,6 +163,8 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
     [RelayCommand]
     public async Task btEliminarEmpleado_OnClick()
     {
+        if (EmpleadoSeleccionado == null) 
+            return;
         var box = MessageBoxManager.GetMessageBoxStandard("Atención", "Los datos se borrarán irreversiblemente.¿Desea continuar?", ButtonEnum.OkCancel);
         var result = await box.ShowAsync();
         if (result == ButtonResult.Ok)
@@ -191,7 +198,7 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
         }
     }
     [RelayCommand]
-    public  async Task btNuevoEmpleado_OnClick()
+    public  void btNuevoEmpleado_OnClick()
     {
         EmpleadoSeleccionado=new Empleado();
         EmpleadoActual=new Empleado();
@@ -200,7 +207,7 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
     
 
     [RelayCommand]
-    public  async Task btTicketsSelecc_OnClick()
+    public  void btTicketsSelecc_OnClick()
     {
         if (EmpleadoSeleccionado == null) return;
         NavigationService.Instance.NavigateTo<ReparacionesViewModel>(EmpleadoSeleccionado.Dni);
@@ -213,7 +220,6 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
             var text = FilterText.ToLower();
             if (FilterText != "")
             {
-                DateTime date;
                 try
                 {
                     switch (FilterModes[SelectedFilterMode])
@@ -228,10 +234,8 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
                             return RegistroEmpleados.Empleados;
                     }
                 }
-                catch (FormatException e)
+                catch (FormatException)
                 {
-                    //TODO: find a good way to communicate this to the user
-                    Console.WriteLine("Fecha de busqueda no válida");
                     return RegistroEmpleados.Empleados;
                 }
             }

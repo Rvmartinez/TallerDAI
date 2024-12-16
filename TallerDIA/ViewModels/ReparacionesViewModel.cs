@@ -14,8 +14,8 @@ using Avalonia.Media;
 using TallerDIA.Models;
 using TallerDIA.Utils;
 using TallerDIA.Views.Dialogs;
-using ChartWindow = TallerDIA.Views.ChartWindow;
-using ConfigChart = TallerDIA.Views.ConfigChart;
+using ChartWindow = TallerDIA.Views.Dialogs.ChartWindow;
+using ConfigChart = TallerDIA.Utils.ConfigChart;
 using ReparacionesView = TallerDIA.Views.ReparacionesView;
 
 namespace TallerDIA.ViewModels
@@ -59,9 +59,9 @@ namespace TallerDIA.ViewModels
             get => _reparaciones.Reps;
         }
 
-        private Reparacion _selectedRepair;
+        private Reparacion? _selectedRepair;
 
-        public Reparacion SelectedRepair
+        public Reparacion? SelectedRepair
         {
             get => _selectedRepair;
             set { SetProperty(ref _selectedRepair, value); }
@@ -72,36 +72,16 @@ namespace TallerDIA.ViewModels
             ReparacionesColection = SharedDB.Instance.Reparaciones;
         }
 
-
-        public ReparacionesViewModel(Empleado empleado)
-        {
-            ReparacionesColection.Reps =
-                new ObservableCollection<Reparacion>(ReparacionesColection.Reps.Where(r => r.Empleado == empleado));
-        }
-
-        public ReparacionesViewModel(Cliente cliente)
-        {
-            ReparacionesColection.Reps =
-                new ObservableCollection<Reparacion>(ReparacionesColection.Reps.Where(r => r.Cliente == cliente));
-        }
-
         public ReparacionesViewModel(string dni)
         {
             ReparacionesColection = SharedDB.Instance.Reparaciones;
         }
-
-
-
-
         public void Initialize(object[] parameters)
         {
             if (parameters.Length > 0 && parameters[0] is string dni)
             {
-
+                SelectedFilterMode = 4;
                 FilterText = dni;
-                ForceUpdateUI();
-                //SelectedClient = FilteredItems[0];
-
             }
         
         }
@@ -149,7 +129,7 @@ namespace TallerDIA.ViewModels
         }
 
         [RelayCommand]
-        private async void OnButtonFinalizarReparacion()
+        private async Task OnButtonFinalizarReparacion()
         {
             if (SelectedRepair == null)
             {
@@ -207,6 +187,7 @@ namespace TallerDIA.ViewModels
             var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
                 ? desktop.MainWindow
                 : null;
+            if (mainWindow == null) return;
             var ReparacionDlg = new ReparacionDlg();
             await ReparacionDlg.ShowDialog(mainWindow);
 
@@ -291,9 +272,6 @@ namespace TallerDIA.ViewModels
         [RelayCommand]
         public async Task ModifyRepaisCommand()
         {
-
-
-
             if (SelectedRepair == null || SelectedRepair.FechaFin != _BASE_FINFECHA)
             {
                 return;
@@ -303,6 +281,7 @@ namespace TallerDIA.ViewModels
                 ? desktop.MainWindow
                 : null;
 
+            if (mainWindow == null) return;
             var ReparacionDlg = new ReparacionDlg(SelectedRepair);
             await ReparacionDlg.ShowDialog(mainWindow);
 
@@ -336,23 +315,10 @@ namespace TallerDIA.ViewModels
                         c.Dni.Contains(empleadoSelect[0]) && c.Nombre.Contains(empleadoSelect[1]));
 
                     empleado = empleadoI.First();
-
-                    Console.WriteLine("Reparacion creada: " + empleado.ToString());
-
-
-
-
-
-
-
                 }
                 else
                 {
-
-
                     empleado = SelectedRepair.Empleado;
-
-                    Console.WriteLine("Reparacion creada: " + empleado.ToString());
                 }
 
                 if (empleado == null)
@@ -414,6 +380,7 @@ namespace TallerDIA.ViewModels
                 var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
                     ? desktop.MainWindow
                     : null;
+                if (mainWindow == null) return;
                 var reparacionNavegarDlg = new ReparacionNavegarDlg(SelectedRepair);
                 await reparacionNavegarDlg.ShowDialog(mainWindow);
             }
@@ -441,6 +408,7 @@ namespace TallerDIA.ViewModels
                     Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop
                         ? desktop.MainWindow
                         : null;
+                if (mainWindow == null) return;
                 var reps = SharedDB.Instance.Reparaciones;
                 var reparacionNavegarDlg = new ChartWindow(reps, new ConfigChart() { FechaFin = false });
                 await reparacionNavegarDlg.ShowDialog(mainWindow);

@@ -7,11 +7,11 @@ namespace TallerDIA.Views;
 
 public partial class ReparacionesView : UserControl
 {
-    public static ReparacionesViewModel dataContext;
+    public static ReparacionesViewModel viewModel;
     public ReparacionesView()
     {
         InitializeComponent();
-        dataContext = new ReparacionesViewModel();
+        DataContext = viewModel = new ReparacionesViewModel();
     }
 
    

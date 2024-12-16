@@ -43,7 +43,7 @@ public partial class ReparacionDlg : Window
         EmpleadoTb.IsEnabled = false;
         EmpleadoTbNuevo.IsVisible = true;
         LabelNuevo.IsVisible = true;
-        BtOk.Click += (_, _) => _ = this.OnAcceptClicked();
+        BtOk.Click += (_, _) => this.OnAcceptClicked();
         BtCancel.Click += (_, _) => this.OnCancelClicked();
         ClienteTb.ItemsSource = _clientes;
         EmpleadoTb.ItemsSource= _empleados;
@@ -65,7 +65,7 @@ public partial class ReparacionDlg : Window
             _empleados.Add(SharedDB.Instance.RegistroEmpleados.Get(i).Dni + "_" + SharedDB.Instance.RegistroEmpleados.Get(i).Nombre);
         }
         InitializeComponent();
-        BtOk.Click += (_, _) => _ = this.OnAcceptClicked();
+        BtOk.Click += (_, _) => this.OnAcceptClicked();
         BtCancel.Click += (_, _) => this.OnCancelClicked();
         ClienteTb.ItemsSource = _clientes;;
         EmpleadoTb.ItemsSource=  _empleados;
@@ -79,11 +79,8 @@ public partial class ReparacionDlg : Window
         this.OnExit();
     }
 
-    async Task OnAcceptClicked()
+    void OnAcceptClicked()
     {
-        
-        
-        
         IsAcepted = true;
         this.OnExit();
     }

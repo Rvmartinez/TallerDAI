@@ -11,11 +11,14 @@ public class CocheXML
     {
 
         String rutaArchivo = Settings.Instance.GetFilepath("garaje");
-        string directorio = Path.GetDirectoryName(rutaArchivo);
-        if (!Directory.Exists(directorio))
+        string directorio = Path.GetDirectoryName(rutaArchivo) ?? "";
+        if (directorio == "")
+            return;
+        else if (!Directory.Exists(directorio))
         {
             Directory.CreateDirectory(directorio);
         }
+
 
         XmlDocument doc = new XmlDocument();
         XmlElement root = doc.CreateElement("GarajeCoches");
@@ -50,16 +53,16 @@ public class CocheXML
         }
         catch (Exception ex)
         {
-            Console.WriteLine("No se ha podido guardar el archivo");
+            Console.WriteLine(ex.Message);
         }
     }
     public static Coche CargarDeXml(XmlElement cocheElement)
     {
         try
         {
-            string matricula = cocheElement["Matricula"].InnerText;
-            string marca = cocheElement["Marca"].InnerText;
-            string modelo = cocheElement["Modelo"].InnerText;
+            string matricula = cocheElement["Matricula"]?.InnerText ?? "";
+            string marca = cocheElement["Marca"]?.InnerText ?? "";
+            string modelo = cocheElement["Modelo"]?.InnerText ?? "";
             XmlElement clienteElement = cocheElement["Cliente"];
             Cliente cliente = ClienteXML.CargarDeXml(clienteElement);
             if (Enum.TryParse(marca, true, out Coche.Marcas marcas))

@@ -21,31 +21,31 @@ namespace TallerDIA.ViewModels
 
 
         }
-        private string _garajePath;
-        public string garajePath
+        private string? _garajePath;
+        public string? garajePath
         {
             get => _garajePath;
             set => SetProperty(ref _garajePath, value);
         }
 
-        private string _plantillaPath;
-        public string plantillaPath
+        private string? _plantillaPath;
+        public string? plantillaPath
         {
             get => _plantillaPath;
             set => SetProperty(ref _plantillaPath, value);
         }
 
 
-        private string trabajosPath;
-        public string TrabajosPath
+        private string? trabajosPath;
+        public string? TrabajosPath
         {
             get => trabajosPath;
             set => SetProperty(ref trabajosPath, value);
         }
 
 
-        private string _clientesPath;
-        public string clientesPath
+        private string? _clientesPath;
+        public string? clientesPath
         {
             get => _clientesPath;
             set => SetProperty(ref _clientesPath, value);
@@ -55,7 +55,8 @@ namespace TallerDIA.ViewModels
         [RelayCommand]
         public async Task RequestGarajeFolder()
         {
-            string folder = await IOUtil.RequestFolderPath();
+            string folder = await IOUtil.RequestFolderPath()?? "";
+            if (folder == "") return;
             garajePath = Path.Combine(folder, "garaje.xml");
             Settings.Instance.AddFilePath("garaje", garajePath);
         }
@@ -64,7 +65,8 @@ namespace TallerDIA.ViewModels
         [RelayCommand]
         public async Task RequestPlantillaFolder()
         {
-            string folder = await IOUtil.RequestFolderPath();
+            string folder = await IOUtil.RequestFolderPath() ?? "";
+            if (folder == "") return;
             plantillaPath = Path.Combine(folder, "plantilla.xml");
             Settings.Instance.AddFilePath("plantilla", plantillaPath);
         }
@@ -72,7 +74,8 @@ namespace TallerDIA.ViewModels
         [RelayCommand]
         public async Task RequestClientesFolder()
         {
-            string folder = await IOUtil.RequestFolderPath();
+            string folder = await IOUtil.RequestFolderPath() ?? "";
+            if (folder == "") return;
             clientesPath = Path.Combine(folder, "clientes.xml");
             Settings.Instance.AddFilePath("clientes", clientesPath);
         }
@@ -80,7 +83,8 @@ namespace TallerDIA.ViewModels
         [RelayCommand]
         public async Task RequestTrabajosFolder()
         {
-            string folder = await IOUtil.RequestFolderPath();
+            string folder = await IOUtil.RequestFolderPath() ?? "";
+            if (folder == "") return;
             TrabajosPath = Path.Combine(folder, "trabajo.xml");
             Settings.Instance.AddFilePath("trabajo", TrabajosPath);
         }

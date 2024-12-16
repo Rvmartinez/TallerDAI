@@ -10,24 +10,21 @@ namespace TallerDIA.Views.Dialogs;
 public partial class ReparacionNavegarDlg : Window
 {
 
-
-    
-
-   
-
     public ReparacionNavegarDlg(Reparacion r)
     {
         InitializeComponent();
         
-        BtEmpleado.Click += (_, _) => this.OnBtEmpleadoClicked(r);
+        BtEmpleado.Click += async (_, _) => await this.OnBtEmpleadoClicked(r);
         BtCancel.Click += (_, _) => this.OnCancelClicked();
-        BtCliente.Click += (_, _) => this.OnBtClienteClicked(r);
-        
+        BtCliente.Click += async  (_, _) => await this.OnBtClienteClicked(r);
     }
+
+    public ReparacionNavegarDlg() { }
 
     async Task OnBtEmpleadoClicked(Reparacion r)
     {
         var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop ? desktop.MainWindow : null;
+                if (mainWindow == null) return;
         var empleadoDlg = new EmpleadoDlg(r.Empleado, true);
         await empleadoDlg.ShowDialog(mainWindow);
         this.OnExit();
@@ -36,6 +33,7 @@ public partial class ReparacionNavegarDlg : Window
     async Task OnBtClienteClicked(Reparacion r)
     { 
         var mainWindow = Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop ? desktop.MainWindow : null;
+                if (mainWindow == null) return;
         var clientedlg = new ClienteDlg(r.Cliente,true);
         await clientedlg.ShowDialog(mainWindow);
         

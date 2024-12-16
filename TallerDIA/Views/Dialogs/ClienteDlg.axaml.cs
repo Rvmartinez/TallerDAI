@@ -1,9 +1,11 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using TallerDIA.Models;
+using TallerDIA.Utils;
 
 namespace TallerDIA.Views.Dialogs;
 
@@ -30,6 +32,7 @@ public partial class ClienteDlg : Window
     public ClienteDlg(Cliente c,bool toret)
     {
         InitializeComponent();
+
         EmailTB.Text = c.Email;
         NombreTB.Text = c.Nombre;
         DniTB.Text = c.DNI;

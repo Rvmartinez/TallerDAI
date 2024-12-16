@@ -98,8 +98,12 @@ namespace TallerDIA.Utils
         public bool EditClient(Cliente cliente,Cliente updated)
         {
             Cliente toupdate = CarteraClientes.Clientes.Where(c => c.IdCliente == cliente.IdCliente).FirstOrDefault();
+            
+
 
             if (toupdate == null) return false;
+
+            EditarClienteEnReparaciones(cliente, updated);
             EditarClienteDeCoches(toupdate, updated);
             toupdate.DNI = updated.DNI;
             toupdate.Nombre = updated.Nombre;
@@ -108,6 +112,16 @@ namespace TallerDIA.Utils
             
 
             return true;
+        }
+
+        public void EditarClienteEnReparaciones(Cliente cliente, Cliente updated)
+        {
+            List<Reparacion> reparacionesAsociadas = Reparaciones.Reps.Where(c => c.Cliente.DNI == cliente.DNI).ToList();
+
+            foreach (Reparacion r in reparacionesAsociadas)
+            {
+                r.Cliente.DNI = updated.DNI;
+            }
         }
 
         public bool AddClient(Cliente c)
