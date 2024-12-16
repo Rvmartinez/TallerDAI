@@ -145,7 +145,7 @@ namespace TallerDIA.ViewModels
         {
             if (SelectedClient == null)
                 return;
-            NavigationService.Instance.NavigateTo<ReparacionesViewModel>(SelectedClient.DNI); // Pasa el ID del cliente
+            NavigationService.Instance.NavigateTo<ReparacionesViewModel>(SelectedClient.DNI,nameof(ClientesViewModel)); // Pasa el ID del cliente
         }
         [RelayCommand]
         public async Task EditClientCommand()

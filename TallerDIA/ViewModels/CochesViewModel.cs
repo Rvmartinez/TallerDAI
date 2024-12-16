@@ -121,8 +121,6 @@ public partial class CochesViewModel : FilterViewModel<Coche>
         if (SelectedCar == null) { return; }
 
         NavigationService.Instance.NavigateTo<ClientesViewModel>(SelectedCar.Owner.DNI);
-
-        //CochesClientes(SelectedCar.Owner);
     }
 
     public async void CochesClientes(Cliente cli)

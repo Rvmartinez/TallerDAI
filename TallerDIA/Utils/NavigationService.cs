@@ -69,8 +69,6 @@ namespace TallerDIA.Utils
                     vm.Initialize(parameters);
                     break;
                 case ReparacionesViewModel:
-                    //TODO: Implementar Initialize en ReparacionesViewModel y utilizar NavigateTo en la vista DESDE la que se quiere navegar y crear un constructor del viewmodel DESTINO que acepte los parameters mandados por el navigationService ( en clientes el constructor creado para esto es el que recibe un string clientId)
-
                     ReparacionesViewModel rep = (ReparacionesViewModel)viewModel;
                     rep.Initialize(parameters);
                     break;

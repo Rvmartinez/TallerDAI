@@ -1,19 +1,70 @@
 <Trabajos>
   <Reparacion>
     <Empleado>
-      <DNI>84848484d</DNI>
-      <Nombre>rr</Nombre>
-      <Email>r@rrr.co</Email>
+      <DNI>77482948M</DNI>
+      <Nombre>Eugenio</Nombre>
+      <Email>eugenio@email.com</Email>
+    </Empleado>
+    <Cliente>
+      <DNI>12345678x</DNI>
+      <Nombre>Antonio</Nombre>
+      <Email>antonio@email.com</Email>
+      <IdCliente>3</IdCliente>
+    </Cliente>
+    <Asunto>Cambio de aceite</Asunto>
+    <FechaInicio>2024-12-16 04:53:19</FechaInicio>
+    <FechaFin>1111-11-11 11:11:11</FechaFin>
+    <Nota>Caro</Nota>
+  </Reparacion>
+  <Reparacion>
+    <Empleado>
+      <DNI>12345677s</DNI>
+      <Nombre>Paco</Nombre>
+      <Email>paco@email.com</Email>
     </Empleado>
     <Cliente>
       <DNI>77482985d</DNI>
-      <Nombre>r</Nombre>
-      <Email>r@r.c</Email>
+      <Nombre>Ruben</Nombre>
+      <Email>ruben@email.com</Email>
+      <IdCliente>2</IdCliente>
+    </Cliente>
+    <Asunto>Cambio ruedas</Asunto>
+    <FechaInicio>2024-12-16 04:53:32</FechaInicio>
+    <FechaFin>1111-11-11 11:11:11</FechaFin>
+    <Nota>Inflar precio</Nota>
+  </Reparacion>
+  <Reparacion>
+    <Empleado>
+      <DNI>12345677s</DNI>
+      <Nombre>Paco</Nombre>
+      <Email>paco@email.com</Email>
+    </Empleado>
+    <Cliente>
+      <DNI>87654321t</DNI>
+      <Nombre>Felipe</Nombre>
+      <Email>felipe@email.com</Email>
+      <IdCliente>4</IdCliente>
+    </Cliente>
+    <Asunto>Pintar</Asunto>
+    <FechaInicio>2024-12-16 04:53:53</FechaInicio>
+    <FechaFin>1111-11-11 11:11:11</FechaFin>
+    <Nota>Eso si, caro caro</Nota>
+  </Reparacion>
+  <Reparacion>
+    <Empleado>
+      <DNI>77482948M</DNI>
+      <Nombre>Eugenio</Nombre>
+      <Email>eugenio@email.com</Email>
+    </Empleado>
+    <Cliente>
+      <DNI>77482984d</DNI>
+      <Nombre>Ruben</Nombre>
+      <Email>vilas@email.com</Email>
       <IdCliente>1</IdCliente>
     </Cliente>
-    <Asunto>rrrr</Asunto>
-    <FechaInicio>2024-12-16 03:36:50</FechaInicio>
+    <Asunto>RRR</Asunto>
+    <FechaInicio>2024-12-16 04:10:56</FechaInicio>
     <FechaFin>1111-11-11 11:11:11</FechaFin>
-    <Nota>qwewe</Nota>
+    <Nota>R</Nota>
   </Reparacion>
 </Trabajos>

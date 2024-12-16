@@ -1,13 +1,46 @@
 <GarajeCoches>
   <Coche>
-    <Matricula>1010MTM</Matricula>
+    <Matricula>1010AAA</Matricula>
     <Marca>Renault</Marca>
-    <Modelo>R</Modelo>
+    <Modelo>I30</Modelo>
+    <Cliente>
+      <DNI>77482984d</DNI>
+      <Nombre>Ruben</Nombre>
+      <Email>vilas@email.com</Email>
+      <IdCliente>5</IdCliente>
+    </Cliente>
+  </Coche>
+  <Coche>
+    <Matricula>1010BBB</Matricula>
+    <Marca>Renault</Marca>
+    <Modelo>MEGANE</Modelo>
     <Cliente>
       <DNI>77482985d</DNI>
-      <Nombre>r</Nombre>
-      <Email>r@r.c</Email>
-      <IdCliente>1</IdCliente>
+      <Nombre>Ruben</Nombre>
+      <Email>ruben@email.com</Email>
+      <IdCliente>2</IdCliente>
+    </Cliente>
+  </Coche>
+  <Coche>
+    <Matricula>2020BBB</Matricula>
+    <Marca>Hyundai</Marca>
+    <Modelo>I30</Modelo>
+    <Cliente>
+      <DNI>87654321t</DNI>
+      <Nombre>Felipe</Nombre>
+      <Email>felipe@email.com</Email>
+      <IdCliente>4</IdCliente>
+    </Cliente>
+  </Coche>
+  <Coche>
+    <Matricula>3030CCC</Matricula>
+    <Marca>Bmw</Marca>
+    <Modelo>M3</Modelo>
+    <Cliente>
+      <DNI>12345678x</DNI>
+      <Nombre>Antonio</Nombre>
+      <Email>antonio@email.com</Email>
+      <IdCliente>3</IdCliente>
     </Cliente>
   </Coche>
 </GarajeCoches>

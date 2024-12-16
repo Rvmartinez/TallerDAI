@@ -1,14 +1,26 @@
 <CarteraClientes>
   <Cliente>
-    <DNI>77482985d</DNI>
-    <Nombre>r</Nombre>
-    <Email>r@r.c</Email>
-    <IdCliente>1</IdCliente>
+    <DNI>12345678x</DNI>
+    <Nombre>Antonio</Nombre>
+    <Email>antonio@email.com</Email>
+    <IdCliente>3</IdCliente>
   </Cliente>
   <Cliente>
-    <DNI>77482984M</DNI>
-    <Nombre>r</Nombre>
-    <Email>r@r.cC</Email>
+    <DNI>87654321t</DNI>
+    <Nombre>Felipe</Nombre>
+    <Email>felipe@email.com</Email>
+    <IdCliente>4</IdCliente>
+  </Cliente>
+  <Cliente>
+    <DNI>77482984d</DNI>
+    <Nombre>Ruben</Nombre>
+    <Email>vilas@email.com</Email>
+    <IdCliente>5</IdCliente>
+  </Cliente>
+  <Cliente>
+    <DNI>77482985d</DNI>
+    <Nombre>Ruben</Nombre>
+    <Email>ruben@email.com</Email>
     <IdCliente>2</IdCliente>
   </Cliente>
 </CarteraClientes>

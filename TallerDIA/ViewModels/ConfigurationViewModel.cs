@@ -72,7 +72,7 @@ namespace TallerDIA.ViewModels
             Settings.Instance.AddFilePath("plantilla", plantillaPath);
             Settings.Instance.AddFilePath("trabajo", reparacionesPath);
             Settings.Instance.AddFilePath("clientes", clientesPath);
-            Settings.Instance.AddFilePath("plantilla", clientesPath);
+            Settings.Instance.AddFilePath("garaje", garajePath);
         }
 
     }

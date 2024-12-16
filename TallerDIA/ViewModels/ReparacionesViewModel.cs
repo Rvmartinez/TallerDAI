@@ -72,7 +72,7 @@ namespace TallerDIA.ViewModels
             ReparacionesColection = SharedDB.Instance.Reparaciones;
         }
 
-        public ReparacionesViewModel(string dni)
+        public ReparacionesViewModel(string dni,string type)
         {
             ReparacionesColection = SharedDB.Instance.Reparaciones;
         }
@@ -80,7 +80,13 @@ namespace TallerDIA.ViewModels
         {
             if (parameters.Length > 0 && parameters[0] is string dni)
             {
-                SelectedFilterMode = 4;
+                if (parameters[1] is string type)
+                {
+                    if(type == nameof(ClientesViewModel))
+                    {
+                        SelectedFilterMode = 4;
+                    }
+                }
                 FilterText = dni;
             }
         

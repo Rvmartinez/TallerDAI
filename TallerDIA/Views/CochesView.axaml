@@ -125,7 +125,8 @@
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding Matricula}" Width="auto" Header="Matricula" />
                 <DataGridTextColumn Binding="{Binding Marca}" Width="auto"  Header="Marca" />
-                <DataGridTextColumn Binding="{Binding Modelo}" Width="auto"  Header="Modelo" />
+				<DataGridTextColumn Binding="{Binding Modelo}" Width="auto"  Header="Modelo" />
+				<DataGridTextColumn Binding="{Binding Owner.DNI}" Width="auto"  Header="Dueño" />
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

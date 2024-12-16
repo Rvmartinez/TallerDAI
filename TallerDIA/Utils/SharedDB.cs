@@ -89,9 +89,20 @@ namespace TallerDIA.Utils
             
                
                 return true;
-            
+        }
 
-            
+        public void EditEmpleadoInReparaciones(Empleado empl, Empleado updated)
+        {
+            List<Reparacion> reps = Reparaciones.Reps.Where( e => e.Empleado.Dni == empl.Dni ).ToList();
+
+            if (reps.Count == 0)
+                return;
+            foreach(Reparacion r in reps)
+            {
+                r.Empleado.Dni = updated.Dni;
+                r.Empleado.Email = updated.Email;
+                r.Empleado.Nombre = updated.Nombre;
+            }
         }
 
 
@@ -105,6 +116,7 @@ namespace TallerDIA.Utils
 
             EditarClienteEnReparaciones(cliente, updated);
             EditarClienteDeCoches(toupdate, updated);
+            toupdate.IdCliente = cliente.IdCliente;
             toupdate.DNI = updated.DNI;
             toupdate.Nombre = updated.Nombre;
             toupdate.Email = updated.Email;
@@ -122,6 +134,8 @@ namespace TallerDIA.Utils
             foreach (Reparacion r in reparacionesAsociadas)
             {
                 r.Cliente.DNI = updated.DNI;
+                r.Cliente.Nombre = updated.Nombre;
+                r.Cliente.Email = updated.Email;
             }
         }
 
@@ -130,6 +144,7 @@ namespace TallerDIA.Utils
             if(!CanAddCliente(c)) 
                 return false;
            
+            if(c.IdCliente <= 0)
             c.IdCliente = GetLastClientId()+1;
             CarteraClientes.Add(c);
 

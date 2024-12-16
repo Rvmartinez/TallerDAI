@@ -144,9 +144,11 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
             {
                 if (SharedDB.BuscarEmpleado(RegistroEmpleados.Empleados.ToList(), EmpleadoSeleccionado) != null && (EmpleadoSeleccionado.Dni == nuevoEmpleado.Dni || SharedDB.BuscarEmpleado(RegistroEmpleados.Empleados.ToList(), nuevoEmpleado) == null))
                 {
+                    SharedDB.Instance.EditEmpleadoInReparaciones(EmpleadoSeleccionado, nuevoEmpleado);
+
                     RegistroEmpleados.RemoveEmpleado(EmpleadoSeleccionado);
-                    ForceUpdateUI();
                     RegistroEmpleados.Add(nuevoEmpleado);
+
                     ForceUpdateUI();
                     Console.Out.WriteLine("Modificado exitoso.");
                 }
@@ -210,7 +212,7 @@ public partial class EmpleadosViewModel : FilterViewModel<Empleado>
     public  void btTicketsSelecc_OnClick()
     {
         if (EmpleadoSeleccionado == null) return;
-        NavigationService.Instance.NavigateTo<ReparacionesViewModel>(EmpleadoSeleccionado.Dni);
+        NavigationService.Instance.NavigateTo<ReparacionesViewModel>(EmpleadoSeleccionado.Dni,nameof(ReparacionesViewModel));
     }
     public override ObservableCollection<string> _FilterModes { get; } = new ObservableCollection<string>(["DNI","Nombre","Email"]);
     public override ObservableCollection<Empleado> FilteredItems
