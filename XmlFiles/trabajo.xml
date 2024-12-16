@@ -6,7 +6,7 @@
       <Email>manolo@email.com</Email>
     </Empleado>
     <Cliente>
-      <DNI>19191919d</DNI>
+      <DNI>19191919M</DNI>
       <Nombre>Cristobal</Nombre>
       <Email>cristobal@email.com</Email>
       <IdCliente>3</IdCliente>
@@ -23,7 +23,7 @@
       <Email>paco@email.com</Email>
     </Empleado>
     <Cliente>
-      <DNI>19191919d</DNI>
+      <DNI>19191919M</DNI>
       <Nombre>Cristobal</Nombre>
       <Email>cristobal@email.com</Email>
       <IdCliente>3</IdCliente>
@@ -40,7 +40,7 @@
       <Email>manolo@email.com</Email>
     </Empleado>
     <Cliente>
-      <DNI>19191919d</DNI>
+      <DNI>19191919M</DNI>
       <Nombre>Cristobal</Nombre>
       <Email>cristobal@email.com</Email>
       <IdCliente>3</IdCliente>
@@ -66,5 +66,39 @@
     <FechaInicio>2024-11-01 16:16:22</FechaInicio>
     <FechaFin>1111-11-11 11:11:11</FechaFin>
     <Nota>Blanco roto</Nota>
+  </Reparacion>
+  <Reparacion>
+    <Empleado>
+      <DNI>74747474d</DNI>
+      <Nombre>Paco</Nombre>
+      <Email>paco@email.com</Email>
+    </Empleado>
+    <Cliente>
+      <DNI>87654353a</DNI>
+      <Nombre>Felipe</Nombre>
+      <Email>felipe@email.com</Email>
+      <IdCliente>2</IdCliente>
+    </Cliente>
+    <Asunto>Cambio aceite</Asunto>
+    <FechaInicio>2022-05-16 16:32:54</FechaInicio>
+    <FechaFin>1111-11-11 11:11:11</FechaFin>
+    <Nota>Caro</Nota>
+  </Reparacion>
+  <Reparacion>
+    <Empleado>
+      <DNI>73737373d</DNI>
+      <Nombre>Manolo</Nombre>
+      <Email>manolo@email.com</Email>
+    </Empleado>
+    <Cliente>
+      <DNI>19191919M</DNI>
+      <Nombre>Cristobal</Nombre>
+      <Email>cristobal@email.com</Email>
+      <IdCliente>3</IdCliente>
+    </Cliente>
+    <Asunto>Reparacion carter</Asunto>
+    <FechaInicio>2022-12-16 16:33:12</FechaInicio>
+    <FechaFin>1111-11-11 11:11:11</FechaFin>
+    <Nota>A este barato</Nota>
   </Reparacion>
 </Trabajos>

@@ -213,8 +213,7 @@ namespace TallerDIA.ViewModels
                     new Cliente() { DNI = dni, Email = email, Nombre = nombre, IdCliente = 0 }))
                 {
                     var box = MessageBoxManager
-                                .GetMessageBoxStandard("Atención", "Ya existe un cliente con ese DNI o Email", ButtonEnum.Ok);
-
+                                .GetMessageBoxStandard("Atención", "Ya existe un cliente con ese DNI o Email", ButtonEnum.Ok).ShowAsync();
                 }
                 Filtrar();
             }

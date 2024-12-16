@@ -142,7 +142,9 @@ namespace TallerDIA.Utils
         public bool AddClient(Cliente c)
         {
             if (!CanAddCliente(c))
-                return false;
+            {
+                
+            }
 
             if (c.IdCliente <= 0)
                 c.IdCliente = GetLastClientId() + 1;
