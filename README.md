@@ -1,1 +1,1 @@
-Proyecto DAI 2024-2025
+Proyecto DIA 2024-2025
